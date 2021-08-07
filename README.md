@@ -1,7 +1,7 @@
 # SurRoL
 
 <p align="center">
-   <img src="resources/surrol-overview.png" width="600" alt="SurRoL"/>
+   <img src="resources/surrol-overview.png" width="1000" alt="SurRoL"/>
 </p>
 
 ## License
