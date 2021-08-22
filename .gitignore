@@ -1,3 +1,8 @@
 __pycache__/
 .ipynb_checkpoints/
 .idea
+surrol.egg-info
+logs
+policies
+surrol/data/demo
+surrol/data/video

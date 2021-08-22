@@ -1,0 +1,23 @@
+world
+    fixed_joint (fixed)
+        ecm_base_link
+            ecm_yaw_joint (revolute)
+                ecm_yaw_link
+                    ecm_pitch_front_joint (revolute)
+                        ecm_pitch_front_link
+                            ecm_pitch_bottom_joint (revolute, mimic=-1.*ecm_pitch_front_joint)
+                                ecm_pitch_bottom_link
+                                    ecm_pitch_end_joint (revolute, mimic=1.*ecm_pitch_front_joint)
+                                        ecm_pitch_end_link
+                                            ecm_main_insertion_joint (prismatic)
+                                                ecm_main_insertion_link
+                                                    ecm_tool_joint (revolute)
+                                                        ecm_tool_link
+                                                            ecm_end_joint (fixed)
+                                                                ecm_end_link
+                            ecm_pitch_top_joint (revolute, mimic=-1.*ecm_pitch_front_joint)
+                                ecm_pitch_top_link
+                    ecm_pitch_back_joint (revolute, mimic=1.*ecm_pitch_front_joint)
+                        ecm_pitch_back_link
+            ecm_remote_center_joint (fixed)
+                ecm_remote_center_link

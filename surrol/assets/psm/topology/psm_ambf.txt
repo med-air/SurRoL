@@ -1,0 +1,30 @@
+# https://github.com/WPI-AIM/ambf/blob/ambf-1.0/ambf_models/descriptions/multi-bodies/robots/blender-psm.yaml
+base link
+    base link-yaw link (joint, revolute)
+        yaw link
+            yaw link-pitch back link (joint, revolute)
+                pitch back link
+                    pitch back link-pitch bottom link (joint, revolute, passive)
+                        pitch bottom link
+                            pitch bottom link-pitch end link (joint, revolute, passive)
+                                pitch end link
+                                    pitch end link-main insertion link (joint, prismatic)
+                                        main insertion link
+                                            main insertion link-tool roll link (joint, revolute)
+                                                tool roll link
+                                                    tool roll link-tool pitch link (joint,
+                                                        tool pitch link
+                                                            tool pitch link-tool gripper1 link (joint, revolute)
+                                                                tool gripper1 link
+                                                            tool pitch link-tool gripper2 link (joint, revolute)
+                                                                tool gripper2 link
+                    pitch back link-pitch top link (joint, revolute, passive)
+                        pitch top link
+                            pitch top link-pitch end link (joint, revolute, passive)
+                                pitch end link
+            yaw link-pitch end link (joint, p2p, passive)
+                pitch end link
+            yaw link-pitch front link (joint, revolute, passive)
+                pitch front link
+                    pitch front link-pitch bottom link (joint, revolute)
+                        pitch bottom link

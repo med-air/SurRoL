@@ -1,0 +1,170 @@
+<?xml version="0.0" ?>
+<robot name="tray">
+    <material name="white">
+        <color rgba="0.95 0.95 0.95 1"/>
+    </material>
+    <material name="rose">
+        <color rgba="0.96 0.87 0.77 1"/>
+    </material>
+    <material name="dummy">
+        <color rgba="0 0 0 0"/>
+    </material>
+
+    <link name="baseLink">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0.000181"/>
+            <mass value=".0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/tray.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.000181"/>
+            <geometry>
+                <box size="0.120 0.196 0.000362"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="border_1">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="0 0 0"/>
+            </geometry>
+            <material name="dummy"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.120 0.003 0.022"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="border_joint_1" type="fixed">
+        <parent link="baseLink"/>
+        <child link="border_1"/>
+        <origin rpy="0 0 0" xyz="0 -0.095 0.011"/>
+    </joint>
+
+    <link name="border_2">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="0 0 0"/>
+            </geometry>
+            <material name="dummy"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.120 0.003 0.022"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="border_joint_2" type="fixed">
+        <parent link="baseLink"/>
+        <child link="border_2"/>
+        <origin rpy="0 0 0" xyz="0 0.095 0.011"/>
+    </joint>
+
+    <link name="border_3">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="0 0 0"/>
+            </geometry>
+            <material name="dummy"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.003 0.196 0.022"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="border_joint_3" type="fixed">
+        <parent link="baseLink"/>
+        <child link="border_3"/>
+        <origin rpy="0 0 0" xyz="-0.058 0 0.011"/>
+    </joint>
+
+    <link name="border_4">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <geometry>
+                <box size="0 0 0"/>
+            </geometry>
+            <material name="dummy"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.003 0.196 0.022"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="border_joint_4" type="fixed">
+        <parent link="baseLink"/>
+        <child link="border_4"/>
+        <origin rpy="0 0 0" xyz="0.058 0 0.011"/>
+    </joint>
+
+    <link name="pad">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0.0036"/>
+            <mass value=".0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/pad.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="rose"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.0036"/>
+            <geometry>
+                <box size="0.101 0.170 0.0052"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="pad_joint" type="fixed">
+        <parent link="baseLink"/>
+        <child link="pad"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+</robot>

@@ -1,0 +1,36 @@
+# https://github.com/jhu-dvrk/dvrk-ros/tree/master/dvrk_model/model/psm.urdf.xacro
+world
+    fixed (fixed)
+        PSM1_psm_base_link
+            outer_yaw (revolute)
+                PSM1_outer_yaw_link
+                    outer_pitch (revolute)
+                        PSM1_outer_pitch_link
+                            outer_insertion (prismatic)
+                                PSM1_tool_main_link
+                                    outer_roll (revolute)
+                                        PSM1_tool_wrist_link
+                                            outer_roll_shaft (fixed)
+                                                PSM1_tool_wrist_shaft_link
+                                                    outer_wrist_pitch (revolute)
+                                                        PSM1_tool_wrist_sca_link
+                                                            outer_wrist_yaw (revolute)
+                                                                PSM1_tool_wrist_sca_shaft_link
+                                                                    jaw (revolute)
+                                                                        PSM1_tool_wrist_sca_ee_link_0
+                                                                    jaw_mimic_1 (revolute, mimic=0.5*jaw)
+                                                                        PSM1_tool_wrist_sca_ee_link_1
+                                                                    jaw_mimic_2 (revolute, mimic=-0.5*jaw)
+                                                                        PSM1_tool_wrist_sca_ee_link_2
+                                                                    tool_tip (fixed)
+                                                                        PSM1_tool_tip_link
+                    outer_pitch_1 (continuous, mimic=1.*outer_pitch)
+                        PSM1_outer_pitch_back_link
+                            outer_pitch_3 (continuous, mimic=-1.*outer_pitch)
+                                PSM1_outer_pitch_bottom_link
+                                    outer_pitch_5 (continuous, mimic)
+                                        PSM1_outer_insertion_link
+                            outer_pitch_4 (continuous, mimic=-1.*outer_pitch)
+                                PSM1_outer_pitch_top_link
+                    outer_pitch_2 (continuous, mimic=1.*outer_pitch)
+                        PSM1_outer_pitch_front_link

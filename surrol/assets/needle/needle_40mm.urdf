@@ -1,0 +1,139 @@
+<?xml version="0.0" ?>
+<robot name="needle">
+    <material name="grey">
+        <color rgba="0.85 0.85 0.85 1"/>
+    </material>
+
+    <link name="baseLink">
+        <contact>
+            <lateral_friction value="1.0"/>
+            <!--      rolling_friction: important (0.1 failed)-->
+            <rolling_friction value="0.0"/>
+        </contact>
+        <inertial>
+            <!--      tours: 30, 8-->
+            <!--      major radius: 0.02, minor radius: 0.0005-->
+            <!--      vis: radius=0.02, in radius=0.0005-->
+            <!--      col: radius=0.02, in radius=0.0006-->
+            <!--      center of mass: 2*R/pi; important-->
+            <origin rpy="0 0 0" xyz="-0.0127 0 0"/>
+            <mass value="0.01"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/needle_40mm.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/needle_40mm_vhacd.obj" scale="1 1 1"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="waypoint_0">
+        <!--    origin-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+    </link>
+
+    <joint name="waypoint_joint_0" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_0"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <link name="waypoint_1">
+        <!--    middle-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <!--    <visual>-->
+        <!--      <origin rpy="0 0 0" xyz="0 0 0"/>-->
+        <!--      <geometry>-->
+        <!--        <box size="0.005 0.005 0.005"/>-->
+        <!--      </geometry>-->
+        <!--      <material name="grey"/>-->
+        <!--    </visual>-->
+    </link>
+
+    <joint name="waypoint_joint_1" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_1"/>
+        <!--    (-R, 0, 0)-->
+        <origin rpy="0 0 0" xyz="-0.02 0 0"/>
+    </joint>
+
+    <link name="waypoint_2">
+        <!--    left-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+    </link>
+
+    <joint name="waypoint_joint_2" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_2"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0.785398" xyz="-0.0141421 -0.0141421 0"/>
+    </joint>
+
+    <link name="waypoint_3">
+        <!--    right-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+    </link>
+
+    <joint name="waypoint_joint_3" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_3"/>
+        <!--    (-sqrt(2)R/2, sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 -0.785398" xyz="-0.0141421 0.0141421 0"/>
+    </joint>
+
+    <link name="waypoint_4">
+        <!--    left 60deg-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+    </link>
+
+    <joint name="waypoint_joint_4" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_4"/>
+        <!--    -cos(60)*R, -sin(60)*R, 0)-->
+        <origin rpy="0 0 1.047197" xyz="-0.0100000 -0.0173205 0"/>
+    </joint>
+
+    <link name="waypoint_5">
+        <!--    right 60deg-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+    </link>
+
+    <joint name="waypoint_joint_5" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_5"/>
+        <!--    -cos(60)*R, sin(60)*R, 0)-->
+        <origin rpy="0 0 -1.047198" xyz="-0.0100000 0.0173205 0"/>
+    </joint>
+</robot>
