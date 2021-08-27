@@ -3,12 +3,6 @@ from gym.envs.registration import register
 
 # PSM Env
 register(
-    id='PSMReach-v0',
-    entry_point='surrol.tasks.psm_reach:PSMReach',
-    max_episode_steps=50,
-)
-
-register(
     id='NeedleReach-v0',
     entry_point='surrol.tasks.needle_reach:NeedleReach',
     max_episode_steps=50,
@@ -27,48 +21,12 @@ register(
 )
 
 register(
-    id='NeedlePickApprox-v0',
-    entry_point='surrol.tasks.needle_pickapprox:NeedlePickApprox',
-    max_episode_steps=50,
-)
-
-register(
-    id='NeedlePlace-v0',
-    entry_point='surrol.tasks.needle_place:NeedlePlace',
-    max_episode_steps=50,
-)
-
-register(
-    id='NeedleStitch-v0',
-    entry_point='surrol.tasks.needle_stitch:NeedleStitch',
-    max_episode_steps=50,
-)
-
-register(
-    id='BlockPick-v0',
-    entry_point='surrol.tasks.block_pick:BlockPick',
-    max_episode_steps=50,
-)
-
-register(
     id='PegTransfer-v0',
     entry_point='surrol.tasks.peg_transfer:PegTransfer',
     max_episode_steps=50,
 )
 
 # Bimanual PSM Env
-register(
-    id='BiPSMReach-v0',
-    entry_point='surrol.tasks.psm_reach_bimanual:BiPSMReach',
-    max_episode_steps=50,
-)
-
-register(
-    id='BiNeedlePlace-v0',
-    entry_point='surrol.tasks.bineedle_place:BiNeedlePlace',
-    max_episode_steps=50,
-)
-
 register(
     id='NeedleRegrasp-v0',
     entry_point='surrol.tasks.needle_regrasp_bimanual:NeedleRegrasp',
