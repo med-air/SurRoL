@@ -4,7 +4,7 @@
    <img src="resources/img/surrol-overview.png" alt="SurRoL"/>
 </p>
 
-SurRoL: An Open-source Reinforcement Learning Centered and dVRK Compatible Platform for Surgical Robot Learning
+[SurRoL: An Open-source Reinforcement Learning Centered and dVRK Compatible Platform for Surgical Robot Learning](https://arxiv.org/abs/2108.13035)
 
 ## Features
 
