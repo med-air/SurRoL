@@ -30,7 +30,7 @@ class EcmEnv(SurRoLEnv):
     WORKSPACE_LIMITS = ((0.45, 0.55), (-0.05, 0.05), (0.60, 0.70))
     SCALING = 1.
 
-    def __init__(self, render_mode: str = None):
+    def __init__(self, render_mode: str = None, cid = -1):
         # workspace
         self.workspace_limits = np.asarray(self.WORKSPACE_LIMITS)
         self.workspace_limits *= self.SCALING
@@ -42,7 +42,7 @@ class EcmEnv(SurRoLEnv):
         self.has_object = False
         self.obj_id = None
 
-        super(EcmEnv, self).__init__(render_mode)
+        super(EcmEnv, self).__init__(render_mode, cid)
 
         # change duration
         self._duration = 0.1

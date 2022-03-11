@@ -1,0 +1,6 @@
+[submodule "submodules/pybullet_rendering"]
+	path = submodules/pybullet_rendering
+	url = https://github.com/ikalevatykh/pybullet_rendering.git
+[submodule "submodules/bullet3"]
+	path = submodules/bullet3
+	url = https://github.com/bulletphysics/bullet3.git

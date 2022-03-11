@@ -28,7 +28,7 @@ class SurRoLEnv(gym.Env):
 
     metadata = {'render.modes': ['human', 'rgb_array', 'img_array']}
 
-    def __init__(self, render_mode: str = None):
+    def __init__(self, render_mode: str = None, cid: int = -1):
         # rendering and connection options
         self._render_mode = render_mode
         # render_mode = 'human'
@@ -36,10 +36,16 @@ class SurRoLEnv(gym.Env):
         #     self.cid = p.connect(p.SHARED_MEMORY)
         #     if self.cid < 0:
         if render_mode == 'human':
-            self.cid = p.connect(p.GUI)
+            if cid < 0:
+                self.cid = p.connect(p.GUI)
+            else:
+                self.cid = cid
             # p.configureDebugVisualizer(p.COV_ENABLE_GUI, 0)
         else:
-            self.cid = p.connect(p.DIRECT)
+            if cid < 0:
+                self.cid = p.connect(p.DIRECT)
+            else:
+                self.cid = cid
             # See PyBullet Quickstart Guide Synthetic Camera Rendering
             # TODO: no light when using direct without egl
             if socket.gethostname().startswith('pc') or True:
