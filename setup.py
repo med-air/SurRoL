@@ -9,11 +9,17 @@ import subprocess
 
 def check_directories():
     root_files = os.listdir('.')
-    assert 'setup.py' in root_files and 'submodules' in root_files, 'Installation NOT in the root directory of SurRol.'
+    assert 'setup.py' in root_files and 'ext' in root_files, 'Installation NOT in the root directory of SurRol.'
     
-    submodules = os.listdir('./submodules')
+    submodules = os.listdir('./ext')
     assert 'bullet3' in submodules, 'Submodule `bullet3` not found.'
     assert 'pybullet_rendering' in submodules, 'Submodule `pybullet_rendering` not found.'
+    
+    submodule_bullet3_fns = os.listdir('./ext/bullet3')
+    assert 'setup.py' in submodule_bullet3_fns, 'Submodule `bullet3` not cloned.'
+
+    submodule_pybullet_rendering_fns = os.listdir('./ext/pybullet_rendering')
+    assert 'setup.py' in submodule_pybullet_rendering_fns, 'Submodule `pybullet_rendering` not cloned.'
 
 def install_submodules():
     # Check prerequisites of project directories
@@ -23,14 +29,14 @@ def install_submodules():
 
     # Install submodules
     print('\n=== Install submodules')
-    os.chdir('./submodules/bullet3')
+    os.chdir('./ext/bullet3')
     bullet_root_dir = os.path.realpath('.')
     subprocess.check_call([os.path.abspath(sys.executable), "setup.py", "install"])
     print('  -- pybullet installed')
     os.chdir('../pybullet_rendering')
     subprocess.check_call([os.path.abspath(sys.executable), "setup.py", "install", "--bullet_dir", bullet_root_dir])
-    os.chdir('../../')
     print('  -- pybullet_rendering installed')
+    os.chdir('../../')
 
 class PostInstallCommand(install):
     def run(self):

@@ -127,6 +127,7 @@ def open_scene(id):
 
 
 app = Application()
+print('Press <W><A><S><D><E><Q><Space> to control the PSM.')
 load_font()
 open_scene(0)
 app.run()
