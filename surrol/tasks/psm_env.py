@@ -90,7 +90,9 @@ class PsmEnv(SurRoLGoalEnv):
         return self._is_success(achieved_goal, desired_goal).astype(np.float32) - 1.
 
     def _env_setup(self):
-        self.obj_ids = {'fixed': [], 'rigid': [], 'deformable': []} # for venv
+        # for venv
+        self.obj_ids = {'fixed': [], 'rigid': [], 'deformable': []}
+
         # camera
         if self._render_mode == 'human':
             reset_camera(yaw=90.0, pitch=-30.0, dist=0.82 * self.SCALING,
