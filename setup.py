@@ -36,6 +36,9 @@ def install_submodules():
     os.chdir('../pybullet_rendering')
     subprocess.check_call([os.path.abspath(sys.executable), "setup.py", "install", "--bullet_dir", bullet_root_dir])
     print('  -- pybullet_rendering installed')
+    os.chdir('../panda3d-kivy')
+    subprocess.check_call([os.path.abspath(sys.executable), "setup.py", "install"])
+    print('  -- panda3d-kivy installed')
     os.chdir('../../')
 
 class PostInstallCommand(install):
@@ -73,6 +76,7 @@ if __name__ == '__main__':
             "sympy",
             "panda3d==1.10.11",
             "trimesh",
+            "kivymd"
         ],
         cmdclass = {
             'install': PostInstallCommand,

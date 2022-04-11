@@ -4,3 +4,6 @@
 [submodule "ext/bullet3"]
 	path = ext/bullet3
 	url = https://github.com/bulletphysics/bullet3.git
+[submodule "ext/panda3d-kivy"]
+	path = ext/panda3d-kivy
+	url = https://github.com/yuehaowang/panda3d-kivy.git
