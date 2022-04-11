@@ -292,7 +292,7 @@ class SurgicalTrainingCase(GymEnvScene):
         # directional light
         dlight = DirectionalLight('dlight')
         dlight.setColor((0.4, 0.4, 0.25, 1))
-        dlight.setShadowCaster(True, app.configs.shadow_resolution, app.configs.shadow_resolution)
+        # dlight.setShadowCaster(True, app.configs.shadow_resolution, app.configs.shadow_resolution)
         dlnp = self.world3d.attachNewNode(dlight)
         dlnp.setPos(*(table_pos + np.array([1.0, 0.0, 15.0])))
         dlnp.lookAt(*table_pos)
