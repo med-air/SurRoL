@@ -15,13 +15,13 @@ class ApplicationConfig:
 
         # Rendering config
         self.srgb = kwargs.get('srgb', True)
-        self.multisamples = kwargs.get('multisamples', 4)
+        self.multisamples = kwargs.get('multisamples', 2)
         self.shadow_resolution = kwargs.get('shadow_resolution', 512)
         self.ambient_occlusion = kwargs.get('ambient_occlusion', False)
 
         # Window config
         self.window_width = kwargs.get('window_width', 640)
-        self.window_height = kwargs.get('window_height', 480)
+        self.window_height = kwargs.get('window_height', 512)
         self.window_title = kwargs.get('window_title', 'SurRol Simulator')
     
     @staticmethod
@@ -41,8 +41,8 @@ class Application(ShowBase):
         loadPrcFileData(
             "",
             f"""
-            framebuffer-srgb  {1 if cfg.srgb else 0}
-            framebuffer-multisample {1 if cfg.multisamples else 0}
+            framebuffer-stencil true
+            framebuffer-multisample 1
             multisamples {cfg.multisamples}
             model-path {pybullet_data.getDataPath()}
             model-path {ASSET_DIR_PATH}
@@ -58,9 +58,12 @@ class Application(ShowBase):
         self.configs = cfg
 
         # Setup filters
+        filters = CommonFilters(self.win, self.cam)
         if cfg.ambient_occlusion:
-            filters = CommonFilters(self.win, self.cam)
             filters.setAmbientOcclusion()
+        if cfg.srgb:
+            filters.setSrgbEncode()
+
 
         # Debug: "out-of-body experience" mouse-interface mode
         if cfg.debug:
@@ -102,7 +105,7 @@ class Application(ShowBase):
             Application.app = self
         else:
             raise Exception('Application instance must be unique!')
-
+        
     def play(self, scene):
         assert isinstance(scene, Scene)
 
@@ -122,11 +125,13 @@ class Application(ShowBase):
             self.main_scene.destroy()
         
         # Initialize new scene
+        init_kwargs = {}
         if isinstance(scene, GymEnvScene):
             self.pybullet_cid = p.connect(p.DIRECT)
             self._renderer_if.build(self.pybullet_cid, scene)
+            init_kwargs['cid'] = self.pybullet_cid
 
-            scene._initialize(cid=self.pybullet_cid)
+        scene._initialize(**init_kwargs)
         
         # Attach new scene
         self.main_scene = scene
