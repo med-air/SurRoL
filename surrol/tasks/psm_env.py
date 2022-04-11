@@ -372,14 +372,14 @@ class PsmsEnv(PsmEnv):
     SCALING = 1.
 
     def __init__(self,
-                 render_mode=None):
+                 render_mode=None, cid = -1):
         # workspace
         workspace_limits = np.asarray(self.WORKSPACE_LIMITS2) \
                            + np.array([0., 0., 0.0102]).reshape((3, 1))  # tip-eef offset with collision margin
         workspace_limits *= self.SCALING
         self.workspace_limits2 = workspace_limits
 
-        super(PsmsEnv, self).__init__(render_mode)
+        super(PsmsEnv, self).__init__(render_mode, cid)
 
     def _env_setup(self):
         super(PsmsEnv, self)._env_setup()
