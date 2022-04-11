@@ -1,3 +1,4 @@
+import os
 import numpy as np
 import pybullet as pb
 from direct.task import Task
@@ -20,7 +21,21 @@ class Scene:
         self.loader = Application.app.loader
         self.render = Application.app.render
 
+    def build_kivy_display_region(self, l, w, b, h):
+        import kivy.config
+        kivy.config.Config.set('graphics', 'width', round(self.app.configs.window_width * w))
+        kivy.config.Config.set('graphics', 'height', round(self.app.configs.window_height * h))
+        return self.app.win.make_display_region(l, w, b, h)
+    
+    def on_start(self):
+        pass
+
+    def on_destroy(self):
+        pass
+
     def destroy(self):
+        self.on_destroy()
+
         if self.world3d is not None:
             self.world3d.removeNode()
         if self.gui is not None:
@@ -30,7 +45,7 @@ class Scene:
         self.gui = None
 
     def _initialize(self, **kwargs):
-        pass
+        self.on_start()
 
 
 class GymEnvScene(Scene):
@@ -63,6 +78,8 @@ class GymEnvScene(Scene):
         pass
 
     def _initialize(self, **kwargs):
+        super(GymEnvScene, self)._initialize(**kwargs)
+
         assert self.env is None
 
         if 'cid' in kwargs:
@@ -121,6 +138,14 @@ class GymEnvScene(Scene):
                     material.setSpecular(Vec3(*shape.material.specular_color))
                     material.setShininess(5.0)
                     model.setMaterial(material, 1)
+
+                    # if shape.material.diffuse_color[3] < 1.0:
+                    #     model.set_transparency(p3d.TransparencyAttrib.M_alpha)
+                
+                    if shape.material.diffuse_texture:
+                        filename = os.path.abspath(shape.material.diffuse_texture.filename)
+                        texture = p3d.TexturePool.load_texture(filename)
+                        model.set_texture(texture, 1)
 
                 # set relative position
                 model.reparentTo(node)
