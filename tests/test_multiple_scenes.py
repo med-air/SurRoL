@@ -105,10 +105,9 @@ selection_panel_kv = '''MDBoxLayout:
                 MDRaisedButton:
                     id: btn1
                     text: "Play"
-                    size_hint: 0.8, None
+                    size_hint: 0.8, 1.0
                 MDIconButton:
                     icon: "application-settings"
-                    size_hint: 0.2, 1.0
         
 
         MDCard:
@@ -155,10 +154,9 @@ selection_panel_kv = '''MDBoxLayout:
                 MDRaisedButton:
                     id: btn2
                     text: "Play"
-                    size_hint: 0.8, None
+                    size_hint: 0.8, 1.0
                 MDIconButton:
                     icon: "application-settings"
-                    size_hint: 0.2, 1.0
 
 
         MDCard:
@@ -205,10 +203,9 @@ selection_panel_kv = '''MDBoxLayout:
                 MDRaisedButton:
                     id: btn3
                     text: "Play"
-                    size_hint: 0.8, None
+                    size_hint: 0.8, 1.0
                 MDIconButton:
                     icon: "application-settings"
-                    size_hint: 0.2, 1.0
         
 
         MDCard:
@@ -255,10 +252,9 @@ selection_panel_kv = '''MDBoxLayout:
                 MDRaisedButton:
                     id: btn4
                     text: "Play"
-                    size_hint: 0.8, None
+                    size_hint: 0.8, 1.0
                 MDIconButton:
                     icon: "application-settings"
-                    size_hint: 0.2, 1.0
 '''
 
 class SelectionUI(MDApp):
@@ -300,7 +296,7 @@ class StartPage(Scene):
 
 menu_bar_kv = '''MDBoxLayout:
     md_bg_color: (1, 0, 0, 0)
-    adaptive_height: True
+    # adaptive_height: True
     padding: "0dp", 0, 0, 0
     
     MDRectangleFlatIconButton:
@@ -310,7 +306,7 @@ menu_bar_kv = '''MDBoxLayout:
         text_color: (1, 1, 1, 1)
         icon_color: (1, 1, 1, 1)
         md_bg_color: app.theme_cls.primary_color
-        size_hint: 0.3, 1.0
+        size_hint: 0.25, 1.0
     MDRectangleFlatIconButton:
         icon: "head-lightbulb-outline"
         id: btn2
@@ -318,7 +314,7 @@ menu_bar_kv = '''MDBoxLayout:
         text_color: (1, 1, 1, 1)
         icon_color: (1, 1, 1, 1)
         md_bg_color: app.theme_cls.bg_light
-        size_hint: 0.3, 1.0
+        size_hint: 0.25, 1.0
     MDRectangleFlatIconButton:
         icon: "chart-histogram"
         id: btn3
@@ -326,7 +322,7 @@ menu_bar_kv = '''MDBoxLayout:
         text_color: (1, 1, 1, 1)
         icon_color: (1, 1, 1, 1)
         md_bg_color: app.theme_cls.primary_color
-        size_hint: 0.3, 1.0
+        size_hint: 0.25, 1.0
     MDRectangleFlatIconButton:
         icon: "help-box"
         id: btn4
@@ -334,7 +330,7 @@ menu_bar_kv = '''MDBoxLayout:
         text_color: (1, 1, 1, 1)
         icon_color: (1, 1, 1, 1)
         md_bg_color: app.theme_cls.bg_light
-        size_hint: 0.3, 1.0
+        size_hint: 0.25, 1.0
 '''
 
 class MenuBarUI(MDApp):
