@@ -443,7 +443,6 @@ class SurgicalSimulator(SurgicalSimulatorBase):
             self.psm1_action[1] = retrived_action[0]
             self.psm1_action[2] = retrived_action[1]
 
-
         if retrived_action[4] == 0:
             self.psm1_action[4] = 1
         if retrived_action[4] == 1:
