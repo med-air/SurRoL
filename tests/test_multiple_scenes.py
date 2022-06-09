@@ -13,6 +13,8 @@ from surrol.tasks.peg_transfer import PegTransfer
 from surrol.tasks.needle_regrasp_bimanual import NeedleRegrasp
 from surrol.tasks.peg_transfer_bimanual import BiPegTransfer
 
+from SRC.test import initTouch, closeTouch, getDeviceAction
+
 app = None
 hint_printed = False
 
@@ -356,6 +358,9 @@ class SurgicalSimulatorBase(GymEnvScene):
     def on_env_created(self):
         """Setup extrnal lights"""
 
+        # initialize the haptic device
+        initTouch()
+
         table_pos = np.array(self.env.POSE_TABLE[0]) * self.env.SCALING
 
         # ambient light
@@ -394,6 +399,8 @@ class SurgicalSimulatorBase(GymEnvScene):
         self.kivy_ui.run()
     
     def on_destroy(self):
+        # initialize the haptic device
+        closeTouch()
         # !!! important
         self.kivy_ui.stop()
         self.app.win.removeDisplayRegion(self.ui_display_region)
@@ -422,6 +429,27 @@ class SurgicalSimulator(SurgicalSimulatorBase):
         self.app.accept('space-repeat', self.setPsmAction, [4, -0.5])
 
     def before_simulation_step(self):
+
+        retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
+        getDeviceAction(retrived_action)
+
+        # retrived_action-> x,y,z, angle, buttonState(0,1,2)
+        if retrived_action[4] == 2:
+            self.psm1_action[0] = 0
+            self.psm1_action[1] = 0
+            self.psm1_action[2] = 0            
+        else:
+            self.psm1_action[0] = retrived_action[2]
+            self.psm1_action[1] = retrived_action[0]
+            self.psm1_action[2] = retrived_action[1]
+
+
+        if retrived_action[4] == 0:
+            self.psm1_action[4] = 1
+        if retrived_action[4] == 1:
+            self.psm1_action[4] = -0.5
+
+
         self.env._set_action(self.psm1_action)
 
     def setPsmAction(self, dim, val):
