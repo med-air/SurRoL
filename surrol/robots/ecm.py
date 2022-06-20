@@ -169,8 +169,11 @@ class Ecm(Arm):
                                                         nearVal=0.01,
                                                         farVal=10.0)
 
-        rgb_array, mask = render_image(width, height,
-                                       self.view_matrix, self.proj_matrix)
+        # rgb_array, mask = render_image(width, height,
+        #                                self.view_matrix, self.proj_matrix)
+        rgb_array = np.zeros((256, 256, 3))
+        mask = np.zeros((256, 256, 1))
+
         return rgb_array, mask
 
     def get_centroid_proj(self, pos) -> np.ndarray:
