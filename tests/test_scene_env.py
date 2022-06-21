@@ -374,9 +374,9 @@ class SurgicalTrainingCase(GymEnvScene):
 
         '''Control ECM'''
         if retrived_action[4] == 3:
-            self.ecm_action[0] = -retrived_action[0]*0.1
-            self.ecm_action[1] = -retrived_action[1]*0.1
-            self.ecm_action[2] = retrived_action[2]*0.1
+            self.ecm_action[0] = -retrived_action[0]*0.5
+            self.ecm_action[1] = -retrived_action[1]*0.5
+            self.ecm_action[2] = retrived_action[2]*0.5
             
         self.env._set_action(self.psm1_action)
 
