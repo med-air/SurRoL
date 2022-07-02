@@ -18,6 +18,15 @@ Under development...
 conda create -n surrol python=3.7 -y
 conda activate surrol
 ```
+    
+### Install SurRoL
+
+```shell
+git clone --recursive https://github.com/yuehaowang/SurRolv2.git
+cd SurRolv2
+pip install -e .
+```
+
 ### Install Driver and Dependencies for Haptic Geomagic Touch
 
 1. Install OpenHaptic Device Driver
@@ -31,14 +40,6 @@ conda activate surrol
     cd tests
     bash setup_haptic.sh
     ```
-    
-### Install SurRoL
-
-```shell
-git clone --recursive https://github.com/yuehaowang/SurRolv2.git
-cd SurRolv2
-pip install -e .
-```
 
 ### Test
 
