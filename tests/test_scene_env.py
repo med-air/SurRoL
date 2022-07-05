@@ -11,7 +11,7 @@ from surrol.tasks.needle_pick import NeedlePick
 from surrol.tasks.peg_transfer import PegTransfer
 # from surrol.tasks.ecm_static_track import StaticTrack
 
-from SRC.test import initTouch, closeTouch, getDeviceAction
+from SRC.test import initTouch_right, closeTouch_right, getDeviceAction_right
 
 ###########################
 import os
@@ -351,7 +351,7 @@ class SurgicalTrainingCase(GymEnvScene):
     def before_simulation_step(self):
 
         retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
-        getDeviceAction(retrived_action)
+        getDeviceAction_right(retrived_action)
 
         """retrived_action-> x,y,z, angle, buttonState(0,1,2)"""
 
@@ -406,7 +406,7 @@ class SurgicalTrainingCase(GymEnvScene):
 
     def on_env_created(self):
         """initialize the haptic device"""
-        initTouch()
+        initTouch_right()
 
         """Setup extrnal lights"""
 
@@ -445,7 +445,7 @@ class SurgicalTrainingCase(GymEnvScene):
 
     def on_destroy(self):
         # close the haptic device
-        closeTouch()
+        closeTouch_right()
 
         
 def open_scene():

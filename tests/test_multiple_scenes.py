@@ -13,7 +13,8 @@ from surrol.tasks.peg_transfer import PegTransfer
 from surrol.tasks.needle_regrasp_bimanual import NeedleRegrasp
 from surrol.tasks.peg_transfer_bimanual import BiPegTransfer
 
-from SRC.test import initTouch, closeTouch, getDeviceAction
+from SRC.test import initTouch_right, closeTouch_right, getDeviceAction_right, startScheduler, stopScheduler
+from SRC.test import initTouch_left, closeTouch_left, getDeviceAction_left
 
 app = None
 hint_printed = False
@@ -358,9 +359,6 @@ class SurgicalSimulatorBase(GymEnvScene):
     def on_env_created(self):
         """Setup extrnal lights"""
 
-        # initialize the haptic device
-        initTouch()
-
         table_pos = np.array(self.env.POSE_TABLE[0]) * self.env.SCALING
 
         # ambient light
@@ -399,8 +397,6 @@ class SurgicalSimulatorBase(GymEnvScene):
         self.kivy_ui.run()
     
     def on_destroy(self):
-        # initialize the haptic device
-        closeTouch()
         # !!! important
         self.kivy_ui.stop()
         self.app.win.removeDisplayRegion(self.ui_display_region)
@@ -409,6 +405,9 @@ class SurgicalSimulatorBase(GymEnvScene):
 class SurgicalSimulator(SurgicalSimulatorBase):
     def __init__(self, env_type, env_params):
         super(SurgicalSimulator, self).__init__(env_type, env_params)
+        
+        initTouch_right()
+        startScheduler()
 
         self.psm1_action = np.zeros(env_type.ACTION_SIZE)
         self.psm1_action[4] = 0.5
@@ -431,8 +430,9 @@ class SurgicalSimulator(SurgicalSimulatorBase):
     def before_simulation_step(self):
 
         retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
-        getDeviceAction(retrived_action)
+        getDeviceAction_right(retrived_action)
 
+        # haptic right
         # retrived_action-> x,y,z, angle, buttonState(0,1,2)
         if retrived_action[4] == 2:
             self.psm1_action[0] = 0
@@ -457,10 +457,21 @@ class SurgicalSimulator(SurgicalSimulatorBase):
     def addPsmAction(self, dim, incre):
         self.psm1_action[dim] += incre
 
+    def on_destroy(self):
+        # !!! important
+        stopScheduler()
+        closeTouch_right()
+        self.kivy_ui.stop()
+        self.app.win.removeDisplayRegion(self.ui_display_region)
+
 
 class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
     def __init__(self, env_type, env_params, jaw_states=[1.0, 1.0]):
         super(SurgicalSimulatorBimanual, self).__init__(env_type, env_params)
+
+        initTouch_right()
+        initTouch_left()
+        startScheduler()
 
         self.psm1_action = np.zeros(env_type.ACTION_SIZE // 2)
         self.psm1_action[4] = jaw_states[0]
@@ -499,6 +510,43 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
         self.app.accept('m-repeat', self.setPsmAction2, [4, -0.5])
 
     def before_simulation_step(self):
+
+        # haptic left
+        retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
+        getDeviceAction_left(retrived_action)
+        # retrived_action-> x,y,z, angle, buttonState(0,1,2)
+        if retrived_action[4] == 2:
+            self.psm1_action[0] = 0
+            self.psm1_action[1] = 0
+            self.psm1_action[2] = 0            
+        else:
+            self.psm1_action[0] = retrived_action[2]
+            self.psm1_action[1] = retrived_action[0]
+            self.psm1_action[2] = retrived_action[1]
+        if retrived_action[4] == 0:
+            self.psm1_action[4] = 1
+        if retrived_action[4] == 1:
+            self.psm1_action[4] = -0.5
+
+
+        # # haptic right
+        retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
+        getDeviceAction_right(retrived_action)
+        # retrived_action-> x,y,z, angle, buttonState(0,1,2)
+        if retrived_action[4] == 2:
+            self.psm2_action[0] = 0
+            self.psm2_action[1] = 0
+            self.psm2_action[2] = 0            
+        else:
+            self.psm2_action[0] = retrived_action[2]
+            self.psm2_action[1] = retrived_action[0]
+            self.psm2_action[2] = retrived_action[1]
+        if retrived_action[4] == 0:
+            self.psm2_action[4] = 1
+        if retrived_action[4] == 1:
+            self.psm2_action[4] = -0.5
+
+
         self.env._set_action(np.concatenate([self.psm2_action, self.psm1_action], axis=-1))
 
     def setPsmAction1(self, dim, val):
@@ -512,6 +560,14 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
         
     def addPsmAction2(self, dim, incre):
         self.psm2_action[dim] += incre
+
+    def on_destroy(self):
+        # !!! important
+        stopScheduler()
+        closeTouch_right()     
+        closeTouch_left()
+        self.kivy_ui.stop()
+        self.app.win.removeDisplayRegion(self.ui_display_region)
 
 
 

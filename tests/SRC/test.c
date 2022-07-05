@@ -39,17 +39,13 @@ Description:
 #include <HDU/hduError.h>
 #include <HDU/hduVector.h>
 
-HDCallbackCode HDCALLBACK UpdateCalibrationCallback(void *pUserData);
-HDCallbackCode HDCALLBACK CalibrationStatusCallback(void *pUserData);
-HDCallbackCode HDCALLBACK DevicePositionCallback(void *pUserData);
-HDCallbackCode HDCALLBACK DeviceAngleCallback(void *pUserData);
-HDCallbackCode HDCALLBACK DeviceButtonCallback(void *pUserData);
-HDCallbackCode HDCALLBACK DeviceAllInfoCallback(void *pUserData);
+HDCallbackCode HDCALLBACK DeviceAllInfoCallback_right(void *pUserData);
+HDCallbackCode HDCALLBACK DeviceAllInfoCallback_left(void *pUserData);
 
-HDenum GetCalibrationStatus();
-HDboolean CheckCalibration(HDenum calibrationStyle);
-void PrintDevicePosition();
-void getDeviceAction(float* retrived_info, int n1);
+HDenum GetCalibrationStatus_right();
+HDenum GetCalibrationStatus_left();
+void getDeviceAction_right(float* retrived_info, int n1);
+void getDeviceAction_left(float* retrived_info2, int n2);
 
 struct S_Haptic_info
 {
@@ -62,123 +58,18 @@ struct S_Haptic_info
 /*******************************************************************************
  Main function.
 *******************************************************************************/
-HHD hHD;
-int calibrationStyle;
+HHD hHD_right;
+int calibrationStyle_right;
 
-int TESTtouch()
-{
-    //HHD hHD;
-    HDErrorInfo error;
-    int supportedCalibrationStyles;
+HHD hHD_left;
+int calibrationStyle_left;
 
-    hHD = hdInitDevice(HD_DEFAULT_DEVICE);
-    if (HD_DEVICE_ERROR(error = hdGetError())) 
-    {
-        hduPrintError(stderr, &error, "Failed to initialize haptic device");
-        fprintf(stderr, "\nPress any key to quit.\n");
-        getch();
-        return -1;
-    }
-
-    printf("Calibration\n");
-    printf("Found %s.\n\n", hdGetString(HD_DEVICE_MODEL_TYPE));
-
-    /* Choose a calibration style.  Some devices may support multiple types of 
-       calibration.  In that case, prefer auto calibration over inkwell 
-       calibration, and prefer inkwell calibration over reset encoders. */
-    hdGetIntegerv(HD_CALIBRATION_STYLE, &supportedCalibrationStyles);
-    if (supportedCalibrationStyles & HD_CALIBRATION_ENCODER_RESET)
-    {
-        calibrationStyle = HD_CALIBRATION_ENCODER_RESET;
-    }
-    if (supportedCalibrationStyles & HD_CALIBRATION_INKWELL)
-    {
-        calibrationStyle = HD_CALIBRATION_INKWELL;
-    }
-    if (supportedCalibrationStyles & HD_CALIBRATION_AUTO)
-    {
-        calibrationStyle = HD_CALIBRATION_AUTO;
-    }
-
-    /* Some haptic devices only support manual encoder calibration via a
-       hardware reset. This requires that the endpoint be placed at a known
-       physical location when the reset is commanded. For the PHANTOM haptic
-       devices, this means positioning the device so that all links are
-       orthogonal. Also, this reset is typically performed before the servoloop
-       is running, and only technically needs to be performed once after each
-       time the device is plugged in. */
-    if (calibrationStyle == HD_CALIBRATION_ENCODER_RESET)
-    {
-        printf("Please prepare for manual calibration by\n");
-        printf("placing the device at its reset position.\n\n");
-        printf("Press any key to continue...\n");
-
-        getch();
-
-        hdUpdateCalibration(calibrationStyle);
-        if (hdCheckCalibration() == HD_CALIBRATION_OK)
-        {
-            printf("Calibration complete.\n\n");
-        }
-        if (HD_DEVICE_ERROR(error = hdGetError()))
-        {
-            hduPrintError(stderr, &error, "Reset encoders reset failed.");
-            return -1;           
-        }
-    }
-
-    hdStartScheduler();
-    if (HD_DEVICE_ERROR(error = hdGetError()))
-    {
-        hduPrintError(stderr, &error, "Failed to start the scheduler");
-        return -1;           
-    }
-
-    /* Some haptic devices are calibrated when the gimbal is placed into
-       the device inkwell and updateCalibration is called.  This form of
-       calibration is always performed after the servoloop has started 
-       running. */
-    if (calibrationStyle  == HD_CALIBRATION_INKWELL)
-    {
-        if (GetCalibrationStatus() == HD_CALIBRATION_NEEDS_MANUAL_INPUT)
-        {
-            printf("Please place the device into the inkwell ");
-            printf("for calibration.\n\n");
-        }
-    }
-
-    printf("Press any key to quit.\n\n");
-
-    /* Loop until key press. */
-    while (!_kbhit())
-    {
-        /* Regular calibration should be checked periodically while the
-           servoloop is running. In some cases, like the PHANTOM Desktop,
-           calibration can be continually refined as the device is moved
-           throughout its workspace.  For other devices that require inkwell
-           reset, such as the PHANToM Omni, calibration is successfully
-           performed whenever the device is put into the inkwell. */
-        if (CheckCalibration(calibrationStyle))
-        {
-            PrintDevicePosition();
-        }
-
-        Sleep(1000);
-    }
-    
-    hdStopScheduler();
-    hdDisableDevice(hHD);
-
-    return 0;
-}
-
-
-int initTouch()
+int initTouch_right()
 {
     HDErrorInfo error;
     int supportedCalibrationStyles;
 
-    hHD = hdInitDevice(HD_DEFAULT_DEVICE);
+    hHD_right = hdInitDevice("Right");
     if (HD_DEVICE_ERROR(error = hdGetError())) 
     {
         hduPrintError(stderr, &error, "Failed to initialize haptic device");
@@ -196,15 +87,15 @@ int initTouch()
     hdGetIntegerv(HD_CALIBRATION_STYLE, &supportedCalibrationStyles);
     if (supportedCalibrationStyles & HD_CALIBRATION_ENCODER_RESET)
     {
-        calibrationStyle = HD_CALIBRATION_ENCODER_RESET;
+        calibrationStyle_right = HD_CALIBRATION_ENCODER_RESET;
     }
     if (supportedCalibrationStyles & HD_CALIBRATION_INKWELL)
     {
-        calibrationStyle = HD_CALIBRATION_INKWELL;
+        calibrationStyle_right = HD_CALIBRATION_INKWELL;
     }
     if (supportedCalibrationStyles & HD_CALIBRATION_AUTO)
     {
-        calibrationStyle = HD_CALIBRATION_AUTO;
+        calibrationStyle_right = HD_CALIBRATION_AUTO;
     }
 
     /* Some haptic devices only support manual encoder calibration via a
@@ -214,7 +105,7 @@ int initTouch()
        orthogonal. Also, this reset is typically performed before the servoloop
        is running, and only technically needs to be performed once after each
        time the device is plugged in. */
-    if (calibrationStyle == HD_CALIBRATION_ENCODER_RESET)
+    if (calibrationStyle_right == HD_CALIBRATION_ENCODER_RESET)
     {
         printf("Please prepare for manual calibration by\n");
         printf("placing the device at its reset position.\n\n");
@@ -222,7 +113,7 @@ int initTouch()
 
         getch();
 
-        hdUpdateCalibration(calibrationStyle);
+        hdUpdateCalibration(calibrationStyle_right);
         if (hdCheckCalibration() == HD_CALIBRATION_OK)
         {
             printf("Calibration complete.\n\n");
@@ -234,20 +125,20 @@ int initTouch()
         }
     }
 
-    hdStartScheduler();
-    if (HD_DEVICE_ERROR(error = hdGetError()))
-    {
-        hduPrintError(stderr, &error, "Failed to start the scheduler");
-        return -1;           
-    }
+    // hdStartScheduler();
+    // if (HD_DEVICE_ERROR(error = hdGetError()))
+    // {
+    //     hduPrintError(stderr, &error, "Failed to start the scheduler");
+    //     return -1;           
+    // }
 
     /* Some haptic devices are calibrated when the gimbal is placed into
        the device inkwell and updateCalibration is called.  This form of
        calibration is always performed after the servoloop has started 
        running. */
-    if (calibrationStyle  == HD_CALIBRATION_INKWELL)
+    if (calibrationStyle_right  == HD_CALIBRATION_INKWELL)
     {
-        if (GetCalibrationStatus() == HD_CALIBRATION_NEEDS_MANUAL_INPUT)
+        if (GetCalibrationStatus_right() == HD_CALIBRATION_NEEDS_MANUAL_INPUT)
         {
             printf("Please place the device into the inkwell ");
             printf("for calibration.\n\n");
@@ -257,10 +148,117 @@ int initTouch()
     return 0;
 }
 
-void closeTouch()
+int initTouch_left()
+{
+    HDErrorInfo error;
+    int supportedCalibrationStyles;
+
+    hHD_left = hdInitDevice("Left");
+    if (HD_DEVICE_ERROR(error = hdGetError())) 
+    {
+        hduPrintError(stderr, &error, "Failed to initialize haptic device");
+        fprintf(stderr, "\nPress any key to quit.\n");
+        getch();
+        return -1;
+    }
+
+    printf("Haptic Calibration\n");
+    printf("Found haptic device: %s.\n\n", hdGetString(HD_DEVICE_MODEL_TYPE));
+
+    /* Choose a calibration style.  Some devices may support multiple types of 
+       calibration.  In that case, prefer auto calibration over inkwell 
+       calibration, and prefer inkwell calibration over reset encoders. */
+    hdGetIntegerv(HD_CALIBRATION_STYLE, &supportedCalibrationStyles);
+    if (supportedCalibrationStyles & HD_CALIBRATION_ENCODER_RESET)
+    {
+        calibrationStyle_left = HD_CALIBRATION_ENCODER_RESET;
+    }
+    if (supportedCalibrationStyles & HD_CALIBRATION_INKWELL)
+    {
+        calibrationStyle_left = HD_CALIBRATION_INKWELL;
+    }
+    if (supportedCalibrationStyles & HD_CALIBRATION_AUTO)
+    {
+        calibrationStyle_left = HD_CALIBRATION_AUTO;
+    }
+
+    /* Some haptic devices only support manual encoder calibration via a
+       hardware reset. This requires that the endpoint be placed at a known
+       physical location when the reset is commanded. For the PHANTOM haptic
+       devices, this means positioning the device so that all links are
+       orthogonal. Also, this reset is typically performed before the servoloop
+       is running, and only technically needs to be performed once after each
+       time the device is plugged in. */
+    if (calibrationStyle_left == HD_CALIBRATION_ENCODER_RESET)
+    {
+        printf("Please prepare for manual calibration by\n");
+        printf("placing the device at its reset position.\n\n");
+        printf("Press any key to continue...\n");
+
+        getch();
+
+        hdUpdateCalibration(calibrationStyle_left);
+        if (hdCheckCalibration() == HD_CALIBRATION_OK)
+        {
+            printf("Calibration complete.\n\n");
+        }
+        if (HD_DEVICE_ERROR(error = hdGetError()))
+        {
+            hduPrintError(stderr, &error, "Reset encoders reset failed.");
+            return -1;           
+        }
+    }
+
+    // hdStartScheduler();
+    // if (HD_DEVICE_ERROR(error = hdGetError()))
+    // {
+    //     hduPrintError(stderr, &error, "Failed to start the scheduler");
+    //     return -1;           
+    // }
+
+    /* Some haptic devices are calibrated when the gimbal is placed into
+       the device inkwell and updateCalibration is called.  This form of
+       calibration is always performed after the servoloop has started 
+       running. */
+    if (calibrationStyle_left  == HD_CALIBRATION_INKWELL)
+    {
+        if (GetCalibrationStatus_left() == HD_CALIBRATION_NEEDS_MANUAL_INPUT)
+        {
+            printf("Please place the device into the inkwell ");
+            printf("for calibration.\n\n");
+        }
+    }
+
+    return 0;
+}
+
+void startScheduler()
+{
+     HDErrorInfo error;
+    hdStartScheduler();
+    if (HD_DEVICE_ERROR(error = hdGetError()))
+    {
+        hduPrintError(stderr, &error, "Failed to start the scheduler");
+        return -1;           
+    }
+}
+
+void stopScheduler()
 {
     hdStopScheduler();
-    hdDisableDevice(hHD);
+}
+
+void closeTouch_left()
+{
+    // hdStopScheduler();
+    hdDisableDevice(hHD_left);
+    return;
+}
+
+void closeTouch_right()
+{
+    // hdStopScheduler();
+    hdDisableDevice(hHD_right);
     return;
 }
 
@@ -268,69 +266,37 @@ void closeTouch()
  Begin Scheduler callbacks
  */
 
-HDCallbackCode HDCALLBACK UpdateCalibrationCallback(void *pUserData)
-{
-    HDenum *calibrationStyle = (int *) pUserData;
-
-    if (hdCheckCalibration() == HD_CALIBRATION_NEEDS_UPDATE)
-    {
-        hdUpdateCalibration(*calibrationStyle);
-    }
-
-    return HD_CALLBACK_DONE;
-}
-
-HDCallbackCode HDCALLBACK CalibrationStatusCallback(void *pUserData)
+HDCallbackCode HDCALLBACK CalibrationStatusCallback_left(void *pUserData)
 {
     HDenum *pStatus = (HDenum *) pUserData;
 
-    hdBeginFrame(hdGetCurrentDevice());
+    hdBeginFrame(hHD_left);
     *pStatus = hdCheckCalibration();
-    hdEndFrame(hdGetCurrentDevice());
+    hdEndFrame(hHD_left);
 
     return HD_CALLBACK_DONE;
 }
 
-HDCallbackCode HDCALLBACK DevicePositionCallback(void *pUserData)
+HDCallbackCode HDCALLBACK CalibrationStatusCallback_right(void *pUserData)
 {
-    HDdouble *pPosition = (HDdouble *) pUserData;
+    HDenum *pStatus = (HDenum *) pUserData;
 
-    hdBeginFrame(hdGetCurrentDevice());
-    hdGetDoublev(HD_CURRENT_POSITION, pPosition);
-    hdEndFrame(hdGetCurrentDevice());
-
-    return HD_CALLBACK_DONE;
-}
-
-HDCallbackCode HDCALLBACK DeviceAngleCallback(void *pUserData)
-{
-    HDdouble *pAngle = (HDdouble *) pUserData;
-
-    hdBeginFrame(hdGetCurrentDevice());
-    hdGetDoublev(HD_CURRENT_GIMBAL_ANGLES, pAngle);
-    hdEndFrame(hdGetCurrentDevice());
-
-    return HD_CALLBACK_DONE;
-}
-HDCallbackCode HDCALLBACK DeviceButtonCallback(void *pUserData)
-{
-    HDint *pButton = (HDint *) pUserData;
-
-    hdBeginFrame(hdGetCurrentDevice());
-    hdGetIntegerv(HD_CURRENT_BUTTONS, pButton);
-    hdEndFrame(hdGetCurrentDevice());
+    hdBeginFrame(hHD_right);
+    *pStatus = hdCheckCalibration();
+    hdEndFrame(hHD_right);
 
     return HD_CALLBACK_DONE;
 }
 
-HDCallbackCode HDCALLBACK DeviceAllInfoCallback(void *pUserData)
+
+HDCallbackCode HDCALLBACK DeviceAllInfoCallback_right(void *pUserData)
 {
 
     struct S_Haptic_info *pinfo = (struct S_Haptic_info *) pUserData;
 
     hduVector3Dd pre_posistion;
 
-    hdBeginFrame(hdGetCurrentDevice());
+    hdBeginFrame(hHD_right);
 
     hdGetDoublev(HD_LAST_POSITION, &pre_posistion);
 
@@ -338,88 +304,78 @@ HDCallbackCode HDCALLBACK DeviceAllInfoCallback(void *pUserData)
     hdGetDoublev(HD_CURRENT_POSITION, &(pinfo->position));
     hdGetDoublev(HD_CURRENT_GIMBAL_ANGLES, &(pinfo->angle));
 
-    hdEndFrame(hdGetCurrentDevice());
+    hdEndFrame(hHD_right);
 
     pinfo->position[0] = pinfo->position[0] - pre_posistion[0];
     pinfo->position[1] = pinfo->position[1] - pre_posistion[1];
     pinfo->position[2] = pinfo->position[2] - pre_posistion[2];
 
+    // printf("Device left position: %.3f %.3f %.3f\n", 
+    //     pre_posistion[0], pre_posistion[1], pre_posistion[2]);
+    // printf("Device left angle: %.3f %.3f %.3f\n", 
+    //     pinfo->angle[0], pinfo->angle[1], pinfo->angle[2]);
+    // printf("Device left button: %d\n", pinfo->button);
+
     return HD_CALLBACK_DONE;
 }
 
-HDenum GetCalibrationStatus()
+HDCallbackCode HDCALLBACK DeviceAllInfoCallback_left(void *pUserData)
+{
+
+    struct S_Haptic_info *pinfo = (struct S_Haptic_info *) pUserData;
+
+    hduVector3Dd pre_posistion;
+
+    hdBeginFrame(hHD_left);
+
+    hdGetDoublev(HD_LAST_POSITION, &pre_posistion);
+
+    hdGetIntegerv(HD_CURRENT_BUTTONS, &(pinfo->button));
+    hdGetDoublev(HD_CURRENT_POSITION, &(pinfo->position));
+    hdGetDoublev(HD_CURRENT_GIMBAL_ANGLES, &(pinfo->angle));
+
+    hdEndFrame(hHD_left);
+
+    pinfo->position[0] = pinfo->position[0] - pre_posistion[0];
+    pinfo->position[1] = pinfo->position[1] - pre_posistion[1];
+    pinfo->position[2] = pinfo->position[2] - pre_posistion[2];
+
+    // printf("Device left position: %.3f %.3f %.3f\n", 
+    //     pinfo->position[0], pinfo->position[1], pinfo->position[2]);
+    // printf("Device left angle: %.3f %.3f %.3f\n", 
+    //     pinfo->angle[0], pinfo->angle[1], pinfo->angle[2]);
+    // printf("Device left button: %d\n", pinfo->button);
+
+    return HD_CALLBACK_DONE;
+}
+
+HDenum GetCalibrationStatus_left()
 {
     HDenum status;
-    hdScheduleSynchronous(CalibrationStatusCallback, &status,
+    hdScheduleSynchronous(CalibrationStatusCallback_left, &status,
                           HD_DEFAULT_SCHEDULER_PRIORITY);
     return status;
 }
 
-HDboolean CheckCalibration(HDenum calibrationStyle)
+HDenum GetCalibrationStatus_right()
 {
-    HDenum status = GetCalibrationStatus();
-    
-    if (status == HD_CALIBRATION_OK)
-    {
-        return HD_TRUE;
-    }
-    else if (status == HD_CALIBRATION_NEEDS_MANUAL_INPUT)
-    {
-        printf("Calibration requires manual input...\n");
-        return HD_FALSE;
-    }
-    else if (status == HD_CALIBRATION_NEEDS_UPDATE)
-    {
-        hdScheduleSynchronous(UpdateCalibrationCallback, &calibrationStyle,
-            HD_DEFAULT_SCHEDULER_PRIORITY);
-
-        if (HD_DEVICE_ERROR(hdGetError()))
-        {
-            printf("\nFailed to update calibration.\n\n");
-            return HD_FALSE;
-        }
-        else
-        {
-            printf("\nCalibration updated successfully.\n\n");
-            return HD_TRUE;
-        }
-    }
-    else
-    {
-        assert(!"Unknown calibration status");
-        return HD_FALSE;
-    }
+    HDenum status;
+    hdScheduleSynchronous(CalibrationStatusCallback_right, &status,
+                          HD_DEFAULT_SCHEDULER_PRIORITY);
+    return status;
 }
 
-void PrintDevicePosition()
-{
-    struct S_Haptic_info myinfo;
+int count_frame_right = 0;
+int count_frame_left = 0;
 
-    hdScheduleSynchronous(DeviceAllInfoCallback, &myinfo,
-        HD_DEFAULT_SCHEDULER_PRIORITY);
-        
-    printf("Device position: %.3f %.3f %.3f\n", 
-        myinfo.position[0], myinfo.position[1], myinfo.position[2]);
-    printf("Device angle: %.3f %.3f %.3f\n", 
-        myinfo.angle[0], myinfo.angle[1], myinfo.angle[2]);
-    printf("Device button: %d\n", myinfo.button);
-}
-
-int count_frame = 0;
-void getDeviceAction(float* retrived_info, int n1)
+void getDeviceAction_right(float* retrived_info, int n1)
 {
 
     struct S_Haptic_info myinfo;
 
-    hdScheduleSynchronous(DeviceAllInfoCallback, &myinfo,
-        HD_DEFAULT_SCHEDULER_PRIORITY);
-        
-    // printf("Device position: %.3f %.3f %.3f\n", 
-    //     myinfo.position[0], myinfo.position[1], myinfo.position[2]);
-    // printf("Device angle: %.3f %.3f %.3f\n", 
-    //     myinfo.angle[0], myinfo.angle[1], myinfo.angle[2]);
-    // printf("Device button: %d\n", myinfo.button);
-    if (count_frame<=1)
+    hdScheduleSynchronous(DeviceAllInfoCallback_right, &myinfo,
+    HD_DEFAULT_SCHEDULER_PRIORITY);
+    if (count_frame_right<=1)
     {
         retrived_info[0] = 0;
         retrived_info[1] = 0;
@@ -434,13 +390,47 @@ void getDeviceAction(float* retrived_info, int n1)
         retrived_info[3] = 0;
         retrived_info[4] = myinfo.button;        
     }
-    count_frame= count_frame + 1;
+    count_frame_right= count_frame_right + 1;    
 
-
+    // printf("Device right position: %.3f %.3f %.3f\n", 
+    //     myinfo.position[0], myinfo.position[1], myinfo.position[2]);
+    // printf("Device right angle: %.3f %.3f %.3f\n", 
+    //     myinfo.angle[0], myinfo.angle[1], myinfo.angle[2]);
+    // printf("Device right button: %d\n", myinfo.button);
 }
 
+void getDeviceAction_left(float* retrived_info2, int n2)
+{
+    struct S_Haptic_info myinfo;
+
+    hdScheduleSynchronous(DeviceAllInfoCallback_left, &myinfo,
+    HD_DEFAULT_SCHEDULER_PRIORITY);
+    if (count_frame_left<=1)
+    {
+        retrived_info2[0] = 0;
+        retrived_info2[1] = 0;
+        retrived_info2[2] = 0;
+        retrived_info2[3] = 0;
+        retrived_info2[4] = myinfo.button;   
+    }
+    else{
+        retrived_info2[0] = myinfo.position[0];
+        retrived_info2[1] = myinfo.position[1];
+        retrived_info2[2] = myinfo.position[2];
+        retrived_info2[3] = 0;
+        retrived_info2[4] = myinfo.button;        
+    }
+    count_frame_left= count_frame_left + 1;    
+
+    // printf("Device left position: %.3f %.3f %.3f\n", 
+    //     myinfo.position[0], myinfo.position[1], myinfo.position[2]);
+    // printf("Device left angle: %.3f %.3f %.3f\n", 
+    //     myinfo.angle[0], myinfo.angle[1], myinfo.angle[2]);
+    // printf("Device left button: %d\n", myinfo.button);
+}
 /*
  End Scheduler callbacks
  *****************************************************************************/
 
 /*****************************************************************************/
+

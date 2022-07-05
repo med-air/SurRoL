@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "hduerror.h": "c",
+        "valarray": "c"
+    }
+}
