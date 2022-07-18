@@ -295,10 +295,12 @@ HDCallbackCode HDCALLBACK DeviceAllInfoCallback_right(void *pUserData)
     struct S_Haptic_info *pinfo = (struct S_Haptic_info *) pUserData;
 
     hduVector3Dd pre_posistion;
+    hduVector3Dd pre_angle;
 
     hdBeginFrame(hHD_right);
 
     hdGetDoublev(HD_LAST_POSITION, &pre_posistion);
+    hdGetDoublev(HD_LAST_GIMBAL_ANGLES, &pre_angle);
 
     hdGetIntegerv(HD_CURRENT_BUTTONS, &(pinfo->button));
     hdGetDoublev(HD_CURRENT_POSITION, &(pinfo->position));
@@ -309,6 +311,10 @@ HDCallbackCode HDCALLBACK DeviceAllInfoCallback_right(void *pUserData)
     pinfo->position[0] = pinfo->position[0] - pre_posistion[0];
     pinfo->position[1] = pinfo->position[1] - pre_posistion[1];
     pinfo->position[2] = pinfo->position[2] - pre_posistion[2];
+
+    pinfo->angle[0] = pinfo->angle[0] - pre_angle[0];
+    pinfo->angle[1] = pinfo->angle[1] - pre_angle[1];
+    pinfo->angle[2] = pinfo->angle[2] - pre_angle[2];
 
     // printf("Device left position: %.3f %.3f %.3f\n", 
     //     pre_posistion[0], pre_posistion[1], pre_posistion[2]);
@@ -325,10 +331,12 @@ HDCallbackCode HDCALLBACK DeviceAllInfoCallback_left(void *pUserData)
     struct S_Haptic_info *pinfo = (struct S_Haptic_info *) pUserData;
 
     hduVector3Dd pre_posistion;
+    hduVector3Dd pre_angle;
 
     hdBeginFrame(hHD_left);
 
     hdGetDoublev(HD_LAST_POSITION, &pre_posistion);
+    hdGetDoublev(HD_LAST_GIMBAL_ANGLES, &pre_angle);
 
     hdGetIntegerv(HD_CURRENT_BUTTONS, &(pinfo->button));
     hdGetDoublev(HD_CURRENT_POSITION, &(pinfo->position));
@@ -339,6 +347,10 @@ HDCallbackCode HDCALLBACK DeviceAllInfoCallback_left(void *pUserData)
     pinfo->position[0] = pinfo->position[0] - pre_posistion[0];
     pinfo->position[1] = pinfo->position[1] - pre_posistion[1];
     pinfo->position[2] = pinfo->position[2] - pre_posistion[2];
+
+    pinfo->angle[0] = pinfo->angle[0] - pre_angle[0];
+    pinfo->angle[1] = pinfo->angle[1] - pre_angle[1];
+    pinfo->angle[2] = pinfo->angle[2] - pre_angle[2];
 
     // printf("Device left position: %.3f %.3f %.3f\n", 
     //     pinfo->position[0], pinfo->position[1], pinfo->position[2]);
@@ -387,7 +399,7 @@ void getDeviceAction_right(float* retrived_info, int n1)
         retrived_info[0] = myinfo.position[0];
         retrived_info[1] = myinfo.position[1];
         retrived_info[2] = myinfo.position[2];
-        retrived_info[3] = 0;
+        retrived_info[3] = myinfo.angle[2];
         retrived_info[4] = myinfo.button;        
     }
     count_frame_right= count_frame_right + 1;    
@@ -417,7 +429,7 @@ void getDeviceAction_left(float* retrived_info2, int n2)
         retrived_info2[0] = myinfo.position[0];
         retrived_info2[1] = myinfo.position[1];
         retrived_info2[2] = myinfo.position[2];
-        retrived_info2[3] = 0;
+        retrived_info2[3] = myinfo.angle[2];
         retrived_info2[4] = myinfo.button;        
     }
     count_frame_left= count_frame_left + 1;    

@@ -6,6 +6,8 @@ from panda3d_kivy.mdapp import MDApp
 from direct.gui.DirectGui import *
 from panda3d.core import AmbientLight, DirectionalLight, Spotlight, PerspectiveLens
 
+import math
+
 from surrol.gui.scene import Scene, GymEnvScene
 from surrol.gui.application import Application, ApplicationConfig
 from surrol.tasks.needle_pick import NeedlePick
@@ -437,11 +439,13 @@ class SurgicalSimulator(SurgicalSimulatorBase):
         if retrived_action[4] == 2:
             self.psm1_action[0] = 0
             self.psm1_action[1] = 0
-            self.psm1_action[2] = 0            
+            self.psm1_action[2] = 0
+            self.psm1_action[3] = 0            
         else:
             self.psm1_action[0] = retrived_action[2]
             self.psm1_action[1] = retrived_action[0]
             self.psm1_action[2] = retrived_action[1]
+            self.psm1_action[3] = -retrived_action[3]/math.pi*180
 
         if retrived_action[4] == 0:
             self.psm1_action[4] = 1
@@ -518,11 +522,13 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
         if retrived_action[4] == 2:
             self.psm1_action[0] = 0
             self.psm1_action[1] = 0
-            self.psm1_action[2] = 0            
+            self.psm1_action[2] = 0
+            self.psm1_action[3] = 0            
         else:
             self.psm1_action[0] = retrived_action[2]
             self.psm1_action[1] = retrived_action[0]
             self.psm1_action[2] = retrived_action[1]
+            self.psm1_action[3] = -retrived_action[3]/math.pi*180
         if retrived_action[4] == 0:
             self.psm1_action[4] = 1
         if retrived_action[4] == 1:
@@ -536,11 +542,13 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
         if retrived_action[4] == 2:
             self.psm2_action[0] = 0
             self.psm2_action[1] = 0
-            self.psm2_action[2] = 0            
+            self.psm2_action[2] = 0
+            self.psm2_action[3] = 0              
         else:
             self.psm2_action[0] = retrived_action[2]
             self.psm2_action[1] = retrived_action[0]
             self.psm2_action[2] = retrived_action[1]
+            self.psm2_action[3] = -retrived_action[3]/math.pi*180
         if retrived_action[4] == 0:
             self.psm2_action[4] = 1
         if retrived_action[4] == 1:
