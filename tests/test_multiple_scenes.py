@@ -14,6 +14,10 @@ from surrol.tasks.needle_pick import NeedlePick
 from surrol.tasks.peg_transfer import PegTransfer
 from surrol.tasks.needle_regrasp_bimanual import NeedleRegrasp
 from surrol.tasks.peg_transfer_bimanual import BiPegTransfer
+from surrol.tasks.ring_rail_cu import RingRailCU
+from surrol.tasks.ecm_env import EcmEnv, goal_distance
+from surrol.robots.ecm import RENDER_HEIGHT, RENDER_WIDTH, FoV
+from surrol.robots.ecm import Ecm
 
 from SRC.test import initTouch_right, closeTouch_right, getDeviceAction_right, startScheduler, stopScheduler
 from SRC.test import initTouch_left, closeTouch_left, getDeviceAction_left
@@ -36,6 +40,8 @@ def open_scene(id):
         scene = SurgicalSimulatorBimanual(NeedleRegrasp, {'render_mode': 'human'}, jaw_states=[1.0, -0.5])
     elif id == 4:
         scene = SurgicalSimulatorBimanual(BiPegTransfer, {'render_mode': 'human'}, jaw_states=[1.0, 1.0])
+    elif id == 5:
+        scene = SurgicalSimulator(RingRailCU, {'render_mode': 'human'})
 
 
     if id in (1, 2) and not hint_printed:
@@ -260,6 +266,55 @@ selection_panel_kv = '''MDBoxLayout:
                     size_hint: 0.8, 1.0
                 MDIconButton:
                     icon: "application-settings"
+        
+        MDCard:
+            orientation: "vertical"
+            size_hint: .45, None
+            height: box_top.height + box_bottom.height
+
+            MDBoxLayout:
+                id: box_top
+                spacing: "20dp"
+                adaptive_height: True
+
+                FitImage:
+                    source: "images/bipegtransfer_poster.png"
+                    size_hint: 0.5, None
+                    height: text_box.height
+
+                MDBoxLayout:
+                    id: text_box
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: "10dp"
+                    padding: 0, "10dp", "10dp", "10dp"
+
+                    MDLabel:
+                        text: "Ring & Rail CU"
+                        theme_text_color: "Primary"
+                        font_style: "H6"
+                        bold: True
+                        adaptive_height: True
+
+                    MDLabel:
+                        text: "Ring & Rail CU"
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+
+            MDSeparator:
+
+            MDBoxLayout:
+                id: box_bottom
+                adaptive_height: True
+                padding: "0dp", 0, 0, 0
+                
+                MDRaisedButton:
+                    id: btn5
+                    text: "Play"
+                    size_hint: 0.8, 1.0
+                MDIconButton:
+                    icon: "application-settings"
+        
 '''
 
 class SelectionUI(MDApp):
@@ -278,6 +333,7 @@ class SelectionUI(MDApp):
         self.screen.ids.btn2.bind(on_press = lambda _: open_scene(2))
         self.screen.ids.btn3.bind(on_press = lambda _: open_scene(3))
         self.screen.ids.btn4.bind(on_press = lambda _: open_scene(4))
+        self.screen.ids.btn5.bind(on_press = lambda _: open_scene(5))
    
 
 class StartPage(Scene):
@@ -360,6 +416,7 @@ class SurgicalSimulatorBase(GymEnvScene):
 
     def on_env_created(self):
         """Setup extrnal lights"""
+        self.ecm_view_out = self.env._view_matrix
 
         table_pos = np.array(self.env.POSE_TABLE[0]) * self.env.SCALING
 
@@ -429,6 +486,24 @@ class SurgicalSimulator(SurgicalSimulatorBase):
         self.app.accept('space-up', self.setPsmAction, [4, 1.0])
         self.app.accept('space-repeat', self.setPsmAction, [4, -0.5])
 
+        self.ecm_view = 0
+        self.ecm_view_out = None
+
+        self.ecm_action = np.zeros(env_type.ACTION_ECM_SIZE)
+        self.app.accept('i-up', self.setEcmAction, [2, 0])
+        self.app.accept('i-repeat', self.addEcmAction, [2, 0.2])
+        self.app.accept('k-up', self.setEcmAction, [2, 0])
+        self.app.accept('k-repeat', self.addEcmAction, [2, -0.2])
+        self.app.accept('o-up', self.setEcmAction, [1, 0])
+        self.app.accept('o-repeat', self.addEcmAction, [1, 0.2])
+        self.app.accept('u-up', self.setEcmAction, [1, 0])
+        self.app.accept('u-repeat', self.addEcmAction, [1, -0.2])
+        self.app.accept('j-up', self.setEcmAction, [0, 0])
+        self.app.accept('j-repeat', self.addEcmAction, [0, 0.2])
+        self.app.accept('l-up', self.setEcmAction, [0, 0])
+        self.app.accept('l-repeat', self.addEcmAction, [0, -0.2])
+        self.app.accept('m-up', self.toggleEcmView)
+
     def before_simulation_step(self):
 
         retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
@@ -442,10 +517,10 @@ class SurgicalSimulator(SurgicalSimulatorBase):
             self.psm1_action[2] = 0
             self.psm1_action[3] = 0            
         else:
-            self.psm1_action[0] = retrived_action[2]
-            self.psm1_action[1] = retrived_action[0]
-            self.psm1_action[2] = retrived_action[1]
-            self.psm1_action[3] = -retrived_action[3]/math.pi*180
+            self.psm1_action[0] = retrived_action[2]*0.7
+            self.psm1_action[1] = retrived_action[0]*0.7
+            self.psm1_action[2] = retrived_action[1]*0.7
+            self.psm1_action[3] = -retrived_action[3]/math.pi*180*0.6
 
         if retrived_action[4] == 0:
             self.psm1_action[4] = 1
@@ -455,11 +530,36 @@ class SurgicalSimulator(SurgicalSimulatorBase):
 
         self.env._set_action(self.psm1_action)
 
+        '''Control ECM'''
+        if retrived_action[4] == 3:
+            self.ecm_action[0] = -retrived_action[0]*0.2
+            self.ecm_action[1] = -retrived_action[1]*0.2
+            self.ecm_action[2] = retrived_action[2]*0.2
+
+
+        # self.env._set_action(self.ecm_action)
+        self.env._set_action_ecm(self.ecm_action)
+        self.env.ecm.render_image()
+
+        if self.ecm_view:
+            self.env._view_matrix = self.env.ecm.view_matrix
+        else:
+            self.env._view_matrix = self.ecm_view_out
+
     def setPsmAction(self, dim, val):
         self.psm1_action[dim] = val
         
     def addPsmAction(self, dim, incre):
         self.psm1_action[dim] += incre
+
+    def addEcmAction(self, dim, incre):
+        self.ecm_action[dim] += incre
+
+    def setEcmAction(self, dim, val):
+        self.ecm_action[dim] = val
+    
+    def toggleEcmView(self):
+        self.ecm_view = not self.ecm_view
 
     def on_destroy(self):
         # !!! important
@@ -513,6 +613,24 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
         self.app.accept('m-up', self.setPsmAction2, [4, 1.0])
         self.app.accept('m-repeat', self.setPsmAction2, [4, -0.5])
 
+        self.ecm_view = 0
+        self.ecm_view_out = None
+
+        self.ecm_action = np.zeros(env_type.ACTION_ECM_SIZE)
+        self.app.accept('i-up', self.setEcmAction, [2, 0])
+        self.app.accept('i-repeat', self.addEcmAction, [2, 0.2])
+        self.app.accept('k-up', self.setEcmAction, [2, 0])
+        self.app.accept('k-repeat', self.addEcmAction, [2, -0.2])
+        self.app.accept('o-up', self.setEcmAction, [1, 0])
+        self.app.accept('o-repeat', self.addEcmAction, [1, 0.2])
+        self.app.accept('u-up', self.setEcmAction, [1, 0])
+        self.app.accept('u-repeat', self.addEcmAction, [1, -0.2])
+        self.app.accept('j-up', self.setEcmAction, [0, 0])
+        self.app.accept('j-repeat', self.addEcmAction, [0, 0.2])
+        self.app.accept('l-up', self.setEcmAction, [0, 0])
+        self.app.accept('l-repeat', self.addEcmAction, [0, -0.2])
+        self.app.accept('m-up', self.toggleEcmView)
+
     def before_simulation_step(self):
 
         # haptic left
@@ -525,10 +643,10 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
             self.psm1_action[2] = 0
             self.psm1_action[3] = 0            
         else:
-            self.psm1_action[0] = retrived_action[2]
-            self.psm1_action[1] = retrived_action[0]
-            self.psm1_action[2] = retrived_action[1]
-            self.psm1_action[3] = -retrived_action[3]/math.pi*180
+            self.psm1_action[0] = retrived_action[2]*0.7
+            self.psm1_action[1] = retrived_action[0]*0.7
+            self.psm1_action[2] = retrived_action[1]*0.7
+            self.psm1_action[3] = -retrived_action[3]/math.pi*180*0.6
         if retrived_action[4] == 0:
             self.psm1_action[4] = 1
         if retrived_action[4] == 1:
@@ -545,10 +663,10 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
             self.psm2_action[2] = 0
             self.psm2_action[3] = 0              
         else:
-            self.psm2_action[0] = retrived_action[2]
-            self.psm2_action[1] = retrived_action[0]
-            self.psm2_action[2] = retrived_action[1]
-            self.psm2_action[3] = -retrived_action[3]/math.pi*180
+            self.psm2_action[0] = retrived_action[2]*0.7
+            self.psm2_action[1] = retrived_action[0]*0.7
+            self.psm2_action[2] = retrived_action[1]*0.7
+            self.psm2_action[3] = -retrived_action[3]/math.pi*180*0.6
         if retrived_action[4] == 0:
             self.psm2_action[4] = 1
         if retrived_action[4] == 1:
@@ -556,6 +674,22 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
 
 
         self.env._set_action(np.concatenate([self.psm2_action, self.psm1_action], axis=-1))
+
+        '''Control ECM'''
+        if retrived_action[4] == 3:
+            self.ecm_action[0] = -retrived_action[0]*0.2
+            self.ecm_action[1] = -retrived_action[1]*0.2
+            self.ecm_action[2] = retrived_action[2]*0.2
+
+
+        # self.env._set_action(self.ecm_action)
+        self.env._set_action_ecm(self.ecm_action)
+        self.env.ecm.render_image()
+
+        if self.ecm_view:
+            self.env._view_matrix = self.env.ecm.view_matrix
+        else:
+            self.env._view_matrix = self.ecm_view_out
 
     def setPsmAction1(self, dim, val):
         self.psm1_action[dim] = val
@@ -568,6 +702,15 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
         
     def addPsmAction2(self, dim, incre):
         self.psm2_action[dim] += incre
+
+    def addEcmAction(self, dim, incre):
+        self.ecm_action[dim] += incre
+
+    def setEcmAction(self, dim, val):
+        self.ecm_action[dim] = val
+    
+    def toggleEcmView(self):
+        self.ecm_view = not self.ecm_view
 
     def on_destroy(self):
         # !!! important

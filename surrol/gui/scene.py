@@ -97,7 +97,6 @@ class GymEnvScene(Scene):
 
             # Step simulation
             pb.stepSimulation()
-
             self.after_simulation_step()
 
             # Call trigger update scene (if necessary) and draw methods

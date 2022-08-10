@@ -136,40 +136,40 @@ class Psm(Arm):
                                childFramePosition=[0, 0, 0])
         p.changeConstraint(c, gearRatio=-1)
 
-        # # p2p joint: top-end
-        # c = p.createConstraint(self.body,
-        #                        11,
-        #                        self.body,
-        #                        1,
-        #                        jointType=p.JOINT_POINT2POINT,
-        #                        jointAxis=[0, 0, 1],
-        #                        parentFramePosition=[0.516 - 0.31246, 0.0 - -0.00056566, 0.0 - 0.0],
-        #                        # offset - initial xyz
-        #                        childFramePosition=[0.03906 - 0.0442293, 0.18001 - 0.27985, 0.0 - 0.0])
-        # p.changeConstraint(c, gearRatio=-1, maxForce=1000)
-        #
-        # # p2p joint: bottom-end
-        # c = p.createConstraint(self.body,
-        #                        10,
-        #                        self.body,
-        #                        1,
-        #                        jointType=p.JOINT_POINT2POINT,
-        #                        jointAxis=[0, 0, 1],
-        #                        parentFramePosition=[0.516 - 0.25683, 0.0 - -0.010348, 0.0 - 0.0],
-        #                        # offset - initial xyz
-        #                        childFramePosition=[0.04295 - 0.0442293, 0.14372 - 0.27985, 0.0 - 0.0])
-        # p.changeConstraint(c, gearRatio=-1, maxForce=1000)
-        #
-        # # p2p joint: front-bottom
-        # c = p.createConstraint(self.body,
-        #                        12,
-        #                        self.body,
-        #                        10,
-        #                        jointType=p.JOINT_POINT2POINT,
-        #                        jointAxis=[0, 0, 1],
-        #                        parentFramePosition=[0.15 - 0.096269, 0.0 - 0.0, -0.0002 - 0.047551],
-        #                        childFramePosition=[0.096 - 0.25683, 0.0 - -0.010348, -0.0002 - 0.0])
-        # p.changeConstraint(c, gearRatio=-1, maxForce=1000)
+        # p2p joint: top-end
+        c = p.createConstraint(self.body,
+                               11,
+                               self.body,
+                               1,
+                               jointType=p.JOINT_POINT2POINT,
+                               jointAxis=[0, 0, 1],
+                               parentFramePosition=[0.516 - 0.31246, 0.0 - -0.00056566, 0.0 - 0.0],
+                               # offset - initial xyz
+                               childFramePosition=[0.03906 - 0.0442293, 0.18001 - 0.27985, 0.0 - 0.0])
+        p.changeConstraint(c, gearRatio=-1, maxForce=0.01)
+        
+        # p2p joint: bottom-end
+        c = p.createConstraint(self.body,
+                               10,
+                               self.body,
+                               1,
+                               jointType=p.JOINT_POINT2POINT,
+                               jointAxis=[0, 0, 1],
+                               parentFramePosition=[0.516 - 0.25683, 0.0 - -0.010348, 0.0 - 0.0],
+                               # offset - initial xyz
+                               childFramePosition=[0.04295 - 0.0442293, 0.14372 - 0.27985, 0.0 - 0.0])
+        p.changeConstraint(c, gearRatio=-1, maxForce=0.01)
+        
+        # p2p joint: front-bottom
+        c = p.createConstraint(self.body,
+                               12,
+                               self.body,
+                               10,
+                               jointType=p.JOINT_POINT2POINT,
+                               jointAxis=[0, 0, 1],
+                               parentFramePosition=[0.15 - 0.096269, 0.0 - 0.0, -0.0002 - 0.047551],
+                               childFramePosition=[0.096 - 0.25683, 0.0 - -0.010348, -0.0002 - 0.0])
+        p.changeConstraint(c, gearRatio=-1, maxForce=0.01)
 
 
 class Psm1(Psm):

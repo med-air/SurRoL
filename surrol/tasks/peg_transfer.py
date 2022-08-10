@@ -6,9 +6,14 @@ import pybullet as p
 from surrol.tasks.psm_env import PsmEnv, goal_distance
 from surrol.utils.pybullet_utils import (
     get_link_pose,
+    reset_camera,
     wrap_angle
 )
+from surrol.tasks.ecm_env import EcmEnv, goal_distance
+
+from surrol.robots.ecm import RENDER_HEIGHT, RENDER_WIDTH, FoV
 from surrol.const import ASSET_DIR_PATH
+from surrol.robots.ecm import Ecm
 
 
 class PegTransfer(PsmEnv):
@@ -16,11 +21,34 @@ class PegTransfer(PsmEnv):
     WORKSPACE_LIMITS = ((0.50, 0.60), (-0.05, 0.05), (0.686, 0.745))
     SCALING = 5.
 
+    QPOS_ECM = (0, 0.6, 0.04, 0)
+    ACTION_ECM_SIZE=3
+
     # TODO: grasp is sometimes not stable; check how to fix it
+
+    def __init__(self, render_mode=None, cid = -1):
+        super(PegTransfer, self).__init__(render_mode, cid)
+        self._view_matrix = p.computeViewMatrixFromYawPitchRoll(
+            cameraTargetPosition=(-0.05 * self.SCALING, 0, 0.375 * self.SCALING),
+            distance=1.81 * self.SCALING,
+            yaw=90,
+            pitch=-30,
+            roll=0,
+            upAxisIndex=2
+        )
 
     def _env_setup(self):
         super(PegTransfer, self)._env_setup()
         self.has_object = True
+
+        # camera
+        if self._render_mode == 'human':
+            reset_camera(yaw=90.0, pitch=-30.0, dist=0.82 * self.SCALING,
+                         target=(-0.05 * self.SCALING, 0, 0.36 * self.SCALING))
+        self.ecm = Ecm((0.15, 0.0, 0.8524), #p.getQuaternionFromEuler((0, 30 / 180 * np.pi, 0)),
+                       scaling=self.SCALING)
+        self.ecm.reset_joint(self.QPOS_ECM)
+        # p.setPhysicsEngineParameter(erp=10)
 
         # robot
         workspace_limits = self.workspace_limits1
@@ -38,6 +66,10 @@ class PegTransfer(PsmEnv):
                             p.getQuaternionFromEuler(self.POSE_BOARD[1]),
                             globalScaling=self.SCALING)
         self.obj_ids['fixed'].append(obj_id)  # 1
+        
+        # group = 1#other objects don't collide with me
+        # mask=1 # don't collide with any other object
+        # p.setCollisionFilterGroupMask(obj_id, 0,group, mask)
         self._pegs = np.arange(12)
         np.random.shuffle(self._pegs[:6])
         np.random.shuffle(self._pegs[6: 12])
@@ -130,7 +162,15 @@ class PegTransfer(PsmEnv):
                 self._waypoints[i] = None
             break
 
-        return action
+        return action    
+    def _set_action_ecm(self, action):
+        action *= 0.01 * self.SCALING
+        pose_rcm = self.ecm.get_current_position()
+        pose_rcm[:3, 3] += action
+        pos, _ = self.ecm.pose_rcm2world(pose_rcm, 'tuple')
+        joint_positions = self.ecm.inverse_kinematics((pos, None), self.ecm.EEF_LINK_INDEX)  # do not consider orn
+        self.ecm.move_joint(joint_positions[:self.ecm.DoF])
+
 
 
 if __name__ == "__main__":

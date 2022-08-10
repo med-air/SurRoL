@@ -1,0 +1,25 @@
+<?xml version="0.0" ?>
+<robot name="withtool6">
+    <link concave="yes" name="baseLink">
+        <contact>
+            <lateral_friction value="100.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0.0036"/>
+            <mass value=".0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes2/reserve_s1_mesh_tex.obj" scale="0.8 0.8 0.8"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0.0 0"/>
+            <geometry>
+                  <mesh filename="meshes2/reserve_s1_mesh_tex_vhacd.obj" scale="0.8 0.8 0.8"/>
+            </geometry>
+        </collision>
+    </link>
+</robot>

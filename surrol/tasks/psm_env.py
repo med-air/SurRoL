@@ -36,6 +36,8 @@ class PsmEnv(SurRoLGoalEnv):
     ACTION_MODE = 'yaw'
     DISTANCE_THRESHOLD = 0.005
     POSE_PSM1 = ((0.05, 0.24, 0.8524), (0, 0, -(90 + 20) / 180 * np.pi))
+    # POSE_PSM1 = ((0.96, 0.1, 0.38), ((90 - 25) / 180 * np.pi, 0, 1/2 * np.pi))
+
     QPOS_PSM1 = (0, 0, 0.10, 0, 0, 0)
     POSE_TABLE = ((0.5, 0, 0.001), (0, 0, 0))
     WORKSPACE_LIMITS1 = ((0.50, 0.60), (-0.05, 0.05), (0.675, 0.745))
