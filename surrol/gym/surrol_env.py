@@ -1,4 +1,4 @@
-import time
+import time,os
 import socket
 
 import gym
@@ -13,6 +13,8 @@ from surrol.utils.pybullet_utils import (
     render_image,
 )
 import numpy as np
+from surrol.const import ROOT_DIR_PATH, ASSET_DIR_PATH
+
 
 RENDER_HEIGHT = 480  # train
 RENDER_WIDTH = 640
@@ -67,7 +69,10 @@ class SurRoLEnv(gym.Env):
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.configureDebugVisualizer(lightPosition=(10.0, 0.0, 10.0))
         p.setGravity(0, 0, -9.81)
-        p.loadURDF("plane.urdf", (0, 0, -0.001))
+        plane=p.loadURDF(os.path.join(ASSET_DIR_PATH, "plane/plane.urdf"), (0, 0, -0.001))
+        wood = p.loadTexture(os.path.join(ASSET_DIR_PATH, "texture/wood.jpg"))
+        p.changeVisualShape(plane, -1, textureUniqueId=wood)
+
         self.obj_ids = {'fixed': [], 'rigid': [], 'deformable': []}
 
         self.seed()
@@ -132,7 +137,9 @@ class SurRoLEnv(gym.Env):
         p.configureDebugVisualizer(p.COV_ENABLE_RENDERING, 0)
         # p.configureDebugVisualizer(p.COV_ENABLE_PLANAR_REFLECTION, 0)
 
-        p.loadURDF("plane.urdf", (0, 0, -0.001))
+        plane=p.loadURDF(os.path.join(ASSET_DIR_PATH, "plane/plane.urdf"), (0, 0, -0.001))
+        wood = p.loadTexture(os.path.join(ASSET_DIR_PATH, "texture/wood.jpg"))
+        p.changeVisualShape(plane, -1, textureUniqueId=wood)
         self._env_setup()
         step(0.25)
         self.goal = self._sample_goal().copy()

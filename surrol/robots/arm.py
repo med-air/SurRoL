@@ -20,6 +20,8 @@ from surrol.utils.pybullet_utils import (
     forward_kinematics,
     inverse_kinematics,
     wrap_angle,
+    control_joint,
+    get_dynamics_info
 )
 from surrol.utils.robotics import (
     get_matrix_from_pose_2d,
@@ -144,11 +146,24 @@ class Arm(object):
             return False
         self._position_joint_desired = np.copy(abs_input)
         joint_positions = self._get_joint_positions_all(abs_input)
-        p.setJointMotorControlArray(self.body,
-                                    self.joints,
-                                    p.POSITION_CONTROL,
-                                    targetPositions=joint_positions,
-                                    targetVelocities=[0.] * len(joint_positions))
+        if(self.DoF == 4):
+            p.setJointMotorControlArray(self.body,
+                                        self.joints,
+                                        p.POSITION_CONTROL,
+                                        targetPositions=joint_positions,
+                                        targetVelocities=[0.] * len(joint_positions))
+        elif(self.DoF == 6):
+            # p.setJointMotorControlArray(self.body,
+            #                             self.joints,
+            #                             p.POSITION_CONTROL,
+            #                             targetPositions=joint_positions,
+            #                             targetVelocities=[0.] * len(joint_positions),
+            #                             forces=[200.]*len(self.joints))
+            for(joint,value) in zip(self.joints,joint_positions):
+                control_joint(self.body,joint,value)
+        # print(self.DoF)
+        # print(p.getDynamicsInfo(self.body,7))
+        
         return abs_input
 
     def move(self, abs_input: np.ndarray, link_index=None) -> [bool, np.ndarray]:

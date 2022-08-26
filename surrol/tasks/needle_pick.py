@@ -22,7 +22,7 @@ class NeedlePick(PsmEnv):
     SCALING = 5.
     QPOS_ECM = (0, 0.6, 0.04, 0)
     ACTION_ECM_SIZE=3
-
+    haptic=True
 
     # TODO: grasp is sometimes not stable; check how to fix it
     def __init__(self, render_mode=None, cid = -1):
@@ -130,7 +130,7 @@ class NeedlePick(PsmEnv):
 
     def _meet_contact_constraint_requirement(self):
         # add a contact constraint to the grasped block to make it stable
-        if self._contact_approx:
+        if self._contact_approx or self.haptic is True:
             return True  # mimic the dVRL setting
         else:
             pose = get_link_pose(self.obj_id, self.obj_link1)

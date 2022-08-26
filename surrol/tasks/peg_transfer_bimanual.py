@@ -22,7 +22,8 @@ class BiPegTransfer(PsmsEnv):
     SCALING = 5.
     QPOS_ECM = (0, 0.6, 0.04, 0)
     ACTION_ECM_SIZE=3
-
+    #for haptic device demo  
+    haptic=True
     def __init__(self, render_mode=None, cid = -1):
         super(BiPegTransfer, self).__init__(render_mode, cid)
         self._view_matrix = p.computeViewMatrixFromYawPitchRoll(
@@ -144,29 +145,29 @@ class BiPegTransfer(PsmsEnv):
 
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1],
                                          pos_mid1[2] + 0.01 * self.SCALING, yaw1, 0.5,
-                                         pos_obj2[0], pos_obj2[1],
+                                         pos_obj2[0], pos_obj2[1]-0.01,
                                          pos_mid2[2], yaw2, 0.5]))  # above object
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1],
                                          pos_mid1[2] + 0.01 * self.SCALING, yaw1, 0.5,
-                                         pos_obj2[0], pos_obj2[1],
+                                         pos_obj2[0], pos_obj2[1]-0.01,
                                          pos_obj2[2] + (0.003 + 0.0102) * self.SCALING, yaw2, 0.5]))  # approach
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1],
                                          pos_mid1[2] + 0.01 * self.SCALING, yaw1, 0.5,
-                                         pos_obj2[0], pos_obj2[1],
+                                         pos_obj2[0], pos_obj2[1]-0.01,
                                          pos_obj2[2] + (0.003 + 0.0102) * self.SCALING, yaw2, -0.5]))  # psm2 grasp
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1],
                                          pos_mid1[2] + 0.01 * self.SCALING, yaw1, 0.5,
-                                         pos_obj2[0], pos_obj2[1],
+                                         pos_obj2[0], pos_obj2[1]-0.01,
                                          pos_mid2[2], yaw2, -0.5]))  # lift up
 
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1], pos_mid1[2] + 0.01 * self.SCALING, yaw1, 0.5,
-                                         pos_mid2[0], pos_mid2[1], pos_mid2[2], yaw2, -0.5]))  # move to middle
+                                         pos_mid2[0], pos_mid2[1]+0.01, pos_mid2[2]+0.01, yaw2, -0.5]))  # move to middle
 
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1], pos_mid1[2], yaw1, 0.5,
-                                         pos_mid2[0], pos_mid2[1], pos_mid2[2], yaw2, -0.5]))  # psm1 pre grasp
+                                         pos_mid2[0], pos_mid2[1]+0.01, pos_mid2[2]+0.01, yaw2, -0.5]))  # psm1 pre grasp
 
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1], pos_mid1[2], yaw1, -0.5,
-                                         pos_mid2[0], pos_mid2[1], pos_mid2[2], yaw2, -0.5]))  # psm1 grasp
+                                         pos_mid2[0], pos_mid2[1]+0.01, pos_mid2[2]+0.01, yaw2, -0.5]))  # psm1 grasp
 
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1], pos_mid1[2], yaw1, -0.5,
                                          pos_mid2[0], pos_mid2[1], pos_mid2[2], yaw2, 0.5]))  # psm2 release
@@ -186,8 +187,12 @@ class BiPegTransfer(PsmsEnv):
 
     def _meet_contact_constraint_requirement(self):
         # add a contact constraint to the grasped block to make it stable
-        pose = get_link_pose(self.obj_id, -1)
-        return pose[0][2] > self.goal[2] + 0.01 * self.SCALING  # reduce difficulty
+        if self.haptic is True:
+            print(f'meet due to hardcoe')
+            return True
+        else:
+            pose = get_link_pose(self.obj_id, -1)
+            return pose[0][2] > self.goal[2] + 0.01 * self.SCALING  # reduce difficulty
 
     def get_oracle_action(self, obs) -> np.ndarray:
         """

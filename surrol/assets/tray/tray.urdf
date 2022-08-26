@@ -13,7 +13,7 @@
         </contact>
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0.000181"/>
-            <mass value=".0"/>
+            <mass value="100.0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>
@@ -34,7 +34,7 @@
     <link name="border_1">
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
-            <mass value=".0"/>
+            <mass value="10.0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>
@@ -60,7 +60,7 @@
     <link name="border_2">
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
-            <mass value=".0"/>
+            <mass value="10.0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>
@@ -86,7 +86,7 @@
     <link name="border_3">
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
-            <mass value=".0"/>
+            <mass value="10.0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>
@@ -112,7 +112,7 @@
     <link name="border_4">
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
-            <mass value=".0"/>
+            <mass value="10.0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>

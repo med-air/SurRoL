@@ -1,5 +1,7 @@
 import argparse
 import numpy as np
+import math
+
 
 from direct.gui.OnscreenText import OnscreenText
 from direct.gui.DirectGui import *
@@ -352,19 +354,23 @@ class SurgicalTrainingCase(GymEnvScene):
 
         retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
         getDeviceAction_right(retrived_action)
-
+        # print("retried action:",retrived_action)
         """retrived_action-> x,y,z, angle, buttonState(0,1,2)"""
 
         if retrived_action[4] == 2:
             '''Clutch'''
             self.psm1_action[0] = 0
             self.psm1_action[1] = 0
-            self.psm1_action[2] = 0            
+            self.psm1_action[2] = 0
+            self.psm1_action[3] = 0
+            
         elif retrived_action[4] != 3:
             '''Control PSM'''
             self.psm1_action[0] = retrived_action[2]
             self.psm1_action[1] = retrived_action[0]
             self.psm1_action[2] = retrived_action[1]
+            self.psm1_action[3] = -retrived_action[3]/math.pi*180
+            
 
         '''Grasping'''
         if retrived_action[4] == 1:

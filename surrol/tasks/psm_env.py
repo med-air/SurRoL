@@ -121,7 +121,7 @@ class PsmEnv(SurRoLGoalEnv):
         obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'sphere/sphere.urdf'),
                             globalScaling=self.SCALING)
         self.obj_ids['fixed'].append(obj_id)  # 0
-
+        print(f'goal:{obj_id}')
         pass  # need to implement based on every task
         # self.obj_ids
 
@@ -235,6 +235,7 @@ class PsmEnv(SurRoLGoalEnv):
         """ Remove the contact constraint if no contacts
         """
         if self.block_gripper or not self.has_object or self._activated < 0:
+            # print(f'skip{self.block_gripper} {self.has_object} {self._activate}')
             return
         elif self._contact_constraint is None:
             # the grippers activate; to check if they can grasp the object
@@ -247,11 +248,17 @@ class PsmEnv(SurRoLGoalEnv):
                 obj_to_body = p.multiplyTransforms(world_to_body[0],
                                                    world_to_body[1],
                                                    obj_pose[0], obj_pose[1])
-
+                print(self.obj_id)
+                points_1 = p.getContactPoints(bodyA=psm.body, linkIndexA=6)
+                points_2 = p.getContactPoints(bodyA=psm.body, linkIndexA=7)
+                points_1 = [point[2] for point in points_1 if point[2] in self.obj_ids['rigid']]
+                points_2 = [point[2] for point in points_2 if point[2] in self.obj_ids['rigid']]
+                contact_Id = list(set(points_1)&set(points_2))[-1]
+                print(f'contact with {contact_Id}!create constraint!')
                 self._contact_constraint = p.createConstraint(
                     parentBodyUniqueId=psm.body,
                     parentLinkIndex=psm.EEF_LINK_INDEX,
-                    childBodyUniqueId=self.obj_id,
+                    childBodyUniqueId=contact_Id,
                     childLinkIndex=-1,
                     jointType=p.JOINT_FIXED,
                     jointAxis=(0, 0, 0),
@@ -267,11 +274,21 @@ class PsmEnv(SurRoLGoalEnv):
             psm = self.psm1 if self._activated == 0 else self.psm2
             points = p.getContactPoints(bodyA=psm.body, linkIndexA=6) \
                      + p.getContactPoints(bodyA=psm.body, linkIndexA=7)
-            points = [points for point in points if point[2] == self.obj_id]
+            points_1 = p.getContactPoints(bodyA=psm.body, linkIndexA=6)
+            points_2 = p.getContactPoints(bodyA=psm.body, linkIndexA=7)
+            points_1 = [point[2] for point in points_1 if point[2] in self.obj_ids['rigid']]
+            points_2 = [point[2] for point in points_2 if point[2] in self.obj_ids['rigid']]
+            intersect = list(set(points_1)&set(points_2))
+            if len(intersect) > 0:
+                contact_Id = intersect[-1]
+            else:
+                contact_Id = -100
+            points = [points for point in points if point[2] == contact_Id]
             remain_contact = len(points) > 0
 
             if not remain_contact and not self._contact_approx:
                 # release the previously grasped object because there is no contact any more
+                print("no contact!remove constraint!")
                 self._release(self._activated)
 
     def _sample_goal(self) -> np.ndarray:
@@ -314,8 +331,8 @@ class PsmEnv(SurRoLGoalEnv):
                 # activate if a physical contact happens
                 points_1 = p.getContactPoints(bodyA=psm.body, linkIndexA=6)
                 points_2 = p.getContactPoints(bodyA=psm.body, linkIndexA=7)
-                points_1 = [point for point in points_1 if point[2] == self.obj_id]
-                points_2 = [point for point in points_2 if point[2] == self.obj_id]
+                points_1 = [point for point in points_1 if point[2] in self.obj_ids['rigid']]
+                points_2 = [point for point in points_2 if point[2] in self.obj_ids['rigid']]
                 if len(points_1) > 0 and len(points_2) > 0:
                     self._activated = idx
 

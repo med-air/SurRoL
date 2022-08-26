@@ -610,7 +610,7 @@ def control_joint(body, joint, value):
                                    controlMode=p.POSITION_CONTROL,
                                    targetPosition=value,
                                    targetVelocity=0,
-                                   maxVelocity=get_max_velocity(body, joint),
+                                #    maxVelocity=get_max_velocity(body, joint),
                                    force=get_max_force(body, joint))
 
 

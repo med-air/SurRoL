@@ -23,6 +23,8 @@ class PegTransfer(PsmEnv):
 
     QPOS_ECM = (0, 0.6, 0.04, 0)
     ACTION_ECM_SIZE=3
+    #for haptic device demo
+    haptic=True
 
     # TODO: grasp is sometimes not stable; check how to fix it
 
@@ -92,7 +94,8 @@ class PegTransfer(PsmEnv):
             # change color to red
             p.changeVisualShape(obj_id, -1, rgbaColor=(255 / 255, 69 / 255, 58 / 255, 1))
         self.obj_id, self.obj_link1 = self._blocks[0], 1
-
+        print(self.obj_ids['fixed'])
+        print(f'goal peg:{obj_id}')
     def _is_success(self, achieved_goal, desired_goal):
         """ Indicates whether or not the achieved goal successfully achieved the desired goal.
         """
@@ -120,13 +123,13 @@ class PegTransfer(PsmEnv):
         yaw = orn[2] if abs(wrap_angle(orn[2] - orn_eef[2])) < abs(wrap_angle(orn[2] + np.pi - orn_eef[2])) \
             else wrap_angle(orn[2] + np.pi)  # minimize the delta yaw
 
-        self._waypoints[0] = np.array([pos_obj[0], pos_obj[1],
+        self._waypoints[0] = np.array([pos_obj[0], pos_obj[1]+0.001,
                                        pos_obj[2] + 0.045 * self.SCALING, yaw, 0.5])  # above object
-        self._waypoints[1] = np.array([pos_obj[0], pos_obj[1],
+        self._waypoints[1] = np.array([pos_obj[0], pos_obj[1]+0.001,
                                        pos_obj[2] + (0.003 + 0.0102) * self.SCALING, yaw, 0.5])  # approach
-        self._waypoints[2] = np.array([pos_obj[0], pos_obj[1],
+        self._waypoints[2] = np.array([pos_obj[0], pos_obj[1]+0.001,
                                        pos_obj[2] + (0.003 + 0.0102) * self.SCALING, yaw, -0.5])  # grasp
-        self._waypoints[3] = np.array([pos_obj[0], pos_obj[1],
+        self._waypoints[3] = np.array([pos_obj[0], pos_obj[1]+0.001,
                                        pos_obj[2] + 0.045 * self.SCALING, yaw, -0.5])  # lift up
 
         # pos_peg = get_link_pose(self.obj_ids['fixed'][1], self.obj_id - np.min(self._blocks) + 6)[0]  # 6 pegs
@@ -139,8 +142,13 @@ class PegTransfer(PsmEnv):
 
     def _meet_contact_constraint_requirement(self):
         # add a contact constraint to the grasped block to make it stable
-        pose = get_link_pose(self.obj_id, -1)
-        return pose[0][2] > self.goal[2] + 0.01 * self.SCALING
+        if self.haptic is True:
+            print(f'meet due to hardcode')
+            return True
+        else:
+            pose = get_link_pose(self.obj_id, -1)
+            print(f'meet by checking distance')
+            return pose[0][2] > self.goal[2] + 0.01 * self.SCALING
 
     def get_oracle_action(self, obs) -> np.ndarray:
         """

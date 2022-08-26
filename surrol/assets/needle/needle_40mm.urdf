@@ -17,7 +17,7 @@
             <!--      col: radius=0.02, in radius=0.0006-->
             <!--      center of mass: 2*R/pi; important-->
             <origin rpy="0 0 0" xyz="-0.0127 0 0"/>
-            <mass value="0.01"/>
+            <mass value="0.51"/>
             <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
         </inertial>
         <visual>

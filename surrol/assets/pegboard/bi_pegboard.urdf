@@ -1,0 +1,31 @@
+<?xml version="0.0" ?>
+<robot name="board">
+    <material name="white">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <link name="baseLink">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="1.57 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/bi-pegboard.obj" scale="1 1 1"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <origin rpy="1.57 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/bi-pegboard_vhacd.obj" scale="1 1 1"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+</robot>

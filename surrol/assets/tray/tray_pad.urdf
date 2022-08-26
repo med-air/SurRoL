@@ -16,7 +16,7 @@
         </contact>
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0.000181"/>
-            <mass value=".0"/>
+            <mass value="100.0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>
@@ -37,7 +37,7 @@
     <link name="border_1">
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
-            <mass value=".0"/>
+            <mass value="100.0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>
@@ -47,9 +47,9 @@
             <material name="dummy"/>
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <origin rpy="0.3 0 0" xyz="0 0 0"/>
             <geometry>
-                <box size="0.120 0.003 0.022"/>
+                <box size="0.120 0.003 0.025"/>
             </geometry>
         </collision>
     </link>
@@ -63,7 +63,7 @@
     <link name="border_2">
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
-            <mass value=".0"/>
+            <mass value="100.0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>
@@ -73,9 +73,9 @@
             <material name="dummy"/>
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <origin rpy="-0.3 0 0" xyz="0 0 0"/>
             <geometry>
-                <box size="0.120 0.003 0.022"/>
+                <box size="0.120 0.003 0.025"/>
             </geometry>
         </collision>
     </link>
@@ -89,7 +89,7 @@
     <link name="border_3">
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
-            <mass value=".0"/>
+            <mass value="100.0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>
@@ -99,9 +99,9 @@
             <material name="dummy"/>
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <origin rpy="0 -0.3 0" xyz="0.004 0 0"/>
             <geometry>
-                <box size="0.003 0.196 0.022"/>
+                <box size="0.003 0.196 0.025"/>
             </geometry>
         </collision>
     </link>
@@ -115,7 +115,7 @@
     <link name="border_4">
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
-            <mass value=".0"/>
+            <mass value="100.0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>
@@ -125,9 +125,9 @@
             <material name="dummy"/>
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <origin rpy="0 0.3 0" xyz="-0.004 0 0"/>
             <geometry>
-                <box size="0.003 0.196 0.022"/>
+                <box size="0.003 0.196 0.025"/>
             </geometry>
         </collision>
     </link>
@@ -144,7 +144,7 @@
         </contact>
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0.0036"/>
-            <mass value=".0"/>
+            <mass value="100.0"/>
             <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>

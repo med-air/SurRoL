@@ -11,10 +11,14 @@ import math
 from surrol.gui.scene import Scene, GymEnvScene
 from surrol.gui.application import Application, ApplicationConfig
 from surrol.tasks.needle_pick import NeedlePick
+from surrol.tasks.peg_board import PegBoard
 from surrol.tasks.peg_transfer import PegTransfer
 from surrol.tasks.needle_regrasp_bimanual import NeedleRegrasp
 from surrol.tasks.peg_transfer_bimanual import BiPegTransfer
 from surrol.tasks.ring_rail_cu import RingRailCU
+from surrol.tasks.peg_board import PegBoard
+
+from surrol.tasks.needle_the_rings import NeedleRings
 from surrol.tasks.ecm_env import EcmEnv, goal_distance
 from surrol.robots.ecm import RENDER_HEIGHT, RENDER_WIDTH, FoV
 from surrol.robots.ecm import Ecm
@@ -41,8 +45,9 @@ def open_scene(id):
     elif id == 4:
         scene = SurgicalSimulatorBimanual(BiPegTransfer, {'render_mode': 'human'}, jaw_states=[1.0, 1.0])
     elif id == 5:
-        scene = SurgicalSimulator(RingRailCU, {'render_mode': 'human'})
-
+        scene = SurgicalSimulator(PegBoard, {'render_mode': 'human'})
+    elif id == 6:
+        scene = SurgicalSimulatorBimanual(NeedleRings, {'render_mode': 'human'}, jaw_states=[1.0, 1.0])
 
     if id in (1, 2) and not hint_printed:
         print('Press <W><A><S><D><E><Q><Space> to control the PSM.')
@@ -278,7 +283,7 @@ selection_panel_kv = '''MDBoxLayout:
                 adaptive_height: True
 
                 FitImage:
-                    source: "images/bipegtransfer_poster.png"
+                    source: "images/ringcu.png"
                     size_hint: 0.5, None
                     height: text_box.height
 
@@ -290,14 +295,14 @@ selection_panel_kv = '''MDBoxLayout:
                     padding: 0, "10dp", "10dp", "10dp"
 
                     MDLabel:
-                        text: "Ring & Rail CU"
+                        text: "Peg Board"
                         theme_text_color: "Primary"
                         font_style: "H6"
                         bold: True
                         adaptive_height: True
 
                     MDLabel:
-                        text: "Ring & Rail CU"
+                        text: "Peg Board"
                         adaptive_height: True
                         theme_text_color: "Primary"
 
@@ -310,6 +315,53 @@ selection_panel_kv = '''MDBoxLayout:
                 
                 MDRaisedButton:
                     id: btn5
+                    text: "Play"
+                    size_hint: 0.8, 1.0
+                MDIconButton:
+                    icon: "application-settings"
+        MDCard:
+            orientation: "vertical"
+            size_hint: .45, None
+            height: box_top.height + box_bottom.height
+
+            MDBoxLayout:
+                id: box_top
+                spacing: "20dp"
+                adaptive_height: True
+
+                FitImage:
+                    source: "images/needlerings.png"
+                    size_hint: 0.5, None
+                    height: text_box.height
+
+                MDBoxLayout:
+                    id: text_box
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: "10dp"
+                    padding: 0, "10dp", "10dp", "10dp"
+
+                    MDLabel:
+                        text: "Needle the Rings"
+                        theme_text_color: "Primary"
+                        font_style: "H6"
+                        bold: True
+                        adaptive_height: True
+
+                    MDLabel:
+                        text: "Needle the Rings"
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+
+            MDSeparator:
+
+            MDBoxLayout:
+                id: box_bottom
+                adaptive_height: True
+                padding: "0dp", 0, 0, 0
+                
+                MDRaisedButton:
+                    id: btn6
                     text: "Play"
                     size_hint: 0.8, 1.0
                 MDIconButton:
@@ -334,6 +386,7 @@ class SelectionUI(MDApp):
         self.screen.ids.btn3.bind(on_press = lambda _: open_scene(3))
         self.screen.ids.btn4.bind(on_press = lambda _: open_scene(4))
         self.screen.ids.btn5.bind(on_press = lambda _: open_scene(5))
+        self.screen.ids.btn6.bind(on_press = lambda _: open_scene(6))
    
 
 class StartPage(Scene):
@@ -520,7 +573,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
             self.psm1_action[0] = retrived_action[2]*0.7
             self.psm1_action[1] = retrived_action[0]*0.7
             self.psm1_action[2] = retrived_action[1]*0.7
-            self.psm1_action[3] = -retrived_action[3]/math.pi*180*0.6
+            self.psm1_action[3] = -retrived_action[3]/math.pi*180
 
         if retrived_action[4] == 0:
             self.psm1_action[4] = 1
@@ -529,6 +582,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
 
 
         self.env._set_action(self.psm1_action)
+        self.env._step_callback()
 
         '''Control ECM'''
         if retrived_action[4] == 3:
@@ -674,7 +728,7 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
 
 
         self.env._set_action(np.concatenate([self.psm2_action, self.psm1_action], axis=-1))
-
+        self.env._step_callback()
         '''Control ECM'''
         if retrived_action[4] == 3:
             self.ecm_action[0] = -retrived_action[0]*0.2
