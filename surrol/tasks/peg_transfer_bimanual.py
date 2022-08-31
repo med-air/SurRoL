@@ -145,29 +145,29 @@ class BiPegTransfer(PsmsEnv):
 
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1],
                                          pos_mid1[2] + 0.01 * self.SCALING, yaw1, 0.5,
-                                         pos_obj2[0], pos_obj2[1]-0.007,
+                                         pos_obj2[0], pos_obj2[1]-0.005,
                                          pos_mid2[2], yaw2, 0.5]))  # above object
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1],
                                          pos_mid1[2] + 0.01 * self.SCALING, yaw1, 0.5,
-                                         pos_obj2[0], pos_obj2[1]-0.007,
+                                         pos_obj2[0], pos_obj2[1]-0.005,
                                          pos_obj2[2] + (0.003 + 0.0102) * self.SCALING, yaw2, 0.5]))  # approach
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1],
                                          pos_mid1[2] + 0.01 * self.SCALING, yaw1, 0.5,
-                                         pos_obj2[0], pos_obj2[1]-0.007,
+                                         pos_obj2[0], pos_obj2[1]-0.005,
                                          pos_obj2[2] + (0.003 + 0.0102) * self.SCALING, yaw2, -0.5]))  # psm2 grasp
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1],
                                          pos_mid1[2] + 0.01 * self.SCALING, yaw1, 0.5,
-                                         pos_obj2[0], pos_obj2[1]-0.007,
+                                         pos_obj2[0], pos_obj2[1]-0.005,
                                          pos_mid2[2], yaw2, -0.5]))  # lift up
 
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1], pos_mid1[2] + 0.01 * self.SCALING, yaw1, 0.5,
-                                         pos_mid2[0], pos_mid2[1]+0.01, pos_mid2[2]+0.01, yaw2, -0.5]))  # move to middle
+                                         pos_mid2[0], pos_mid2[1], pos_mid2[2]+0.01, yaw2, -0.5]))  # move to middle
 
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1], pos_mid1[2], yaw1, 0.5,
-                                         pos_mid2[0], pos_mid2[1]+0.01, pos_mid2[2]+0.01, yaw2, -0.5]))  # psm1 pre grasp
+                                         pos_mid2[0], pos_mid2[1], pos_mid2[2]+0.01, yaw2, -0.5]))  # psm1 pre grasp
 
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1], pos_mid1[2], yaw1, -0.5,
-                                         pos_mid2[0], pos_mid2[1]+0.01, pos_mid2[2]+0.01, yaw2, -0.5]))  # psm1 grasp
+                                         pos_mid2[0], pos_mid2[1], pos_mid2[2]+0.01, yaw2, -0.5]))  # psm1 grasp
 
         self._waypoints.append(np.array([pos_mid1[0], pos_mid1[1], pos_mid1[2], yaw1, -0.5,
                                          pos_mid2[0], pos_mid2[1], pos_mid2[2], yaw2, 0.5]))  # psm2 release
@@ -177,10 +177,10 @@ class BiPegTransfer(PsmsEnv):
 
         pos_place = [self.goal[0] + pos_obj1[0] - pos_peg[0],
                      self.goal[1] + pos_obj1[1] - pos_peg[1], pos_mid1[2]]  # consider offset
-        self._waypoints.append(np.array([pos_place[0]-0.0025, pos_place[1]-0.002, pos_place[2], yaw1, -0.5,
+        self._waypoints.append(np.array([pos_place[0]-0.02, pos_place[1]-0.0035, pos_place[2], yaw1, -0.5,
                                          pos_mid2[0], pos_mid2[1], pos_mid2[2] + 0.01 * self.SCALING,
                                          yaw2, 0.5]))  # above goal
-        self._waypoints.append(np.array([pos_place[0], pos_place[1], pos_place[2], yaw1, 0.5,
+        self._waypoints.append(np.array([pos_place[0]-0.02, pos_place[1]-0.0035, pos_place[2], yaw1, 0.5,
                                          pos_mid2[0], pos_mid2[1], pos_mid2[2] + 0.01 * self.SCALING,
                                          yaw2, 0.5]))  # above goal
         self._waypoints_done = [False] * len(self._waypoints)

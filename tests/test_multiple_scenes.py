@@ -776,7 +776,7 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
 
 
 
-app_cfg = ApplicationConfig(window_width=800, window_height=600)
+app_cfg = ApplicationConfig(window_width=1200, window_height=900)
 app = Application(app_cfg)
 open_scene(0)
 app.run()

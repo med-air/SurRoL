@@ -275,10 +275,10 @@
            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
        </inertial>
        <visual>
-           <origin rpy="1.57 1.57 0.15" xyz="0. -0. -0."/>
+           <origin rpy="1.57 1.57 0.05" xyz="0. -0. -0."/>
            <!--      <origin rpy="0 0 0" xyz="0.0007 0.0051 0"/>-->
            <geometry>
-               <mesh filename="meshes/visual/LND_Jaw_L.obj" scale="0.001 0.001 0.001"/>
+               <mesh filename="meshes/visual/LND_Jaw_rotated_L.obj" scale="0.001 0.001 0.001"/>
                <!--        <box size="0.0014 0.0102 0.0018"/>-->
            </geometry>
            <material
@@ -290,9 +290,9 @@
        <collision>
            <!--      use .obj or box-->
            <!--      <origin rpy="0 0 0" xyz="0 0 0"/>-->
-           <origin rpy="1.57 1.57 0.075" xyz="0. -0. -0."/>
+           <origin rpy="1.57 1.57 0.0" xyz="0. -0. -0."/>
            <geometry>
-               <mesh filename="meshes/collision/LND_Jaw_L_vhacd_512_500k.obj" scale="0.001 0.001 0.001"/>
+               <mesh filename="meshes/collision/LND_Jaw_rotated_L_vhacd.obj" scale="0.001 0.001 0.001"/>
                <!--        <box size="0.0014 0.0102 0.0018"/>-->
            </geometry>
        </collision>
@@ -318,10 +318,10 @@
            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
        </inertial>
        <visual>
-           <origin rpy="1.57 1.57 -0.15" xyz="0.00 0. 0"/>
+           <origin rpy="1.57 1.57 -0.05" xyz="0.00 0. 0"/>
            <!--      <origin rpy="0 0 0" xyz="-0.0007 0.0051 0"/>-->
            <geometry>
-               <mesh filename="meshes/visual/LND_Jaw_R.obj" scale="0.001 0.001 0.001"/>
+               <mesh filename="meshes/visual/LND_Jaw_rotated_R.obj" scale="0.001 0.001 0.001"/>
                <!--        <box size="0.0014 0.0102 0.0018"/>-->
            </geometry>
            <material
@@ -333,9 +333,9 @@
        <collision>
            <!--      use .obj or box-->
            <!--      <origin rpy="0 0 0" xyz="0 0 0"/>-->
-           <origin rpy="1.57 1.57 -0.075" xyz="0. -0. -0."/>
+           <origin rpy="1.57 1.57 -0.0" xyz="0. -0. -0."/>
            <geometry>
-               <mesh filename="meshes/collision/LND_Jaw_R_vhacd_512_500k.obj" scale="0.001 0.001 0.001"/>
+               <mesh filename="meshes/collision/LND_Jaw_rotated_R_vhacd.obj" scale="0.001 0.001 0.001"/>
                <!--        <box size="0.0014 0.0102 0.0018"/>-->
            </geometry>
        </collision>

@@ -267,7 +267,7 @@ class PsmEnv(SurRoLGoalEnv):
                     childFramePosition=(0, 0, 0),
                     childFrameOrientation=(0, 0, 0))
                 # TODO: check the maxForce; very subtle
-                p.changeConstraint(self._contact_constraint, maxForce=20)
+                p.changeConstraint(self._contact_constraint, maxForce=15)
         else:
             # self._contact_constraint is not None
             # the gripper grasp the object; to check if they remain contact
