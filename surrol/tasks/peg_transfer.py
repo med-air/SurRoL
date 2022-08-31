@@ -75,7 +75,8 @@ class PegTransfer(PsmEnv):
         self._pegs = np.arange(12)
         np.random.shuffle(self._pegs[:6])
         np.random.shuffle(self._pegs[6: 12])
-
+        print(self._pegs)
+        # self._pegs = [2,1,0,3,4,5,6,7,9,11,10,8]
         # blocks
         num_blocks = 4
         # for i in range(6, 6 + num_blocks):
@@ -123,13 +124,13 @@ class PegTransfer(PsmEnv):
         yaw = orn[2] if abs(wrap_angle(orn[2] - orn_eef[2])) < abs(wrap_angle(orn[2] + np.pi - orn_eef[2])) \
             else wrap_angle(orn[2] + np.pi)  # minimize the delta yaw
 
-        self._waypoints[0] = np.array([pos_obj[0], pos_obj[1]+0.001,
+        self._waypoints[0] = np.array([pos_obj[0], pos_obj[1]+0.0053,
                                        pos_obj[2] + 0.045 * self.SCALING, yaw, 0.5])  # above object
-        self._waypoints[1] = np.array([pos_obj[0], pos_obj[1]+0.001,
+        self._waypoints[1] = np.array([pos_obj[0], pos_obj[1]+0.0053,
                                        pos_obj[2] + (0.003 + 0.0102) * self.SCALING, yaw, 0.5])  # approach
-        self._waypoints[2] = np.array([pos_obj[0], pos_obj[1]+0.001,
+        self._waypoints[2] = np.array([pos_obj[0], pos_obj[1]+0.0053,
                                        pos_obj[2] + (0.003 + 0.0102) * self.SCALING, yaw, -0.5])  # grasp
-        self._waypoints[3] = np.array([pos_obj[0], pos_obj[1]+0.001,
+        self._waypoints[3] = np.array([pos_obj[0], pos_obj[1]+0.0053,
                                        pos_obj[2] + 0.045 * self.SCALING, yaw, -0.5])  # lift up
 
         # pos_peg = get_link_pose(self.obj_ids['fixed'][1], self.obj_id - np.min(self._blocks) + 6)[0]  # 6 pegs
