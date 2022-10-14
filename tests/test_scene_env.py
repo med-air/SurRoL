@@ -13,7 +13,7 @@ from surrol.tasks.needle_pick import NeedlePick
 from surrol.tasks.peg_transfer import PegTransfer
 # from surrol.tasks.ecm_static_track import StaticTrack
 
-from SRC.test import initTouch_right, closeTouch_right, getDeviceAction_right,startScheduler, stopScheduler
+from haptic_src.test import initTouch_right, closeTouch_right, getDeviceAction_right,startScheduler, stopScheduler
 
 ###########################
 import os

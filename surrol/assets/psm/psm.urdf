@@ -275,10 +275,10 @@
            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
        </inertial>
        <visual>
-           <origin rpy="1.57 1.57 0.05" xyz="0. -0. -0."/>
+           <origin rpy="0 0 0" xyz="0 0 0"/>
            <!--      <origin rpy="0 0 0" xyz="0.0007 0.0051 0"/>-->
            <geometry>
-               <mesh filename="meshes/visual/LND_Jaw_rotated_L.obj" scale="0.001 0.001 0.001"/>
+               <mesh filename="meshes/visual/tool_gripper1_link_wide.obj"/>
                <!--        <box size="0.0014 0.0102 0.0018"/>-->
            </geometry>
            <material
@@ -290,10 +290,10 @@
        <collision>
            <!--      use .obj or box-->
            <!--      <origin rpy="0 0 0" xyz="0 0 0"/>-->
-           <origin rpy="1.57 1.57 0.0" xyz="0. -0. -0."/>
+           <origin rpy="0 0 0" xyz="0.0007 0.0051 0"/>
            <geometry>
-               <mesh filename="meshes/collision/LND_Jaw_rotated_L_vhacd.obj" scale="0.001 0.001 0.001"/>
-               <!--        <box size="0.0014 0.0102 0.0018"/>-->
+               <!--        <mesh filename="meshes/collision/tool_gripper1_link_wide_vhacd.obj"/>-->
+               <box size="0.0014 0.0102 0.0018"/>
            </geometry>
        </collision>
    </link>
@@ -318,10 +318,10 @@
            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
        </inertial>
        <visual>
-           <origin rpy="1.57 1.57 -0.05" xyz="0.00 0. 0"/>
+           <origin rpy="0 0 0" xyz="0 0 0"/>
            <!--      <origin rpy="0 0 0" xyz="-0.0007 0.0051 0"/>-->
            <geometry>
-               <mesh filename="meshes/visual/LND_Jaw_rotated_R.obj" scale="0.001 0.001 0.001"/>
+               <mesh filename="meshes/visual/tool_gripper2_link_wide.obj"/>
                <!--        <box size="0.0014 0.0102 0.0018"/>-->
            </geometry>
            <material
@@ -333,10 +333,10 @@
        <collision>
            <!--      use .obj or box-->
            <!--      <origin rpy="0 0 0" xyz="0 0 0"/>-->
-           <origin rpy="1.57 1.57 -0.0" xyz="0. -0. -0."/>
+           <origin rpy="0 0 0" xyz="-0.0007 0.0051 0"/>
            <geometry>
-               <mesh filename="meshes/collision/LND_Jaw_rotated_R_vhacd.obj" scale="0.001 0.001 0.001"/>
-               <!--        <box size="0.0014 0.0102 0.0018"/>-->
+               <!--        <mesh filename="meshes/collision/tool_gripper2_link_wide_vhacd.obj"/>-->
+               <box size="0.0014 0.0102 0.0018"/>
            </geometry>
        </collision>
    </link>

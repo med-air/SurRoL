@@ -10,6 +10,7 @@ import time
 import numpy as np
 import imageio
 from surrol.const import ROOT_DIR_PATH
+import surrol.gym
 
 parser = argparse.ArgumentParser(description='generate demonstrations for imitation')
 parser.add_argument('--env', type=str, required=True,
@@ -110,6 +111,8 @@ def goToGoal(env, last_obs):
         episode_acs.append(action)
         episode_info.append(info)
         episode_obs.append(obs)
+        # TODO ！！！
+        time.sleep(0.01)
     print("Episode time used: {:.2f}s\n".format(time.time() - episode_init_time))
 
     if success:

@@ -50,8 +50,7 @@ class PegTransfer(PsmEnv):
         self.ecm = Ecm((0.15, 0.0, 0.8524), #p.getQuaternionFromEuler((0, 30 / 180 * np.pi, 0)),
                        scaling=self.SCALING)
         self.ecm.reset_joint(self.QPOS_ECM)
-        # p.setPhysicsEngineParameter(erp=10)
-
+        # self.ecm.reset_joint((3.3482885360717773, -0.0017351149581372738, 4.2447919845581055,0))
         # robot
         workspace_limits = self.workspace_limits1
         pos = (workspace_limits[0][0],
@@ -83,18 +82,19 @@ class PegTransfer(PsmEnv):
         for i in self._pegs[6: 6 + num_blocks]:
             pos, orn = get_link_pose(self.obj_ids['fixed'][1], i)
             yaw = (np.random.rand() - 0.5) * np.deg2rad(60)
-            obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'block/block.urdf'),
+            obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'block/block_haptic.urdf'),
                                 np.array(pos) + np.array([0, 0, 0.03]),
                                 p.getQuaternionFromEuler((0, 0, yaw)),
                                 useFixedBase=False,
                                 globalScaling=self.SCALING)
+            print(f"peg obj id: {obj_id}.")
             self.obj_ids['rigid'].append(obj_id)
         self._blocks = np.array(self.obj_ids['rigid'][-num_blocks:])
         np.random.shuffle(self._blocks)
         for obj_id in self._blocks[:1]:
             # change color to red
             p.changeVisualShape(obj_id, -1, rgbaColor=(255 / 255, 69 / 255, 58 / 255, 1))
-        self.obj_id, self.obj_link1 = self._blocks[0], 1
+        self.obj_id, self.obj_link1 = self._blocks[0], -1
         print(self.obj_ids['fixed'])
         print(f'goal peg:{obj_id}')
     def _is_success(self, achieved_goal, desired_goal):
@@ -144,11 +144,18 @@ class PegTransfer(PsmEnv):
     def _meet_contact_constraint_requirement(self):
         # add a contact constraint to the grasped block to make it stable
         if self.haptic is True:
-            print(f'meet due to hardcode')
-            return True
+            # print(f'meet due to hardcode')
+            points_1 = p.getContactPoints(bodyA=self.psm1.body, linkIndexA=6)
+            points_2 = p.getContactPoints(bodyA=self.psm1.body, linkIndexA=7)
+            points_1 = [point[2] for point in points_1 if point[2] in self.obj_ids['rigid']]
+            points_2 = [point[2] for point in points_2 if point[2] in self.obj_ids['rigid']]
+            contact_List = list(set(points_1)&set(points_2))
+            print(f'joint contact item:{contact_List}')
+            if len(contact_List)>0:
+                return True
         else:
             pose = get_link_pose(self.obj_id, -1)
-            print(f'meet by checking distance')
+            # print(f'meet by checking distance')
             return pose[0][2] > self.goal[2] + 0.01 * self.SCALING
 
     def get_oracle_action(self, obs) -> np.ndarray:
@@ -179,9 +186,7 @@ class PegTransfer(PsmEnv):
         pos, _ = self.ecm.pose_rcm2world(pose_rcm, 'tuple')
         joint_positions = self.ecm.inverse_kinematics((pos, None), self.ecm.EEF_LINK_INDEX)  # do not consider orn
         self.ecm.move_joint(joint_positions[:self.ecm.DoF])
-
-
-
+        
 if __name__ == "__main__":
     env = PegTransfer(render_mode='human')  # create one process and corresponding env
 

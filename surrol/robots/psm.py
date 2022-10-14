@@ -51,7 +51,7 @@ TOOL_JOINT_LIMIT['upper'][2] = 0.24  # prismatic joint (m)
 
 class Psm(Arm):
     NAME = 'PSM'
-    URDF_PATH = os.path.join(ASSET_DIR_PATH, 'psm/psm.urdf')
+    URDF_PATH = os.path.join(ASSET_DIR_PATH, 'psm/psm_newest_gripper_LND.urdf')
     DoF = 6  # 6-dof arm
     JOINT_TYPES = ('R', 'R', 'P', 'R', 'R', 'R')
     EEF_LINK_INDEX = 5   # EEF link index

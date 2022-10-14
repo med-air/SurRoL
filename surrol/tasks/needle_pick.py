@@ -45,8 +45,10 @@ class NeedlePick(PsmEnv):
  
         # camera
         if self._render_mode == 'human':
-            reset_camera(yaw=90.0, pitch=-30.0, dist=0.82 * self.SCALING,
-                         target=(-0.05 * self.SCALING, 0, 0.36 * self.SCALING))
+            # reset_camera(yaw=90.0, pitch=-30.0, dist=0.82 * self.SCALING,
+            #              target=(-0.05 * self.SCALING, 0, 0.36 * self.SCALING))
+            reset_camera(yaw=89.60, pitch=-56, dist=5.98,
+                         target=(-0.13, 0.03,-0.94))
         self.ecm = Ecm((0.15, 0.0, 0.8524), #p.getQuaternionFromEuler((0, 30 / 180 * np.pi, 0)),
                        scaling=self.SCALING)
         self.ecm.reset_joint(self.QPOS_ECM)
@@ -165,7 +167,8 @@ class NeedlePick(PsmEnv):
         pos, _ = self.ecm.pose_rcm2world(pose_rcm, 'tuple')
         joint_positions = self.ecm.inverse_kinematics((pos, None), self.ecm.EEF_LINK_INDEX)  # do not consider orn
         self.ecm.move_joint(joint_positions[:self.ecm.DoF])
-
+    def _reset_ecm_pos(self):
+        self.ecm.reset_joint(self.QPOS_ECM)
 
 
 if __name__ == "__main__":

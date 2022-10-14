@@ -91,7 +91,6 @@ class GymEnvScene(Scene):
     def _step_simulation_task(self, task):
         """Step simulation
         """
-
         if task.time - self.time > 1 / 240.0:
             self.before_simulation_step()
 

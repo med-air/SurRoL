@@ -97,6 +97,7 @@ class SurRoLEnv(gym.Env):
         else:
             raise NotImplementedError
 
+        # @taohuang
         self._duration = 0.2  # important for mini-steps
 
     def step(self, action: np.ndarray):
@@ -223,13 +224,15 @@ class SurRoLEnv(gym.Env):
         """
         raise NotImplementedError
 
-    def test(self, horizon=100):
+    # def test(self, horizon=100):
+    # original 100 steps; change to 200 for bimanual need to be reverted
+    def test(self, horizon=200):
         """
         Run the test simulation without any learning algorithm for debugging purposes
         """
         steps, done = 0, False
         obs = self.reset()
-        while not done and steps <= horizon:
+        while  steps <= 100000000000:
             tic = time.time()
             action = self.get_oracle_action(obs)
             print('\n -> step: {}, action: {}'.format(steps, np.round(action, 4)))

@@ -1,0 +1,291 @@
+<?xml version="0.0" ?>
+<robot name="ring">
+    <!-- <material name="blue">
+        <color rgba="0.078431 0.494117 0.984313 1"/>
+    </material> -->
+
+    <link name="baseLink">
+        <!-- from lego/lego.urdf -->
+        <contact>
+            <lateral_friction value="1.0"/>
+            <rolling_friction value="0.0"/>
+            <contact_cfm value="0.0"/>
+            <contact_erp value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.01"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/compactvisualboard.obj" scale="1 1 1"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <!-- <material name="blue"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board5_vhacd.obj" scale="1 1 1"/>
+                       <!-- <box size="0.002 0.002 0.002"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <!-- for testing get linkstate -->
+    <link name="waypoint_0">
+        <!--    origin-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <!-- <mesh filename="meshes/compactboard.obj" scale="1 1 1"/> -->
+                       <box size="0.00001 0.00001 0.00001"/>
+            </geometry>
+            <!-- <material name="blue"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board0_vhacd.obj" scale="1 1 1"/>
+                       <!-- <box size="0.002 0.002 0.002"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="waypoint_joint_0" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_0"/>
+        <origin rpy="0 0 0" xyz="-4 0 4"/>
+    </joint>
+
+    <link name="waypoint_1">
+        <!--    middle-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <!-- <mesh filename="meshes/compactboard.obj" scale="1 1 1"/> -->
+                       <box size="0.00001 0.00001 0.00001"/>
+            </geometry>
+            <!-- <material name="blue"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board1_vhacd.obj" scale="1 1 1"/>
+                       <!-- <box size="0.002 0.002 0.002"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="waypoint_joint_1" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_1"/>
+        <!--    (-R, 0, 0)-->
+        <origin rpy="0 0 0" xyz="-4 0 0"/>
+    </joint>
+
+    <link name="waypoint_2">
+        <!--    left-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <!-- <mesh filename="meshes/compactboard.obj" scale="1 1 1"/> -->
+                       <box size="0.00001 0.00001 0.00001"/>
+            </geometry>
+            <!-- <material name="blue"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board2_vhacd.obj" scale="1 1 1"/>
+                       <!-- <box size="0.002 0.002 0.002"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="waypoint_joint_2" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_2"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="-4 0 -4"/>
+    </joint>
+
+    <link name="waypoint_3">
+        <!--    right-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <!-- <mesh filename="meshes/compactboard.obj" scale="1 1 1"/> -->
+                       <box size="0.00001 0.00001 0.00001"/>
+            </geometry>
+            <!-- <material name="blue"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board4_vhacd.obj" scale="1 1 1"/>
+                       <!-- <box size="0.002 0.002 0.002"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="waypoint_joint_3" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_3"/>
+        <!--    (-sqrt(2)R/2, sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0 0 4"/>
+    </joint>
+
+    <link name="waypoint_4">
+        <!--    left 60deg-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <!-- <mesh filename="meshes/compactboard.obj" scale="1 1 1"/> -->
+                       <box size="0.00001 0.00001 0.00001"/>
+            </geometry>
+            <!-- <material name="blue"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board6_vhacd.obj" scale="1 1 1"/>
+                       <!-- <box size="0.002 0.002 0.002"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="waypoint_joint_4" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_4"/>
+        <!--    -cos(60)*R, -sin(60)*R, 0)-->
+        <origin rpy="0 0 0" xyz="0 0 -4"/>
+    </joint>
+
+    <link name="waypoint_5">
+        <!--    right 60deg-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <!-- <mesh filename="meshes/compactboard.obj" scale="1 1 1"/> -->
+                       <box size="0.00001 0.00001 0.00001"/>
+            </geometry>
+            <!-- <material name="blue"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/boarda_vhacd.obj" scale="1 1 1"/>
+                       <!-- <box size="0.002 0.002 0.002"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="waypoint_joint_5" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_5"/>
+        <!--    -cos(60)*R, sin(60)*R, 0)-->
+        <origin rpy="0 0 0" xyz="4 0 4"/>
+    </joint> 
+    <link name="waypoint_6">
+        <!--    right 60deg-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <!-- <mesh filename="meshes/compactboard.obj" scale="1 1 1"/> -->
+                       <box size="0.00001 0.00001 0.00001"/>
+            </geometry>
+            <!-- <material name="blue"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/boardb_vhacd.obj" scale="1 1 1"/>
+                       <!-- <box size="0.002 0.002 0.002"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="waypoint_joint_6" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_6"/>
+        <!--    -cos(60)*R, sin(60)*R, 0)-->
+        <origin rpy="0 0 0" xyz="4 0 0"/>
+    </joint> 
+    <link name="waypoint_7">
+        <!--    right 60deg-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <!-- <mesh filename="meshes/compactboard.obj" scale="1 1 1"/> -->
+                       <box size="0.00001 0.00001 0.00001"/>
+            </geometry>
+            <!-- <material name="blue"/> -->
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/boardc_vhacd.obj" scale="1 1 1"/>
+                       <!-- <box size="0.002 0.002 0.002"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="waypoint_joint_7" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_7"/>
+        <!--    -cos(60)*R, sin(60)*R, 0)-->
+        <origin rpy="0 0 0" xyz="4 0 -4"/>
+    </joint> 
+</robot>
