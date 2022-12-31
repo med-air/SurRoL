@@ -404,3 +404,34 @@ body {
 .container-t > *:not(.tab-wrap) {
   padding: 0 80px;
 }
+
+.paper-title {
+  color: black;
+  text-decoration: none;
+}
+
+.papericon {
+  /* border-radius: 8px; */
+  /* -moz-box-shadow: 3px 3px 6px #888;
+  -webkit-box-shadow: 3px 3px 6px #888;
+  box-shadow: 3px 3px 6px #888; */
+  /* height: auto; */
+  width: 160px;
+  margin-top: auto;
+  margin-left: 5px;
+  margin-bottom: auto;
+}
+
+.media {
+  margin-bottom: 15px;
+  margin-left: 10px;
+}
+
+.media-body {
+  margin-top: 5px;
+  padding-left: 20px;
+}
+
+.publication {
+  margin-bottom: 15px;
+}
