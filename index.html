@@ -46,28 +46,23 @@
 <body>
 
   
-  <div id="header">
-    <img class ="himg" src="./images/cuhklogo2.jpeg"/> 
-    <img class ="himg" src="./images/cselogo.png"/> 
-    <img class ="himg" src="./images/curi-logo.png"/> 
-    <img class ="himg" src="./images/logo_2x.png"/> 
-</div>
 
 
 
 
-<section class="hero">
 
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
+<section class="section">
+
+  <div style="background-color:#fafafa;padding:3rem 8rem">
+    <!-- <div class="container is-max-desktop">
+      <div class="columns is-centered"> -->
         <div class="column has-text-centered">
           <h1 class="title is-2 publication-title"><span style="color:#0070c0"> Sur</span><span style="color:#00b050">Ro</span><span style="color:#c55a11">L</span>: RL Centered and dVRK Compatible Platform for <span style="color:#0070c0"> Sur</span>gical <span style="color:#00b050">Ro</span>bot <span style="color:#c55a11">L</span>earning</h1>
           <h1 style="font-size:120%;font-weight: bold;">The Chinese University of Hong Kong</h1>
         </div>
       </div>
-    </div>
-  </div>
+    <!-- </div>
+  </div> -->
 </section>
 
 
@@ -125,29 +120,30 @@
         </div>
         <!-- <br> -->
         <!--/ Interpolating. -->
-        <h1 style="color:#7f0c75;font-size:180%;font-family:verdana;font-weight: bold;margin-bottom: 2.5%;">Papers</h1>
+        <h1 style="color:#7f0c75;font-size:180%;font-family:verdana;font-weight: bold;margin-bottom: 2.5%;">Project Papers</h1>
         <div class="publication media">
-          <img src="temp1_files/iros21_SurRol.png" class="papericon">
-          <div class="media-body ">
+          <img src="temp1_files/loop.png" class="papericon">
+          <div class="media-body "style="font-size: 95%;">
+              <!-- <a class="paper-title" href="./papers/2021/[IROS'21] SurRoL An Open-source RL Centered and dVRK Compatible Platform for Surgical Robot Learning.pdf"> -->
+              <a class="paper-title"  target="_blank">
+              <b> Human-in-the-loop Embodied Intelligence with Interactive Simulation Environment for Surgical Robot Learning</b></a>
+              <br>Yonghao Long, Wang Wei, Tao Huang, Yuehao Wang and Qi Dou.
+              <!-- [<a href="https://github.com/med-air/SurRoL" target="_blank">code</a>] -->
+          </div>
+        </div>
+        <div class="publication media">
+          <img src="temp1_files/surrol.png" class="papericon">
+          <div class="media-body " style="font-size: 95%;">
               <!-- <a class="paper-title" href="./papers/2021/[IROS'21] SurRoL An Open-source RL Centered and dVRK Compatible Platform for Surgical Robot Learning.pdf"> -->
               <a class="paper-title" href="https://arxiv.org/pdf/2108.13035.pdf" target="_blank">
               <b> SurRoL: An Open-source RL Centered and dVRK Compatible Platform for Surgical Robot Learning.</b></a>
-              <br> Jiaqi Xu*, Bin Li*, Bo Lu, Yun-Hui Liu, <b>Qi Dou</b>, Pheng-Ann Heng.
+              <br> Jiaqi Xu*, Bin Li*, Bo Lu, Yun-Hui Liu, Qi Dou, Pheng-Ann Heng.
               [<a href="https://github.com/med-air/SurRoL" target="_blank">code</a>]
               <br><i> International Conference on Intelligent Robots and Systems (IROS), 2021. </i><br>
               <i><p style="color: red; display: inline;">(Included in <a href="https://github.com/jhu-dvrk/sawIntuitiveResearchKit/wiki" target="_blank"> dVRK Software Ecosystem</a> as a community open-source ML tool)</p></i>
           </div>
         </div>
-        <div class="publication media">
-          <img src="temp1_files/method.png" class="papericon">
-          <div class="media-body ">
-              <!-- <a class="paper-title" href="./papers/2021/[IROS'21] SurRoL An Open-source RL Centered and dVRK Compatible Platform for Surgical Robot Learning.pdf"> -->
-              <a class="paper-title"  target="_blank">
-              <b> Human-in-the-loop Embodied Intelligence with Interactive Simulation Environment for Surgical Robot Learning</b></a>
-              <br>Yonghao Long, Wang Wei, Tao Huang, Yuehao Wang and Qi Dou.
-              [<a href="https://github.com/med-air/SurRoL" target="_blank">code</a>]
-          </div>
-        </div>
+
       </div>
     </div>
 
@@ -197,10 +193,10 @@
             We have established a spectrum of tasks given the dexterity and precision properties in the surgical context.
             </p>
             <p>
-            In detail, SurRoL has <b>Fundamental Action Tasks</b>:Needle Reach, Gauze Retrieve, Needle Pickand Needle Regrasp;
+            In detail, SurRoL has <b>Fundamental Action Tasks</b>: Needle Reach, Gauze Retrieve, Needle Pick and Needle Regrasp;
             <b>ECM Fov Control Tasks</b>: ECM Reach, MisOrient, Static Track and Active Track;
             and <b>Basic Surgical Robot SKill Training Tasks</b>: Peg Transfer, Bimanual Peg Transfer, Needle the Rings, Pick and Place, Peg Board and Match Board.
-            These fourteen tasks range from entry-level to sophisticated counterparts, which cover levels of surgical skills and involve manipulating PSM(s) and ECM. 
+            These 14 tasks range from entry-level to sophisticated counterparts, which cover levels of surgical skills and involve manipulating PSM(s) and ECM. 
           </p>
         </div>
       </div>
@@ -326,7 +322,7 @@
           <p>
             To incorporate human control of surgical robots in the simulator, we develop a manipulation system with an interaction input device. 
             We use Touch (3D Systems Inc.) physical devices to simulate two master arms of the robot to tele-operate Patient Side Manipulators (PSMs) and the Endoscopic Camera Manipulator (ECM).
-            Below are two demos for controling ECM(right) and two PSMs(left) by haptic devices.
+            Below are two demos for controling ECM(left) and two PSMs(right) by haptic devices.
           </p>
   
         </div>
@@ -334,12 +330,12 @@
           <div class="container-v">
               <div class="item-v">
                 <video width=100% height=98% autoplay loop muted>
-                    <source src="./temp1_files/ecm_final.mov" type="video/mp4">
+                    <source src="./temp1_files/ecm_all_final.mov" type="video/mp4">
                 </video>
               </div>
               <div class="item-v">        
                 <video width=100% height=98% autoplay loop muted>
-                    <source src="./temp1_files/bipeg_final.mov" type="video/mp4">
+                    <source src="./temp1_files/bipeg_all_final.mov" type="video/mp4">
                 </video>
               </div>
             </div>
@@ -355,9 +351,8 @@
 
       <div class="content has-text-justified">
         <p>
-          Below are the trajectories of four HER(+DEMO) policies on the real dVRK which demonstrate that our platform 
+          Below are the trajectories of four learned policies on the real dVRK which demonstrate that our platform 
           enables the smooth transfer of learned skills from the simulation to the real world. 
-          More experiment details can be found in our <a href="https://arxiv.org/pdf/2108.13035.pdf">paper</a>.
         </p>
 
       </div>
@@ -397,15 +392,15 @@
   <div class="columns is-centered">
     <div id = "ackn" class="column is-full-width">
 
-      <h1 style="color:#7f0c75;font-size:180%;font-family:verdana;font-weight: bold;margin-bottom: 2.5%;">Acknowledgement</h1>
+      <h1 style="color:#7f0c75;font-size:180%;font-family:verdana;font-weight: bold;margin-bottom: 2.5%;">Contact</h1>
 
       <div class="content has-text-justified">
         <p>
           <!-- There's a lot of excellent work that was introduced around the same time as ours. -->
-          This project was supported by Hong Kong Research Grants Council TRS Project No. T42-409/18-R, CUHK Shun Hing Institute 
-          of Advanced Engineering (project MMT-p5- 20), and Hong Kong Multi-Scale Medical Robotics Center.
-
+          For any questions, please feel free to email qidou@cuhk.edu.hk
+          
         </p>
+        <br>
       </div>
         
     </div>
@@ -415,17 +410,17 @@
 
 </section>
 
-<!-- <footer class="footer">
-  <div class="container">
+<footer class="footer">
+  <!-- <div class="container">
     <div class="content has-text-centered">
       <a class="icon-link" href="https://homes.cs.washington.edu/~kpar/nerfies/videos/nerfies_paper.pdf">
-        <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
-      <!-- </a>
+        <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg>
+      </a>
       <a class="icon-link" href="https://github.com/keunhong" disabled="">
-        <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
-      <!-- </a>
-    </div>  --> 
-    <!-- <div class="columns is-centered">
+        <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+      </a>
+    </div>  
+    <div class="columns is-centered">
       <div class="column is-8">
         <div class="content">
           <p>
@@ -440,9 +435,15 @@
           </p>
         </div>
       </div>
-    </div> -->
-  <!-- </div>
-</footer> -->
+    </div>
+  </div> -->
+    <div id="header">
+    <img class ="himg" src="./images/cuhklogo2.jpeg"/> 
+    <img class ="himg" src="./images/cselogo.png"/> 
+    <img class ="himg" src="./images/curi-logo.png"/> 
+    <img class ="himg" src="./images/logo_2x.png"/> 
+  </div>
+</footer>
 
 
 

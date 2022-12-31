@@ -407,6 +407,7 @@ body {
 
 .paper-title {
   color: black;
+  /* font-size: 95%; */
   text-decoration: none;
 }
 
