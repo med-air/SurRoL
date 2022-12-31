@@ -186,12 +186,7 @@
 #wowslider-container8 .ws_video_btn.ws_youtube:hover div {
 	background-position: 100% 0;
 }
-#wowslider-container8 .ws_video_btn.ws_vimeo div {
-	background-position: 0 100%;
-}
-#wowslider-container8 .ws_video_btn.ws_vimeo:hover div {
-	background-position: 100% 100%;
-}
+
 
 #wowslider-container8 .ws_playpause.ws_hide {
 	display: none !important;
