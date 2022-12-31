@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html class="fontawesome-i2svg-active fontawesome-i2svg-complete"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="description" content="Simulator">
+  <meta name="keywords" content="Surrol">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <meta name="keywords" content="Nerfies, D-NeRF, NeRF"> -->
+  <title>SurRoL</title>
+
+
+
+
+  <link rel="stylesheet" href="./temp1_files/bulma.min.css">
+  <!-- <link rel="stylesheet" href="./temp1_files/bulma-carousel.min.css"> -->
+  <!-- <link rel="stylesheet" href="./temp1_files/bulma-slider.min.css"> -->
+  <link rel="stylesheet" href="./temp1_files/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./temp1_files/index.css">
+
+  <!-- <link rel="stylesheet" href="nicepage.css" media="screen"> -->
+  <!-- <link rel="stylesheet" href="MRG-Net.css" media="screen"> -->
+  <!-- <link rel="icon" href="https://nerfies.github.io/static/images/favicon.svg"> -->
+
+  <script src="./temp1_files/jquery.min.js"></script>
+  <script defer="" src="./temp1_files/fontawesome.all.min.js"></script>
+
+  <script src="./temp1_files/index.js"></script>
+
+
+
+	<!-- Start WOWSlider.com HEAD section --> <!-- add to the <head> of your page -->
+	<link rel="stylesheet" type="text/css" href="engine6/style.css" />
+	<script type="text/javascript" src="engine6/jquery.js"></script>	<script src="https://www.youtube.com/iframe_api"></script>
+
+	<!-- End WOWSlider.com HEAD section -->
+	<!-- Start WOWSlider.com HEAD section --> <!-- add to the <head> of your page -->
+	<link rel="stylesheet" type="text/css" href="engine7/style.css" />
+	<script type="text/javascript" src="engine7/jquery.js"></script>	<script src="https://www.youtube.com/iframe_api"></script>
+
+	<!-- End WOWSlider.com HEAD section -->
+	<!-- Start WOWSlider.com HEAD section --> <!-- add to the <head> of your page -->
+	<link rel="stylesheet" type="text/css" href="engine8/style.css" />
+	<script type="text/javascript" src="engine8/jquery.js"></script>	<script src="https://www.youtube.com/iframe_api"></script>
+
+	<!-- End WOWSlider.com HEAD section -->
+</head>
+<body>
+
+  
+  <div id="header">
+    <img class ="himg" src="./images/cuhklogo2.jpeg"/> 
+    <img class ="himg" src="./images/cselogo.png"/> 
+    <img class ="himg" src="./images/curi-logo.png"/> 
+    <img class ="himg" src="./images/logo_2x.png"/> 
+</div>
+
+
+
+
+<section class="hero">
+
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title"><span style="color:#0070c0"> Sur</span><span style="color:#00b050">Ro</span><span style="color:#c55a11">L</span>: RL Centered and dVRK Compatible Platform for <span style="color:#0070c0"> Sur</span>gical <span style="color:#00b050">Ro</span>bot <span style="color:#c55a11">L</span>earning</h1>
+          <h1 style="font-size:120%;font-weight: bold;">The Chinese University of Hong Kong</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <img style="border-radius: 2%;max-width: 19%;margin:0.25%;display:inline-block;"src="./temp1_files/ezgif.com-gif-maker (20).gif">
+      <img style="border-radius: 2%;max-width: 19%;margin:0.25%;display:inline-block;"src="./temp1_files/ezgif.com-gif-maker (14).gif">
+      <img style="border-radius: 2%;max-width: 19%;margin:0.25%;display:inline-block;"src="./temp1_files/ezgif.com-gif-maker (13).gif">
+      <img style="border-radius: 2%;max-width: 19%;margin:0.25%;display:inline-block;"src="./temp1_files/ezgif.com-gif-maker (10).gif">
+      <img style="border-radius: 2%;max-width: 19%;margin:0.25%;display:inline-block;"src="./temp1_files/ezgif.com-gif-maker (11).gif">
+      <!-- <h6 class="has-text-centered">
+        Demonstration of tasks
+      </h6> -->
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div id= "method" class="column is-full-width">
+        <h1 style="color:#7f0c75;font-size:180%;font-family:verdana;font-weight: bold;margin-bottom: 2.5%;">Overview</h1>
+
+        <!-- Interpolating. -->
+        <!-- <h3 class="title is-4">Interpolating states</h3> -->
+        <div class="content has-text-justified">
+          <p>
+            Autonomous surgical execution relieves tedious routines and surgeon's fatigue. 
+            Recent learning-based methods, especially reinforcement learning (RL) based methods, 
+            achieve promising performance for dexterous manipulation, 
+            which usually requires the simulation to collect data efficiently and reduce the hardware cost.
+ 
+            The existing learning-based simulation platforms for medical robots suffer from limited scenarios and 
+            simplified physical interactions, which degrades the real-world performance of learned policies.
+
+            Given this, we designed SurRoL, an RL-centered simulation platform for surgical robot learning compatible 
+            with the da Vinci Research Kit (dVRK). SurRoL integrates a user-friendly RL library for algorithm 
+            development and a real-time physics engine, which is able to support more PSM/ECM scenarios and more realistic 
+            physical interactions.
+          </p>
+          <p>
+            Based on the first verison of SurRoL, we proposed a new version which highlights 1) standardized interface which supports
+            human interaction through physical input device and policy
+            learning, 2) realistic physical simulation with fine-grained
+            modeling of collision properties and proportional derivative
+            (PD) control under constrains, 3) high-fidelity rendering
+            with vivid phong shading, spotlight modeling and shadow
+            projection for human perception. 
+          </p>
+        </div>
+        <!-- <br> -->
+        <!--/ Interpolating. -->
+
+        <span class="link-block">
+          <a href="hhttps://arxiv.org/pdf/2108.13035.pdf" class="external-link button is-normal is-rounded is-dark">
+            <span class="icon">
+                <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
+            </span>
+            <span>Paper</span>
+          </a>
+        </span>
+        <span class="link-block">
+          <a href="https://github.com/med-air/SurRoL" class="external-link button is-normal is-rounded is-dark">
+            <span class="icon">
+                <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
+            </span>
+            <span>Code</span>
+            </a>
+        </span>
+      </div>
+    </div>
+
+        <!-- Animation. -->
+    <div class="columns is-centered">
+      <div id= "method" class="column is-full-width">
+        <h1 style="color:#7f0c75;font-size:180%;font-family:verdana;font-weight: bold;margin-bottom: 2.5%;">Specifics</h1>
+
+        <!-- Interpolating. -->
+        <!-- <h3 class="title is-4">Interpolating states</h3> -->
+        <div class="content has-text-justified">
+          <p>  
+            In SurRoL, we create assets of surgical tasks with the help of the powerful 3D modeling tool Blender, and then generate relevant collision models and urdf description models at the same time for physical modeling in the simulation environment. Once surgical tasks are imported to the simulator, the human can conduct surgical action using a human interaction device, and the interaction information is streamed to the virtual environment for physical simulation. In the meanwhile, the video frames are produced using the visualization engine of the simulator, which will be displayed on the monitor for human perception and interaction. The human action can be recorded for intelligent policy learning, and the policy can also interact with the virtual environment by itself, to finally form the diagram of human-in-the-loop surgical robot learning with an interactive simulation environment.
+          </p>
+        </div>
+        <div class="columns is-vcentered interpolation-panel">
+          <!-- <div class="column is-3 has-text-centered">
+            <img src="./temp1_files/left.png" class="interpolation-image" alt="Interpolate start reference image.">
+          </div> -->
+          <div class="column interpolation-video-column">
+            <img src="./temp1_files/method.png">
+            <!-- <input class="slider is-fullwidth is-large is-info" id="interpolation-slider" step="1" min="0" max="239" value="0" type="range"> -->
+          </div>
+          <!-- <div class="column is-3 has-text-centered">
+            <img src="./temp1_files/right.png" class="interpolation-image" alt="Interpolation end reference image.">
+          </div> -->
+        </div>
+
+        <!--/ Interpolating. -->
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+</section>
+<section class="section">
+  <div class="container is-max-desktop" >
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h1 style="color:#7f0c75;font-size:180%;font-family:verdana;font-weight: bold;margin-bottom: 2.5%;">Task Demonstrations</h1>
+        <div class="content has-text-justified">
+          <p>
+            We have established a spectrum of tasks given the dexterity and precision properties in the surgical context.
+            </p>
+            <p>
+            In detail, SurRoL has <b>Fundamental Action Tasks</b>:Needle Reach, Gauze Retrieve, Needle Pickand Needle Regrasp;
+            <b>ECM Fov Control Tasks</b>: ECM Reach, MisOrient, Static Track and Active Track;
+            and <b>Basic Surgical Robot SKill Training Tasks</b>: Peg Transfer, Bimanual Peg Transfer, Needle the Rings, Pick and Place, Peg Board and Match Board.
+            These fourteen tasks range from entry-level to sophisticated counterparts, which cover levels of surgical skills and involve manipulating PSM(s) and ECM. 
+          </p>
+        </div>
+      </div>
+    </div> 
+
+    <div class="container-t">
+
+      <div class="tab-wrap">
+        <!-- active tab on page load gets checked attribute -->
+        <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
+        <label for="tab1">Fundamental Action</label>
+    
+        <input type="radio" id="tab2" name="tabGroup1" class="tab">
+        <label for="tab2">ECM Fov Control</label>
+    
+        <input type="radio" id="tab3" name="tabGroup1" class="tab">
+        <label for="tab3">Basi Surgical Robot SKill Training</label>
+    
+        <div class="tab__content">
+            <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+              <div id="wowslider-container6">
+                <div class="ws_images"><ul>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/E-4q61woQTI?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data6/images/e4q61woqti.png" alt="Needle Reach" title="Needle Reach" id="wows6_0"/>The goal is to move the PSM jaw tip to the location slightly above the needle within a tolerance, where the needle is randomly placed on a surgical tray, and the jaw is close and of fixed orientation.</li>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/Rj8FriqUJRU?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data6/images/rj8friqujru.png" alt="Gauze Retrieve" title="Gauze Retrieve" id="wows6_1"/>The goal is to sequentially pick the surgical gauze and get it back (place it at the target position), with one DoF to indicate the jaw open/close.</li>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/SLj4YBBtk8M?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data6/images/slj4ybbtk8m.png" alt="html slideshow" title="Needle Pick" id="wows6_2"/>The goal  is to sequentially pick the surgical needle and get it back (place it at the target position), with an additional DoF indicating the yaw angle.</li>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/jUtX27djnYI?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data6/images/sztohairog8.png" alt="needle regrasp" title="Needle Regrasp" id="wows6_3"/>The goal is to hand over the held needle from one arm to the other arm with bimanual operations.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                </ul></div>
+                <div class="ws_bullets"><div>
+                  <a href="#" title="Needle Reach"><span><img src="data6/tooltips/e4q61woqti.png" alt="Needle Reach"/>1</span></a>
+                  <a href="#" title="Gauze Retrieve"><span><img src="data6/tooltips/rj8friqujru.png" alt="Gauze Retrieve"/>2</span></a>
+                  <a href="#" title="Needle Pick"><span><img src="data6/tooltips/slj4ybbtk8m.png" alt="Needle Pick"/>3</span></a>
+                  <a href="#" title="needle regrasp"><span><img src="data6/tooltips/sztohairog8.png" alt="needle regrasp"/>4</span></a>
+                </div></div><div class="ws_script" style="position:absolute;left:-99%"><a>css image slider</a> by WOWSlider.com v9.0m</div>
+                <div class="ws_shadow"></div>
+                </div>	
+                <script type="text/javascript" src="engine6/wowslider.js"></script>
+                <script type="text/javascript" src="engine6/script.js"></script>
+                <!-- End WOWSlider.com BODY section -->
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+
+        </div>
+    
+        <div class="tab__content">
+            <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+              <div id="wowslider-container7">
+                <div class="ws_images"><ul>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/qnmyF2iWVlo?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data7/images/qnmyf2iwvlo.png" alt="ECM Reach" title="ECM Reach" id="wows7_0"/>The goal is to move the camera mounted on ECM to a randomly sampled position.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/MA9nxLOXD7I?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data7/images/ma9nxloxd7i.png" alt="Misorient" title="Misorient" id="wows7_1"/>The goal is to adjust the ECM's  joint such that the misorientation with the desired Natural Line-of-Sight is minimized.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/5-W8bf4MMHs?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data7/images/5w8bf4mmhs.png" alt="jquery carousel slider" title="Static Track" id="wows7_2"/>The goal is to let the ECM track a static target cube with red color, disturbed by other surrounding cubes, that mimics the scenario to focus on the primary instrument during surgery.</li>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/uOFwTVnUEuM?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data7/images/ssodxuofykk.png" alt="Active Track" title="Active Track" id="wows7_3"/>The goal is to keep the ECM tracking the moving cube, with a relaxed misorientation requirement but a chance to lose the target out of the view.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                </ul></div>
+                <div class="ws_bullets"><div>
+                  <a href="#" title="ECM Reach"><span><img src="data7/tooltips/qnmyf2iwvlo.png" alt="ECM Reach"/>1</span></a>
+                  <a href="#" title="Misorient"><span><img src="data7/tooltips/ma9nxloxd7i.png" alt="Misorient"/>2</span></a>
+                  <a href="#" title="Static Track"><span><img src="data7/tooltips/5w8bf4mmhs.png" alt="Static Track"/>3</span></a>
+                  <a href="#" title="Active Track"><span><img src="data7/tooltips/ssodxuofykk.png" alt="Active Track"/>4</span></a>
+                </div></div><div class="ws_script" style="position:absolute;left:-99%"><a >jquery image carousel</a> by WOWSlider.com v9.0m</div>
+                <div class="ws_shadow"></div>
+                </div>	
+                <script type="text/javascript" src="engine7/wowslider.js"></script>
+                <script type="text/javascript" src="engine7/script.js"></script>
+                <!-- End WOWSlider.com BODY section -->
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+        </div>
+    
+        <div class="tab__content">
+            <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+              <div id="wowslider-container8">
+                <div class="ws_images"><ul>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/hjGl09hRugc?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data8/images/hjgl09hrugc.png" alt="Peg Transfer" title="Peg Transfer" id="wows8_0"/>The goal is to move the block from one peg to the other peg with single PSM, which requires collision avoidance and long-horizon reasoning.</li>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/yYiruD8izz8?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data8/images/yyirud8izz8.png" alt="bi pegtransfer" title="Bimanual Peg Transfer" id="wows8_1"/>The goal is to move the block from one peg to the other peg with bimanual operations.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/hXsOMGUcVIA?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data8/images/hxsomgucvia.png" alt="needlerings" title="Needle the Rings" id="wows8_2"/>The goal is to pick up the needle and pass it through the highlighted ring which calls for high positioning and orienting skills.</li>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/-9K7p94633o?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data8/images/9k7p94633o.png" alt="Pick and Place" title="Pick and Place" id="wows8_3"/>The goal is to place the colored jacks into the matching colored containers sequentially.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/VZNorNQ2rGs?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data8/images/vznornq2rgs.png" alt="image slider" title="Peg Board" id="wows8_4"/>The goal is to pick up and transfer the rings sequentially from the peg board to the peg on the floor.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></li>
+                  <li><iframe width="100%" height="100%" src="https://www.youtube.com/embed/rQUCI0ntgp0?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data8/images/rquci0ntgp0.png" alt="Match Board" title="Match Board" id="wows8_5"/>The goal is to pick up the various objects and place them into their corresponding spaces on the board.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></li>
+                </ul></div>
+                <div class="ws_bullets"><div>
+                  <a href="#" title="Peg Transfer"><span><img src="data8/tooltips/hjgl09hrugc.png" alt="Peg Transfer"/>1</span></a>
+                  <a href="#" title="bi pegtransfer"><span><img src="data8/tooltips/yyirud8izz8.png" alt="bi pegtransfer"/>2</span></a>
+                  <a href="#" title="needlerings"><span><img src="data8/tooltips/hxsomgucvia.png" alt="needlerings"/>3</span></a>
+                  <a href="#" title="Pick and Place"><span><img src="data8/tooltips/9k7p94633o.png" alt="Pick and Place"/>4</span></a>
+                  <a href="#" title="Peg Board"><span><img src="data8/tooltips/vznornq2rgs.png" alt="Peg Board"/>5</span></a>
+                  <a href="#" title="Match Board"><span><img src="data8/tooltips/rquci0ntgp0.png" alt="Match Board"/>6</span></a>
+                </div></div><div class="ws_script" style="position:absolute;left:-99%"><a >slider html</a> by WOWSlider.com v9.0m</div>
+                <div class="ws_shadow"></div>
+              </div>	
+              <script type="text/javascript" src="engine8/wowslider.js"></script>
+              <script type="text/javascript" src="engine8/script.js"></script>
+            <!-- End WOWSlider.com BODY section -->  
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+          </div>
+    
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<section class="section" style="margin:-2.5% 0">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+  
+        <h1 style="color:#7f0c75;font-size:180%;font-family:verdana;font-weight: bold;margin-bottom: 2.5%;">Haptic Device Control</h1>
+  
+        <div class="content has-text-justified">
+          <p>
+            To incorporate human control of surgical robots in the simulator, we develop a manipulation system with an interaction input device. 
+            We use Touch (3D Systems Inc.) physical devices to simulate two master arms of the robot to tele-operate Patient Side Manipulators (PSMs) and the Endoscopic Camera Manipulator (ECM).
+            Below are two demos for controling ECM(right) and two PSMs(left) by haptic devices.
+          </p>
+  
+        </div>
+        <div class="content has-text-centered">
+          <div class="container-v">
+              <div class="item-v">
+                <video width=100% height=98% autoplay loop muted>
+                    <source src="./temp1_files/ecm_final.mov" type="video/mp4">
+                </video>
+              </div>
+              <div class="item-v">        
+                <video width=100% height=98% autoplay loop muted>
+                    <source src="./temp1_files/bipeg_final.mov" type="video/mp4">
+                </video>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="columns is-centered">
+    <div class="column is-full-width">
+
+      <h1 style="color:#7f0c75;font-size:170%;font-family:verdana;font-weight: bold;margin-bottom: 2.5%;">Deployment on the Real World dVRK</h1>
+
+      <div class="content has-text-justified">
+        <p>
+          Below are the trajectories of four HER(+DEMO) policies on the real dVRK which demonstrate that our platform 
+          enables the smooth transfer of learned skills from the simulation to the real world. 
+          More experiment details can be found in our <a href="https://arxiv.org/pdf/2108.13035.pdf">paper</a>.
+        </p>
+
+      </div>
+      <div class="content has-text-centered">
+        <div class="container-v">
+            <div class="item-v">
+              <video width=100% height=98% autoplay loop muted>
+                  <source src="./temp1_files/gauze_retri_dep_txt.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item-v">        
+              <video width=100% height=98% autoplay loop muted>
+                  <source src="./temp1_files/needle_pick_dep_txt.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item-v">        
+              <video width=100% height=98% autoplay loop muted>
+                  <source src="./temp1_files/pegtrans_dep_txt.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item-v">        
+              <video width=100% height=98% autoplay loop muted>
+                  <source src="./temp1_files/stat_track_dep_txt.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+      </div>
+
+
+
+    </div>
+  </div>
+
+
+
+  <!-- Concurrent Work. -->
+  <div class="columns is-centered">
+    <div id = "ackn" class="column is-full-width">
+
+      <h1 style="color:#7f0c75;font-size:180%;font-family:verdana;font-weight: bold;margin-bottom: 2.5%;">Acknowledgement</h1>
+
+      <div class="content has-text-justified">
+        <p>
+          <!-- There's a lot of excellent work that was introduced around the same time as ours. -->
+          This project was supported by Hong Kong Research Grants Council TRS Project No. T42-409/18-R, CUHK Shun Hing Institute 
+          of Advanced Engineering (project MMT-p5- 20), and Hong Kong Multi-Scale Medical Robotics Center.
+
+        </p>
+      </div>
+        
+    </div>
+  </div>
+  <!--/ Concurrent Work. -->
+</div>
+
+</section>
+
+<!-- <footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://homes.cs.washington.edu/~kpar/nerfies/videos/nerfies_paper.pdf">
+        <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
+      <!-- </a>
+      <a class="icon-link" href="https://github.com/keunhong" disabled="">
+        <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
+      <!-- </a>
+    </div>  --> 
+    <!-- <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div> -->
+  <!-- </div>
+</footer> -->
+
+
+
+
+</body></html
