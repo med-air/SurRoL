@@ -23,7 +23,7 @@
 
 body {
   /* font-family:  sans-serif; */
-  font-family: 'Lato',-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Lato', Helvetica, Arial, sans-serif;
   font-size: 17px;
   height: auto;
   line-height: 1.2;
@@ -67,8 +67,7 @@ body {
 }
 
 
-.publication-title {
-}
+
 
 .publication-banner {
   max-height: parent;
@@ -83,8 +82,6 @@ body {
   object-fit: fit;
 }
 
-.publication-header .hero-body {
-}
 
 .publication-title {
     font-family: 'Lato', sans-serif;
@@ -106,8 +103,7 @@ body {
     font-weight: bolder;
 }
 
-.publication-authors {
-}
+
 
 .publication-authors a {
    color: hsl(204, 86%, 53%) !important;
@@ -121,12 +117,7 @@ body {
   display: inline-block;
 }
 
-.publication-banner img {
-}
 
-.publication-authors {
-  /*color: #4286f4;*/
-}
 
 .publication-video {
     position: relative;
@@ -146,8 +137,7 @@ body {
     height: 100%;
 }
 
-.publication-body img {
-}
+
 
 .results-carousel {
   overflow: hidden;
@@ -177,8 +167,7 @@ body {
   border-radius: 5px;
 }
 
-.interpolation-video-column {
-}
+
 
 .interpolation-panel .slider {
   margin: 0 !important;
@@ -195,26 +184,6 @@ body {
   border-radius: 5px;
 }
 
-/* @charset "UTF-8";
-* {
-  box-sizing: border-box;
-}
-
-html {
-  height: 100%;
-  overflow: hidden;
-  width: 100%;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  height: auto;
-  line-height: 1;
-  overflow-x: hidden;
-  padding: 2rem;
-  width: 100%;
-} */
 
 
 
@@ -241,26 +210,7 @@ body {
 .item:nth-child(4) 
 
 
-/* @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i'); */
-/* @import url('https://fonts.googleapis.com/css?family=Bree+Serif'); */
-/* * {
-  box-sizing: border-box;
-} */
-/* body {
-  justify-content: center;} */
-  /* padding: 10px;
-  background: #ffff;
-  font-family: 'Lato', sans-serif;
-  color: #333; */
 
-
-/* .vtabs {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 1280px;
-  background: #e5e5e5;
-  box-shadow: 0 48px 80px -32px rgba(0,0,0,0.3);
-} */
 .input {
   position: absolute;
   opacity: 0;
