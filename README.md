@@ -1,13 +1,13 @@
 # SurRoL: An Open-source Reinforcement Learning Centered and dVRK Compatible Platform for Surgical Robot Learning
 
+
+##[[Project Website]](https://med-air.github.io/SurRoL/)
+
 <p align="center">
    <img src="resources/img/surrol-overview.png" alt="SurRoL"/>
 </p>
 
-[[Project Website]](https://med-air.github.io/SurRoL/)
-
-ISMR'22 [Integrating Artificial Intelligence and Augmented Reality in Robotic Surgery: An Initial dVRK Study Using a Surgical Education Scenario](https://arxiv.org/abs/2201.00383)
-
+ISMR'22 [Integrating Artificial Intelligence and Augmented Reality in Robotic Surgery: An Initial dVRK Study Using a Surgical Education Scenario](https://arxiv.org/abs/2201.00383) <br>
 IROS'21 [SurRoL: An Open-source Reinforcement Learning Centered and dVRK Compatible Platform for Surgical Robot Learning](https://arxiv.org/abs/2108.13035)
 
 ## Features
