@@ -88,27 +88,16 @@
         <!-- <h3 class="title is-4">Interpolating states</h3> -->
         <div class="content has-text-justified">
           <p>
-            Autonomous surgical execution relieves tedious routines and surgeon's fatigue. 
-            Recent learning-based methods, especially reinforcement learning (RL) based methods, 
-            achieve promising performance for dexterous manipulation, 
-            which usually requires the simulation to collect data efficiently and reduce the hardware cost.
- 
-            The existing learning-based simulation platforms for medical robots suffer from limited scenarios and 
-            simplified physical interactions, which degrades the real-world performance of learned policies.
-
-            Given this, we designed SurRoL, an RL-centered simulation platform for surgical robot learning compatible 
-            with the da Vinci Research Kit (dVRK). SurRoL integrates a user-friendly RL library for algorithm 
-            development and a real-time physics engine, which is able to support more PSM/ECM scenarios and more realistic 
-            physical interactions.
+            Surgical robot automation has attracted increasing research interest over the past decade, 
+            expecting its huge potential to benefit surgeons, nurses, and patients. 
+            Recently, the learning paradigm of embodied AI has demonstrated a promising ability to learn 
+            good control policies for various complex tasks, where embodied AI simulators play an essential role in facilitating relevant research.
           </p>
           <p>
-            Based on the first verison of SurRoL, we proposed a new version which highlights 1) standardized interface which supports
-            human interaction through physical input device and policy
-            learning, 2) realistic physical simulation with fine-grained
-            modeling of collision properties and proportional derivative
-            (PD) control under constrains, 3) high-fidelity rendering
-            with vivid phong shading, spotlight modeling and shadow
-            projection for human perception. 
+            In this regard, we designed SurRoL, an RL Centered and dVRK Compatible Platform for Surgical Robot Learning 
+            dedicated to surgical embodied intelligence with its strong focus on learning algorithm support and extendable 
+            infrastructure design. It has been featured as one of the community-recognized machine learning infrastructures 
+            by the dVRK software ecosystem for surgical robotics research.
           </p>
         </div>
       </div>
@@ -323,13 +312,14 @@
     <div class="columns is-centered">
       <div class="column is-full-width">
   
-        <h1 style="color:#7f0c75;font-size:170% ;font-weight: bold;margin-bottom: 2%;margin-top: -7%;">Haptic Device Control</h1>
+        <h1 style="color:#7f0c75;font-size:170% ;font-weight: bold;margin-bottom: 2%;margin-top: -7%;">Control with Human Input Device</h1>
   
         <div class="content has-text-justified">
           <p>
-            To incorporate human control of surgical robots in the simulator, we develop a manipulation system with an interaction input device. 
-            We use Touch (3D Systems Inc.) physical devices to simulate two master arms of the robot to tele-operate Patient Side Manipulators (PSMs) and the Endoscopic Camera Manipulator (ECM).
-            Below are two demos for controling ECM(left) and two PSMs(right) by haptic devices.
+            To incorporate human control of surgical robots in the simulator, 
+            we develop a manipulation system with human input devices. We use Touch (3D Systems Inc.) 
+            physical devices to simulate two master arms of the robot to tele-operate Patient Side Manipulators (PSMs) 
+            and the Endoscopic Camera Manipulator (ECM). Below are two demos for controlling ECM(left) and two PSMs(right).
           </p>
   
         </div>
