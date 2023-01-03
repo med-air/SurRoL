@@ -6,7 +6,9 @@
 
 [[Project Website]](https://med-air.github.io/SurRoL/)
 
+ISMR 2022 [Integrating Artificial Intelligence and Augmented Reality in Robotic Surgery: An Initial dVRK Study Using a Surgical Education Scenario](https://arxiv.org/abs/2201.00383)
 IROS 2021 [SurRoL: An Open-source Reinforcement Learning Centered and dVRK Compatible Platform for Surgical Robot Learning](https://arxiv.org/abs/2108.13035)
+
 
 ## Features
 
