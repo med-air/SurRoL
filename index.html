@@ -151,7 +151,14 @@
         <!-- <h3 class="title is-4">Interpolating states</h3> -->
         <div class="content has-text-justified">
           <p>  
-            In SurRoL, we create assets of surgical tasks with the help of the powerful 3D modeling tool Blender, and then generate relevant collision models and urdf description models at the same time for physical modeling in the simulation environment. Once surgical tasks are imported to the simulator, the human can conduct surgical action using a human interaction device, and the interaction information is streamed to the virtual environment for physical simulation. In the meanwhile, the video frames are produced using the visualization engine of the simulator, which will be displayed on the monitor for human perception and interaction. The human action can be recorded for intelligent policy learning, and the policy can also interact with the virtual environment by itself, to finally form the diagram of human-in-the-loop surgical robot learning with an interactive simulation environment.
+            In SurRoL, we create assets of surgical tasks with the help of the powerful 3D modeling tool Blender, 
+            and then generate relevant collision models and urdf description models at the same time for physical 
+            modeling in the simulation environment. Once surgical tasks are imported to the simulator, the human 
+            can conduct surgical action using a human interaction device, and the interaction information is streamed 
+            to the virtual environment for physical simulation. In the meanwhile, the video frames are produced using 
+            the visualization engine of the simulator, which will be displayed on the monitor for human perception 
+            and interaction. The human action can be recorded for intelligent policy learning and the policy can also 
+            interact with the virtual environment, which forms the diagram of human-in-the-loop surgical robot learning with interactive simulation environment.
           </p>
         </div>
         <div class="columns is-vcentered interpolation-panel">
@@ -311,14 +318,14 @@
     <div class="columns is-centered">
       <div class="column is-full-width">
   
-        <h1 style="color:#7f0c75;font-size:170% ;font-weight: bold;margin-bottom: 2%;margin-top: -7%;">Haptic Device Control</h1>
+        <h1 style="color:#7f0c75;font-size:170% ;font-weight: bold;margin-bottom: 2%;margin-top: -7%;">Control with Human Input Device</h1>
   
         <div class="content has-text-justified">
           <p>
             To incorporate human control of surgical robots in the simulator, 
             we develop a manipulation system with human input devices. We use Touch (3D Systems Inc.) 
             physical devices to simulate two master arms of the robot to tele-operate Patient Side Manipulators (PSMs) 
-            and the Endoscopic Camera Manipulator (ECM). Below are two demos for controlling ECM(left) and two PSMs(right).
+            and the Endoscopic Camera Manipulator (ECM).
           </p>
   
         </div>
@@ -328,11 +335,13 @@
                 <video width=100% height=98% autoplay loop playsinline muted>
                     <source src="./temp1_files/ecm_all_final.mov" type="video/mp4">
                 </video>
+                <p style="color:#4a484a;font-size:80% ;">ECM Control</p>
               </div>
               <div class="item-v">        
                 <video width=100% height=98% autoplay loop playsinline muted>
                     <source src="./temp1_files/bipeg_all_final.mov" type="video/mp4">
                 </video>
+                <p style="color:#4a484a;font-size:80% ;">Bimanual PSMs Control</p>
               </div>
             </div>
         </div>
