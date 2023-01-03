@@ -1,4 +1,4 @@
-# SurRoL
+# SurRoL [Website](https://med-air.github.io/SurRoL/)
 
 <p align="center">
    <img src="resources/img/surrol-overview.png" alt="SurRoL"/>
