@@ -8,6 +8,7 @@
 	zoom: 1; 
 	position: relative;
 	width: 100%;
+
 	max-width: 1280px;
 	max-height:720px;
 	margin:0px auto 0px;
@@ -269,10 +270,11 @@
 	position:absolute;
 	display:inline-block;
 	font: 4.2em Arial, Helvetica, sans-serif;
-	bottom: 0.75em;
+	bottom: -3.75em;
 	left: 0em; 
-	margin-right: 0;
-	margin-bottom: -135px;
+	width: 100%;
+	/* margin-right: 0; */
+	/* margin-bottom: -135px; */
 	padding:0.5em 0.4em;
 	background:rgba(0, 0, 0, 0.9);
 	border-left:0.2em solid #008AC3;

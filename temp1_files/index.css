@@ -330,6 +330,7 @@ body {
 }
 .tab__content {
   padding: 10px 25px;
+  margin-bottom: 12.5%;
   background-color: transparent;
   position: absolute;
   width: 100%;
