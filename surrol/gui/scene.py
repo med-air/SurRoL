@@ -17,10 +17,12 @@ class Scene:
         from .application import Application
         self.app = Application.app
         self.cam = Application.app.cam
+        self.cam2= Application.app.cam2
         self.taskMgr = Application.app.taskMgr
         self.loader = Application.app.loader
         self.render = Application.app.render
-
+        self.outview ={}
+        self.flag=1
     def build_kivy_display_region(self, l, w, b, h):
         import kivy.config
         kivy.config.Config.set('graphics', 'width', round(self.app.configs.window_width * w))
@@ -104,7 +106,7 @@ class GymEnvScene(Scene):
                 viewMatrix=self.env._view_matrix,
                 projectionMatrix=self.env._proj_matrix)
             pb.setGravity(0,0,-10.0)
-
+            print(f"pb view matrix: {self.env._view_matrix}")
             self.time = task.time
 
         return Task.cont
@@ -159,12 +161,28 @@ class GymEnvScene(Scene):
         """
 
         if scene_view.camera is not None:
+            print(f"scenn view:{scene_view.camera.pose_matrix}")
             yfov, znear, zfar, aspect = decompose(scene_view.camera.projection_matrix)
+            # print(f"yfov:{yfov}, znear:{znear}, zfar{zfar}, aspect{aspect}")
             conv_mat = Mat4.convert_mat(p3d.CSZupRight, p3d.CSYupRight)
             self.cam.set_mat(conv_mat * Mat4(*scene_view.camera.pose_matrix.ravel(),))
             self.cam.node().get_lens().set_near_far(znear, zfar)
             self.cam.node().get_lens().set_fov(np.rad2deg(yfov*aspect), np.rad2deg(yfov))
-
+            if self.flag:
+                self.flag=0
+                self.outview['pose']=scene_view.camera.pose_matrix
+                self.outview['yfov'],self.outview['znear'],self.outview['zfar'],self.outview['aspect']=np.rad2deg(yfov),znear,zfar,np.rad2deg(yfov*aspect)
+            static_track_ecm_view_out = np.array([[-0.8660253882408142, -0.25000008940696716, 0.4330127537250519, 0.0],
+            [0.5000001192092896, -0.43301281332969666, 0.7499998211860657, 0.0],
+            [4.4703490686970326e-08, 0.8660253286361694, 0.5000001192092896, 0.0],
+            [0.33382686972618103, -0.49541640281677246, -2.541912794113159, 1.0]])
+            trans_mat = np.array([[1, 0, -0.,  0], [0., 1, -0.,0.05 ], [0., 0., 1,  0],[0, 0, 0, 1]])
+            result_mat = np.transpose(np.matmul(trans_mat,np.transpose(scene_view.camera.pose_matrix)))
+            self.cam2.set_mat(conv_mat * Mat4(*result_mat.ravel(),))
+            # self.cam2.set_mat(conv_mat * Mat4(*self.outview['pose'].ravel(),))
+            # print(f"{scene_view.camera.pose_matrix} {trans_mat} camera view matrix: {conv_mat * Mat4(*scene_view.camera.pose_matrix.ravel(),)}")
+            self.cam2.node().get_lens().set_near_far(self.outview['znear'],self.outview['zfar'])
+            self.cam2.node().get_lens().set_fov(self.outview['aspect'], self.outview['yfov'])
     def _update_state(self, scene_state):
         """Apply scene state.
 
@@ -175,3 +193,8 @@ class GymEnvScene(Scene):
         for uid, node in self.env_nodes.items():
             node.set_mat(Mat4(*scene_state.matrix(uid).ravel()))
 
+# (-0.8660253882408142, -0.25000008940696716, 0.4330127537250519, 0.0, 
+# 0.5000001192092896, -0.43301281332969666, 0.7499998211860657, 0.0,
+#  4.4703490686970326e-08, 0.8660253286361694, 0.5000001192092896, 0.0,
+#  0.33382686972618103, -0.49541640281677246, -2.541912794113159, 1.0)
+# (-0.8660253882408142, -0.25000008940696716, 0.4330127537250519, 0.0, 0.5000001192092896, -0.43301281332969666, 0.7499998211860657, 0.0, 4.4703490686970326e-08, 0.8660253286361694, 0.5000001192092896, 0.0, 0.33382686972618103, -0.49541640281677246, -2.541912794113159, 1.0)

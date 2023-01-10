@@ -14,7 +14,16 @@ from surrol.utils.robotics import (
 )
 from surrol.utils.utils import RGB_COLOR_255
 from surrol.const import ASSET_DIR_PATH
+from surrol.utils.pybullet_utils import (
+    get_link_pose,
+    reset_camera,    
+    wrap_angle
+)
+from surrol.tasks.ecm_env import EcmEnv, goal_distance
 
+from surrol.robots.ecm import RENDER_HEIGHT, RENDER_WIDTH, FoV
+from surrol.const import ASSET_DIR_PATH
+from surrol.robots.ecm import Ecm
 
 class MisOrient(EcmEnv):
     ACTION_SIZE = 1  # droll
@@ -23,7 +32,20 @@ class MisOrient(EcmEnv):
     QPOS_ECM = (0, 0, 0.05, 0)
     WORKSPACE_LIMITS = ((-0.6, 0.4), (-0.8, 0.8), (0.02, 0.02))
     CUBE_NUMBER = (9, 16)
+    # QPOS_ECM = (0, 0.6, 0.04, 0)
+    POSE_TABLE = ((0.5, 0, 0.001), (0, 0, 0))
 
+    ACTION_ECM_SIZE=3
+    def __init__(self, render_mode=None, cid = -1):
+        super(MisOrient, self).__init__(render_mode, cid)
+        self._view_matrix = p.computeViewMatrixFromYawPitchRoll(
+            cameraTargetPosition=(0.27, -0.2, 0.55),
+            distance=2.3,
+            yaw=150,
+            pitch=-30,
+            roll=0,
+            upAxisIndex=2
+        )
     def _env_setup(self):
         super(MisOrient, self)._env_setup()
         self.use_camera = True
@@ -39,28 +61,28 @@ class MisOrient(EcmEnv):
         joint_positions = np.random.uniform(low, high)
         self.ecm.reset_joint(joint_positions)
 
-        # # cube; disable to speed up training
-        # cube_num = self.CUBE_NUMBER
-        # x = np.linspace(self.workspace_limits[0, 0], self.workspace_limits[0, 1], cube_num[0])
-        # y = np.linspace(self.workspace_limits[1, 0], self.workspace_limits[1, 1], cube_num[1])
-        # textures = os.listdir(os.path.join(ASSET_DIR_PATH, 'cube/texture'))
-        # textures = [tex for tex in textures if tex.startswith('cube_tex') and tex.endswith('.png')]
-        # for i in range(cube_num[0]):
-        #     for j in range(cube_num[1]):
-        #         # little use during training
-        #         obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'cube/cube_vis.urdf'),
-        #                             (x[i], y[j], 0.04), (0, 0, 0, 1),
-        #                             useFixedBase=True, globalScaling=0.4)
-        #         if np.random.rand() > 0.6:
-        #             color = RGB_COLOR_255[np.random.randint(len(RGB_COLOR_255))]
-        #         else:
-        #             color = [225, 225, 225]
-        #         p.changeVisualShape(obj_id, -1,
-        #                             rgbaColor=(color[0] / 255, color[1] / 255, color[2] / 255, 1),
-        #                             specularColor=(0.1, 0.1, 0.1))
-        #         tex = textures[np.random.randint(len(textures))]
-        #         tex_id = p.loadTexture(os.path.join(ASSET_DIR_PATH, 'cube/texture', tex))
-        #         p.changeVisualShape(obj_id, -1, textureUniqueId=tex_id)
+        # cube; disable to speed up training
+        cube_num = self.CUBE_NUMBER
+        x = np.linspace(self.workspace_limits[0, 0], self.workspace_limits[0, 1], cube_num[0])
+        y = np.linspace(self.workspace_limits[1, 0], self.workspace_limits[1, 1], cube_num[1])
+        textures = os.listdir(os.path.join(ASSET_DIR_PATH, 'cube/texture'))
+        textures = [tex for tex in textures if tex.startswith('cube_tex') and tex.endswith('.png')]
+        for i in range(cube_num[0]):
+            for j in range(cube_num[1]):
+                # little use during training
+                obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'cube/cube_vis.urdf'),
+                                    (x[i], y[j], 0.04), (0, 0, 0, 1),
+                                    useFixedBase=True, globalScaling=0.4)
+                if np.random.rand() > 0.6:
+                    color = RGB_COLOR_255[np.random.randint(len(RGB_COLOR_255))]
+                else:
+                    color = [225, 225, 225]
+                p.changeVisualShape(obj_id, -1,
+                                    rgbaColor=(color[0] / 255, color[1] / 255, color[2] / 255, 1),
+                                    specularColor=(0.1, 0.1, 0.1))
+                tex = textures[np.random.randint(len(textures))]
+                tex_id = p.loadTexture(os.path.join(ASSET_DIR_PATH, 'cube/texture', tex))
+                p.changeVisualShape(obj_id, -1, textureUniqueId=tex_id)
 
     @staticmethod
     def _get_misorientation(tip_world: np.ndarray, tip_world0: np.ndarray) -> np.ndarray:
@@ -185,6 +207,15 @@ class MisOrient(EcmEnv):
         action = droll.clip(-1, 1) * 0.3
         return action
 
+    def _set_action_ecm(self, action):
+        action *= 0.01 * self.SCALING
+        pose_rcm = self.ecm.get_current_position()
+        pose_rcm[:3, 3] += action
+        pos, _ = self.ecm.pose_rcm2world(pose_rcm, 'tuple')
+        joint_positions = self.ecm.inverse_kinematics((pos, None), self.ecm.EEF_LINK_INDEX)  # do not consider orn
+        self.ecm.move_joint(joint_positions[:self.ecm.DoF])
+    def _reset_ecm_pos(self):
+        self.ecm.reset_joint(self.QPOS_ECM)
 
 if __name__ == "__main__":
     env = MisOrient(render_mode='human')  # create one process and corresponding env

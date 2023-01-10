@@ -53,7 +53,7 @@ def open_scene(id):
     elif id == 6:
         scene = SurgicalSimulator(PegBoard, {'render_mode': 'human'})
     elif id == 7:
-        scene = SurgicalSimulatorBimanual(NeedleRings, {'render_mode': 'human'}, jaw_states=[1.0, 1.0])
+        scene = SurgicalSimulatorBimanual(NeedleRegrasp, {'render_mode': 'human'}, jaw_states=[1.0, 1.0])
 
     if id in (1, 2) and not hint_printed:
         print('Press <W><A><S><D><E><Q><Space> to control the PSM.')

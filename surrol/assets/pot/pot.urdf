@@ -3,7 +3,9 @@
     <material name="red">
         <color rgba="0.8 0.1 0.2 1"/>
     </material>
-
+    <material name="BLUE">
+        <color rgba="0.68 1.00 0.80 0.9"/>
+    </material>
     <link name="baseLink">
         <!-- from lego/lego.urdf -->
         <contact>
@@ -35,5 +37,25 @@
         </collision>
     </link>
 
+    <!-- <link name="waypoint0">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.002"/>
+            </geometry>
+            <material name="BLUE"/>
+        </visual>
+    </link>
+
+    <joint name="waypoint_joint_0" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint0"/>
+        <origin rpy="0 0 0" xyz="0 0. 0"/>
+    </joint> -->
 
 </robot>

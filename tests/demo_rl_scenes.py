@@ -37,10 +37,11 @@ from haptic_src.test import initTouch_right, closeTouch_right, getDeviceAction_r
 from haptic_src.test import initTouch_left, closeTouch_left, getDeviceAction_left
 from direct.task import Task
 app = None
+cnt = 0
 hint_printed = False
 resetFlag = False
 def open_scene(id):
-    global app, hint_printed,resetFlag
+    global app, hint_printed,resetFlag,cnt
 
     scene = None
 
@@ -116,7 +117,7 @@ selection_panel_kv = '''MDBoxLayout:
                     padding: 0, "10dp", "10dp", "10dp"
 
                     MDLabel:
-                        text: "1. Needle Pick"
+                        text: "Needle Pick"
                         theme_text_color: "Primary"
                         font_style: "H6"
                         bold: True
@@ -163,7 +164,7 @@ selection_panel_kv = '''MDBoxLayout:
                     padding: 0, "10dp", "10dp", "10dp"
 
                     MDLabel:
-                        text: "5. Bi-Peg Transfer"
+                        text: "Bi-Peg Transfer"
                         theme_text_color: "Primary"
                         font_style: "H6"
                         bold: True
@@ -211,7 +212,7 @@ selection_panel_kv = '''MDBoxLayout:
                     padding: 0, "10dp", "10dp", "10dp"
 
                     MDLabel:
-                        text: "2. Peg Transfer"
+                        text: "Peg Transfer"
                         theme_text_color: "Primary"
                         font_style: "H6"
                         bold: True
@@ -261,7 +262,7 @@ selection_panel_kv = '''MDBoxLayout:
                     padding: 0, "10dp", "10dp", "10dp"
 
                     MDLabel:
-                        text: "6. Peg Board"
+                        text: "Peg Board"
                         theme_text_color: "Primary"
                         font_style: "H6"
                         bold: True
@@ -309,7 +310,7 @@ selection_panel_kv = '''MDBoxLayout:
                     padding: 0, "10dp", "10dp", "10dp"
 
                     MDLabel:
-                        text: "3. Pick and Place"
+                        text: "Pick and Place"
                         theme_text_color: "Primary"
                         font_style: "H6"
                         bold: True
@@ -357,7 +358,7 @@ selection_panel_kv = '''MDBoxLayout:
                     padding: 0, "10dp", "10dp", "10dp"
 
                     MDLabel:
-                        text: "7. Needle the Rings"
+                        text: "Needle the Rings"
                         theme_text_color: "Primary"
                         font_style: "H6"
                         bold: True
@@ -405,7 +406,7 @@ selection_panel_kv = '''MDBoxLayout:
                     padding: 0, "10dp", "10dp", "10dp"
 
                     MDLabel:
-                        text: "4. MatchBoard"
+                        text: "MatchBoard"
                         theme_text_color: "Primary"
                         font_style: "H6"
                         bold: True
@@ -453,7 +454,7 @@ selection_panel_kv = '''MDBoxLayout:
                     padding: 0, "10dp", "10dp", "10dp"
 
                     MDLabel:
-                        text: "1. Needle Pick(RL Agent)"
+                        text: "Needle Pick(RL Agent)"
                         theme_text_color: "Primary"
                         font_style: "H6"
                         bold: True
@@ -501,7 +502,7 @@ selection_panel_kv = '''MDBoxLayout:
                     padding: 0, "10dp", "10dp", "10dp"
 
                     MDLabel:
-                        text: "2. Peg Transfer(RL Agent)"
+                        text: "Peg Transfer(RL Agent)"
                         theme_text_color: "Primary"
                         font_style: "H6"
                         bold: True
@@ -659,7 +660,7 @@ class SurgicalSimulatorBase(GymEnvScene):
         slight.setShadowCaster(True, app.configs.shadow_resolution, app.configs.shadow_resolution)
         slnp = self.world3d.attachNewNode(slight)
         slnp.setPos(*(table_pos + np.array([0, 0.0, 5.0])))
-        slnp.lookAt(*(table_pos + np.array([0.5, 0, 1.0])))
+        slnp.lookAt(*(table_pos + np.array([0, 0, 1.0])))
         self.world3d.setLight(slnp)
 
     def on_start(self):
@@ -742,7 +743,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
         
         initTouch_right()
         startScheduler()
-
+        # self.cnt=cnt
         self.psm1_action = np.zeros(env_type.ACTION_SIZE)
         self.psm1_action[4] = 0.5
 
@@ -837,11 +838,15 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                 elif self.id == 9:
                     time_size = 10
                 # if time.time()-self.start_time > (self.itr + 1) * time_size:
-                if time.time()-self.start_time > time_size:    
-                    # self.on_destroy()
+                if self.env._is_success(self.env._get_obs()['achieved_goal'],self.env._sample_goal()) or time.time()-self.start_time > time_size:   
+                    # if self.cnt>=6: 
+                    #     self.kivy_ui.stop()
+                    #     self.app.win.removeDisplayRegion(self.ui_display_region)
+
                     open_scene(0)
                     print(f"xxxx current time:{time.time()}")
                     open_scene(self.id)
+                    # self.cnt+=1
                     return 
                     # self.start_time=time.time()
                     # self.toggleEcmView()

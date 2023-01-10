@@ -261,9 +261,12 @@ from haptic_src.test import initTouch_left, closeTouch_left, getDeviceAction_lef
 
 class MatchBoardHaptic(PsmEnv):
     POSE_TRAY = ((0.55, 0, 0.6751), (0, 0, 0))
-    RPOT_POS = (0.55, -0.025, 0.6781)
-    GPOT_POS = (0.55, 0.03, 0.6781)
-    POT_ORN = (1.57,0,0)
+    # RPOT_POS = (0.55, -0.025, 0.6781)
+    # GPOT_POS = (0.55, 0.03, 0.6781)
+    # POT_ORN = (1.57,0,0)
+    BOARD_POS = (0.55, 0, 0.6781)
+    BOARD_ORN= (1.57,0,0)
+    BOARD_SCALING = 0.03
     WORKSPACE_LIMITS = ((0.50, 0.60), (-0.05, 0.05), (0.685, 0.745))  # reduce tip pad contact
     SCALING = 5.
     QPOS_ECM = (0, 0.6, 0.04, 0)
@@ -372,19 +375,46 @@ class MatchBoardHaptic(PsmEnv):
         #                     useFixedBase=False,
         #                     globalScaling=self.SCALING)
         #         p.changeVisualShape(pick_item,-1,rgbaColor=(0,1,0,1),specularColor=(80,80,80))
-        startOrientation = p.getQuaternionFromEuler([1.57,0,0])
-        match_board = p.loadURDF("/Users/ww/gazebo_fyp/SurRolv2/surrol/assets_test/ring/match_board.urdf",[0,0,0.05],startOrientation,globalScaling=0.1,useFixedBase=1)
+        match_board = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'match_board/match_board.urdf'),
+                            np.array(self.BOARD_POS) * self.SCALING,
+                            p.getQuaternionFromEuler(self.BOARD_ORN),
+                            globalScaling=self.BOARD_SCALING,
+                            useFixedBase=1)
         self.obj_ids['fixed'].append(match_board)
-        obj0= p.loadURDF("/Users/ww/gazebo_fyp/SurRolv2/surrol/assets_test/ring/0.urdf",[-0.4,-0.4,0.2],startOrientation,globalScaling=0.1)
-        obj1= p.loadURDF("/Users/ww/gazebo_fyp/SurRolv2/surrol/assets_test/ring/1.urdf",[-0.4,0,0.2],startOrientation,globalScaling=0.1)
-        obj2= p.loadURDF("/Users/ww/gazebo_fyp/SurRolv2/surrol/assets_test/ring/2.urdf",[-0.4,0.4,0.2],startOrientation,globalScaling=0.1)
-        obj4= p.loadURDF("/Users/ww/gazebo_fyp/SurRolv2/surrol/assets_test/ring/4.urdf",[0,-0.4,0.2],startOrientation,globalScaling=0.1)
-        obj5= p.loadURDF("/Users/ww/gazebo_fyp/SurRolv2/surrol/assets_test/ring/5.urdf",[0,0,0.2],startOrientation,globalScaling=0.1)
-        obj6= p.loadURDF("/Users/ww/gazebo_fyp/SurRolv2/surrol/assets_test/ring/6.urdf",[0,0.4,0.2],startOrientation,globalScaling=0.1)
-        obja= p.loadURDF("/Users/ww/gazebo_fyp/SurRolv2/surrol/assets_test/ring/a.urdf",[0.4,-0.4,0.2],startOrientation,globalScaling=0.1)
-        objb= p.loadURDF("/Users/ww/gazebo_fyp/SurRolv2/surrol/assets_test/ring/b.urdf",[0.4,0,0.2],startOrientation,globalScaling=0.1)
-        objc= p.loadURDF("/Users/ww/gazebo_fyp/SurRolv2/surrol/assets_test/ring/c.urdf",[0.4,0.4,0.2],startOrientation,globalScaling=0.1)
-
+        for i in range(7):
+            if i==3:
+                continue
+            fn='match_board/'+str(i)+'.urdf'
+            urdf_path = os.path.join(ASSET_DIR_PATH, fn)
+            if i<3:
+                if i%3==0:
+                    pos_offset = [-0.15,-0.075*(i%3+1)-0.15,0.06]
+                else:
+                    pos_offset = [-0.15,0.075*i+0.15,0.06]
+            else:
+                # pos_offset = [0,-0.075*(7-i)-0.15,0.06]
+                if i==4:
+                    pos_offset = [0,-0.075*(i%3)-0.15,0.06]
+                else:
+                    pos_offset = [0,0.075*(i-4)+0.15,0.06]
+            obj= p.loadURDF(urdf_path,np.array(self.BOARD_POS) * self.SCALING+pos_offset,p.getQuaternionFromEuler(self.BOARD_ORN),globalScaling=self.BOARD_SCALING)
+            self.obj_ids['rigid'].append(obj)
+        for i in range(3):
+            fn='match_board/'+chr(i+ord('a'))+'.urdf'
+            urdf_path = os.path.join(ASSET_DIR_PATH, fn)
+            if i%3==0:
+                pos_offset = [0.15,-0.075*(i%3+1)-0.15,0.06]
+            else:
+                pos_offset = [0.15,0.075*i+0.15,0.06]
+            obj= p.loadURDF(urdf_path,np.array(self.BOARD_POS) * self.SCALING+pos_offset,p.getQuaternionFromEuler(self.BOARD_ORN),globalScaling=self.BOARD_SCALING)
+        # obj4= p.loadURDF(os.path.join(ASSET_DIR_PATH, 'match_board/4.urdf'),[0,-0.4,0.2],p.getQuaternionFromEuler(self.BOARD_ORN),globalScaling=self.BOARD_SCALING)
+        # obj5= p.loadURDF(os.path.join(ASSET_DIR_PATH, 'match_board/5.urdf'),[0,0,0.2],p.getQuaternionFromEuler(self.BOARD_ORN),globalScaling=self.BOARD_SCALING)
+        # obj6= p.loadURDF(os.path.join(ASSET_DIR_PATH, 'match_board/6.urdf'),[0,0.4,0.2],p.getQuaternionFromEuler(self.BOARD_ORN),globalScaling=self.BOARD_SCALING)
+        # obja= p.loadURDF(os.path.join(ASSET_DIR_PATH, 'match_board/a.urdf'),[0.4,-0.4,0.2],p.getQuaternionFromEuler(self.BOARD_ORN),globalScaling=self.BOARD_SCALING)
+        # objb= p.loadURDF(os.path.join(ASSET_DIR_PATH, 'match_board/b.urdf'),[0.4,0,0.2],p.getQuaternionFromEuler(self.BOARD_ORN),globalScaling=self.BOARD_SCALING)
+        # objc= p.loadURDF(os.path.join(ASSET_DIR_PATH, 'match_board/c.urdf'),[0.4,0.4,0.2],p.getQuaternionFromEuler(self.BOARD_ORN),globalScaling=self.BOARD_SCALING)
+            self.obj_ids['rigid'].append(obj)  # 0
+        self.obj_id, self.obj_link1 = self.obj_ids['fixed'][2], 1
 
     def _sample_goal(self) -> np.ndarray:
         """ Samples a new goal and returns it.
@@ -502,7 +532,7 @@ class MatchBoardHaptic(PsmEnv):
         closeTouch_right() 
 
 if __name__ == "__main__":
-    env = MatchBoard(render_mode='human')  # create one process and corresponding env
+    env = MatchBoardHaptic(render_mode='human')  # create one process and corresponding env
 
     env.test()
     env.close()

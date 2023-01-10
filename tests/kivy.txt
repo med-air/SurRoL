@@ -1,0 +1,287 @@
+        MDCard:
+            orientation: "vertical"
+            size_hint: .45, None
+            height: box_top.height + box_bottom.height
+
+            MDBoxLayout:
+                id: box_top
+                spacing: "20dp"
+                adaptive_height: True
+
+                FitImage:
+                    source: "images/bipegtransfer_poster.png"
+                    size_hint: 0.5, None
+                    height: text_box.height
+
+                MDBoxLayout:
+                    id: text_box
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: "10dp"
+                    padding: 0, "10dp", "10dp", "10dp"
+
+                    MDLabel:
+                        text: "Bi-Peg Transfer"
+                        theme_text_color: "Primary"
+                        font_style: "H6"
+                        bold: True
+                        adaptive_height: True
+
+                    MDLabel:
+                        text: "Bimanual peg transfer"
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+
+            MDSeparator:
+
+            MDBoxLayout:
+                id: box_bottom
+                adaptive_height: True
+                padding: "0dp", 0, 0, 0
+                
+                MDRaisedButton:
+                    id: btn4
+                    text: "Play"
+                    size_hint: 0.8, 1.0
+                MDIconButton:
+                    icon: "application-settings"
+            
+        MDCard:
+            orientation: "vertical"
+            size_hint: .45, None
+            height: box_top.height + box_bottom.height
+
+            MDBoxLayout:
+                id: box_top
+                spacing: "20dp"
+                adaptive_height: True
+
+                FitImage:
+                    source: "images/pick&place.png"
+                    size_hint: 0.5, None
+                    height: text_box.height
+
+                MDBoxLayout:
+                    id: text_box
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: "10dp"
+                    padding: 0, "10dp", "10dp", "10dp"
+
+                    MDLabel:
+                        text: "Pick and Place"
+                        theme_text_color: "Primary"
+                        font_style: "H6"
+                        bold: True
+                        adaptive_height: True
+
+                    MDLabel:
+                        text: "Pick and Place"
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+
+            MDSeparator:
+
+            MDBoxLayout:
+                id: box_bottom
+                adaptive_height: True
+                padding: "0dp", 0, 0, 0
+                
+                MDRaisedButton:
+                    id: btn5
+                    text: "Play"
+                    size_hint: 0.8, 1.0
+                MDIconButton:
+                    icon: "application-settings"  
+
+        MDCard:
+            orientation: "vertical"
+            size_hint: .45, None
+            height: box_top.height + box_bottom.height
+
+            MDBoxLayout:
+                id: box_top
+                spacing: "20dp"
+                adaptive_height: True
+
+                FitImage:
+                    source: "images/pegboard.png"
+                    size_hint: 0.5, None
+                    height: text_box.height
+
+                MDBoxLayout:
+                    id: text_box
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: "10dp"
+                    padding: 0, "10dp", "10dp", "10dp"
+
+                    MDLabel:
+                        text: "Peg Board"
+                        theme_text_color: "Primary"
+                        font_style: "H6"
+                        bold: True
+                        adaptive_height: True
+
+                    MDLabel:
+                        text: "Peg Board"
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+
+            MDSeparator:
+
+            MDBoxLayout:
+                id: box_bottom
+                adaptive_height: True
+                padding: "0dp", 0, 0, 0
+                
+                MDRaisedButton:
+                    id: btn6
+                    text: "Play"
+                    size_hint: 0.8, 1.0
+                MDIconButton:
+                    icon: "application-settings"
+        MDCard:
+            orientation: "vertical"
+            size_hint: .45, None
+            height: box_top.height + box_bottom.height
+
+            MDBoxLayout:
+                id: box_top
+                spacing: "20dp"
+                adaptive_height: True
+
+                FitImage:
+                    source: "images/needlerings.png"
+                    size_hint: 0.5, None
+                    height: text_box.height
+
+                MDBoxLayout:
+                    id: text_box
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: "10dp"
+                    padding: 0, "10dp", "10dp", "10dp"
+
+                    MDLabel:
+                        text: "Needle the Rings"
+                        theme_text_color: "Primary"
+                        font_style: "H6"
+                        bold: True
+                        adaptive_height: True
+
+                    MDLabel:
+                        text: "Pass a needle through the ring"
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+
+            MDSeparator:
+
+            MDBoxLayout:
+                id: box_bottom
+                adaptive_height: True
+                padding: "0dp", 0, 0, 0
+                
+                MDRaisedButton:
+                    id: btn7
+                    text: "Play"
+                    size_hint: 0.8, 1.0
+                MDIconButton:
+                    icon: "application-settings"
+
+        MDCard:
+            orientation: "vertical"
+            size_hint: .45, None
+            height: box_top.height + box_bottom.height
+
+            MDBoxLayout:
+                id: box_top
+                spacing: "20dp"
+                adaptive_height: True
+
+                FitImage:
+                    source: "images/matchboard.png"
+                    size_hint: 0.5, None
+                    height: text_box.height
+
+                MDBoxLayout:
+                    id: text_box
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: "10dp"
+                    padding: 0, "10dp", "10dp", "10dp"
+
+                    MDLabel:
+                        text: "MatchBoard"
+                        theme_text_color: "Primary"
+                        font_style: "H6"
+                        bold: True
+                        adaptive_height: True
+
+                    MDLabel:
+                        text: "Load a heart with texture"
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+
+            MDSeparator:
+
+            MDBoxLayout:
+                id: box_bottom
+                adaptive_height: True
+                padding: "0dp", 0, 0, 0
+                
+                MDRaisedButton:
+                    id: btn8
+                    text: "Play"
+                    size_hint: 0.8, 1.0
+                MDIconButton:
+                    icon: "application-settings"
+        
+
+        MDCard:
+            orientation: "vertical"
+            size_hint: .45, None
+            height: box_top.height + box_bottom.height
+
+            MDBoxLayout:
+                id: box_top
+                spacing: "20dp"
+                adaptive_height: True
+
+                FitImage:
+                    source: "images/matchboard.png"
+                    size_hint: 0.5, None
+                    height: text_box.height
+
+                MDBoxLayout:
+                    id: text_box
+                    orientation: "vertical"
+                    adaptive_height: True
+                    spacing: "10dp"
+                    padding: 0, "10dp", "10dp", "10dp"
+
+                    MDLabel:
+                        text: "9. Needle Reach"
+                        theme_text_color: "Primary"
+                        font_style: "H6"
+                        bold: True
+                        adaptive_height: True
+
+                    MDLabel:
+                        text: "Test task"
+                        adaptive_height: True
+                        theme_text_color: "Primary"
+
+            MDSeparator:
+
+            MDBoxLayout:
+                id: box_bottom
+                adaptive_height: True
+                padding: "0dp", 0, 0, 0
+                
+                MDRaisedButton:
+                    id: btn9
+                    text: "Play"
+                    size_hint: 0.8, 1.0
+                MDIconButton:
+                    icon: "application-settings"

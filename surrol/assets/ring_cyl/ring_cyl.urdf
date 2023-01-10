@@ -1,40 +1,41 @@
 <?xml version="0.0" ?>
-<robot name="needle">
-    <material name="grey">
-        <color rgba="0.7 0.7 0.7 1"/>
+<robot name="ring">
+    <material name="blue">
+        <color rgba="0.078431 0.494117 0.984313 1"/>
     </material>
 
     <link name="baseLink">
+        <!-- from lego/lego.urdf -->
         <contact>
             <lateral_friction value="1.0"/>
-            <!--      rolling_friction: important (0.1 failed)-->
             <rolling_friction value="0.0"/>
+            <contact_cfm value="0.0"/>
+            <contact_erp value="1.0"/>
         </contact>
         <inertial>
-            <!--      tours: 30, 8-->
-            <!--      major radius: 0.02, minor radius: 0.0005-->
-            <!--      vis: radius=0.02, in radius=0.0005-->
-            <!--      col: radius=0.02, in radius=0.0006-->
-            <!--      center of mass: 2*R/pi; important-->
-            <origin rpy="0 0 0" xyz="-0.0127 0 0"/>
-            <mass value="0.51"/>
-            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.01"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
         </inertial>
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/needle_40mm.obj" scale="1 1 1"/>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_cyl.obj" scale="1 1 1"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
             </geometry>
-            <material name="grey"/>
+            <material name="blue"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/needle_40mm_vhacd.obj" scale="1 1 1"/>
+                <mesh filename="meshes/ring_cyl_vhacd.obj" scale="1 1 1"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
             </geometry>
         </collision>
     </link>
 
+    <!-- for testing get linkstate -->
     <link name="waypoint_0">
         <!--    origin-->
         <inertial>
@@ -135,5 +136,5 @@
         <child link="waypoint_5"/>
         <!--    -cos(60)*R, sin(60)*R, 0)-->
         <origin rpy="0 0 -1.047198" xyz="-0.0100000 0.0173205 0"/>
-    </joint>
+    </joint> 
 </robot>

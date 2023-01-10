@@ -3,14 +3,35 @@ import time
 import numpy as np
 
 import pybullet as p
-from surrol.tasks.ecm_env import EcmEnv
 from surrol.const import ASSET_DIR_PATH
+from surrol.utils.pybullet_utils import (
+    get_link_pose,
+    reset_camera,    
+    wrap_angle
+)
+from surrol.tasks.ecm_env import EcmEnv, goal_distance
 
+from surrol.robots.ecm import RENDER_HEIGHT, RENDER_WIDTH, FoV
+from surrol.const import ASSET_DIR_PATH
+from surrol.robots.ecm import Ecm
 
 class ECMReach(EcmEnv):
     ACTION_MODE = 'dmove'
     WORKSPACE_LIMITS = ((0.45, 0.55), (-0.05, 0.05), (0.60, 0.70))
+    QPOS_ECM = (0, 0.6, 0.04, 0)
+    POSE_TABLE = ((0.5, 0, 0.001), (0, 0, 0))
 
+    ACTION_ECM_SIZE=3
+    def __init__(self, render_mode=None, cid = -1):
+        super(ECMReach, self).__init__(render_mode, cid)
+        self._view_matrix = p.computeViewMatrixFromYawPitchRoll(
+            cameraTargetPosition=(0.27, -0.2, 0.55),
+            distance=2.2,
+            yaw=150,
+            pitch=-30,
+            roll=0,
+            upAxisIndex=2
+        )
     def _env_setup(self):
         super(ECMReach, self)._env_setup()
 
@@ -51,6 +72,16 @@ class ECMReach(EcmEnv):
         action = np.array([delta_pos[0], delta_pos[1], delta_pos[2]])
         return action
 
+
+    def _set_action_ecm(self, action):
+        action *= 0.01 * self.SCALING
+        pose_rcm = self.ecm.get_current_position()
+        pose_rcm[:3, 3] += action
+        pos, _ = self.ecm.pose_rcm2world(pose_rcm, 'tuple')
+        joint_positions = self.ecm.inverse_kinematics((pos, None), self.ecm.EEF_LINK_INDEX)  # do not consider orn
+        self.ecm.move_joint(joint_positions[:self.ecm.DoF])
+    def _reset_ecm_pos(self):
+        self.ecm.reset_joint(self.QPOS_ECM)
 
 if __name__ == "__main__":
     env = ECMReach(render_mode='human')  # create one process and corresponding env

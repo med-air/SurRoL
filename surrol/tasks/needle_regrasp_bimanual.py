@@ -73,7 +73,7 @@ class NeedleRegrasp(PsmsEnv):
         sample_space = workspace_limits.copy()
         sample_space[:, 0] += limits_span
         sample_space[:, 1] -= limits_span
-        obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'needle/needle_40mm.urdf'),
+        obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'needle/needle_40mm_RL.urdf'),
                             (0.01 * self.SCALING, 0, 0),
                             (0, 0, 0, 1),
                             useFixedBase=False,

@@ -104,7 +104,7 @@ class Boundary(object):
 class Trajectory(object):
     """ Generate a 2-D (x, y) trajectory using the heuristics """
 
-    def __init__(self, workspace_limits: np.ndarray, num_points=2000, seed=1024):
+    def __init__(self, workspace_limits: np.ndarray, num_points=1750, seed=1024):
         self.workspace_limits = workspace_limits.copy()
         self._seed = seed
         self.xi, self.yi = None, None
@@ -120,8 +120,8 @@ class Trajectory(object):
             np.random.seed(self._seed)
 
         # Divide the work space into four blocks
-        boundary_x = np.random.uniform(self.workspace_limits[0, :].mean() - 0.1 * self.workspace_limits[0, :].ptp(),
-                                       self.workspace_limits[0, :].mean() + 0.1 * self.workspace_limits[0, :].ptp())
+        boundary_x = np.random.uniform(self.workspace_limits[0, :].mean() - 0.5 * self.workspace_limits[0, :].ptp(),
+                                       self.workspace_limits[0, :].mean() -0.3 * self.workspace_limits[0, :].ptp())
         boundary_y = np.random.uniform(self.workspace_limits[1, :].mean() - 0.1 * self.workspace_limits[1, :].ptp(),
                                        self.workspace_limits[1, :].mean() + 0.1 * self.workspace_limits[1, :].ptp())
         # upper left

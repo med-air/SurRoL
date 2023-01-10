@@ -232,7 +232,7 @@ class SurRoLEnv(gym.Env):
         """
         steps, done = 0, False
         obs = self.reset()
-        while  steps <= 100000000000:
+        while not done and steps <= 9999900:
             tic = time.time()
             action = self.get_oracle_action(obs)
             print('\n -> step: {}, action: {}'.format(steps, np.round(action, 4)))
