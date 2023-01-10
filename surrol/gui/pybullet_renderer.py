@@ -9,6 +9,16 @@ from panda3d.core import GraphicsPipe, GraphicsOutput
 from panda3d.core import Texture
 from PIL import Image
 
+def adjust_gamma(image, gamma=1.0):
+    # build a lookup table mapping the pixel values [0, 255] to
+    # their adjusted gamma values
+    invGamma = 1.0 / gamma
+    table = np.array([((i / 255.0) ** invGamma) * 255
+        for i in np.arange(0, 256)]).astype("uint8")
+    # apply gamma correction using the lookup table
+    return cv2.LUT(image, table)
+
+
 def show_rgbd_image(image, depth_image, window_name='Image window', delay=1, depth_offset=0.0, depth_scale=1.0):
     # if depth_image.dtype != np.uint8:
     #     if depth_scale is None:
@@ -18,13 +28,13 @@ def show_rgbd_image(image, depth_image, window_name='Image window', delay=1, dep
     #     depth_image = np.clip((depth_image - depth_offset) / depth_scale, 0.0, 1.0)
     #     depth_image = (255.0 * depth_image).astype(np.uint8)
     # depth_image = np.tile(depth_image, (1, 1, 3))
-    if image.shape[2] == 4:  # add alpha channel
-        alpha = np.full(depth_image.shape[:2] + (1,), 255, dtype=np.uint8)
-        depth_image = np.concatenate([depth_image, alpha], axis=-1)
-    images = np.concatenate([image, depth_image[..., :-1]], axis=1)
+    # if image.shape[2] == 4:  # add alpha channel
+    #     alpha = np.full(depth_image.shape[:2] + (1,), 255, dtype=np.uint8)
+    #     depth_image = np.concatenate([depth_image, alpha], axis=-1)
+    # images = np.concatenate([image, depth_image[..., :-1]], axis=1)
     # images = cv2.cvtColor(images, cv2.COLOR_RGB2BGR)  # not needed since image is already in BGR format
     cv2.imshow(window_name, image)
-    cv2.imshow('right',depth_image[..., :-1])
+    cv2.imshow('right',depth_image)
     key = cv2.waitKey(delay)
     key &= 255
     if key == 27 or key == ord('q'):
@@ -66,7 +76,7 @@ class Panda3DSceneRenderer(BaseRenderer):
         p3d.ConfigVariableBool('allow-incomplete-render').set_value(False)
 
         self._multisamples = 32
-        self._srgb_color = False
+        self._srgb_color = True
         self._show_window = True
 
 
@@ -129,9 +139,9 @@ class Panda3DSceneRenderer(BaseRenderer):
     #         height {int} -- target buffer height
     #     """
     
-    #     # fb_prop = p3d.FrameBufferProperties(p3d.FrameBufferProperties.get_default())
-    #     # fb_prop.set_multisamples(self._multisamples)
-    #     # fb_prop.set_srgb_color(self._srgb_color)
+        # fb_prop = p3d.FrameBufferProperties(p3d.FrameBufferProperties.get_default())
+        # fb_prop.set_multisamples(self._multisamples)
+        # fb_prop.set_srgb_color(self._srgb_color)
 
     #     # self._buffer = self._engine.make_output(
     #     #     self._pipe, name="offscreen", sort=0,
@@ -177,7 +187,7 @@ class Panda3DSceneRenderer(BaseRenderer):
             node.setQuat(p3d.Quat(*pose.quat))
             node.setScale(*pose.scale)
 
-        self._scene.app.setBackgroundColor(*scene_view.bg_color)
+        # self._scene.app.setBackgroundColor(*scene_view.bg_color)
         # return False
 
         # if self._callback_fn is not None:
@@ -225,6 +235,7 @@ class Panda3DSceneRenderer(BaseRenderer):
 
         requested_format = None
         tex = self.dr.getScreenshot()
+        print(f"!!!!left{tex}")
         if requested_format is None:
             data = tex.getRamImage()
         else:
@@ -232,8 +243,10 @@ class Panda3DSceneRenderer(BaseRenderer):
         color_image = np.frombuffer(data, np.uint8)  # use data.get_data() instead of data in python 2
         color_image.shape = (tex.getYSize(), tex.getXSize(), tex.getNumComponents())
         color_image = np.flipud(color_image)
+        color_image = adjust_gamma(color_image,1.8)
 
         movedTex = self.dr2.getScreenshot()
+        print(f"!!!!right{tex}")
         if requested_format is None:
             data = movedTex.getRamImage()
         else:
@@ -241,6 +254,7 @@ class Panda3DSceneRenderer(BaseRenderer):
         moved_image = np.frombuffer(data, np.uint8)
         moved_image.shape = (movedTex.getYSize(), movedTex.getXSize(), movedTex.getNumComponents())
         moved_image = np.flipud(moved_image)
+        moved_image = adjust_gamma(moved_image,1.8)
 
         show_rgbd_image(color_image,moved_image)
         # plt.imshow(color_image)

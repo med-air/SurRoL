@@ -75,7 +75,7 @@ class Application(ShowBase):
             filters.setAmbientOcclusion()
         if cfg.srgb:
             filters.setSrgbEncode()
-
+            filters.setGammaAdjust(1.2)
 
         # Debug: "out-of-body experience" mouse-interface mode
         if cfg.debug:
@@ -154,6 +154,9 @@ class Application(ShowBase):
         # props.setRgbColor(1)
         # frame_buffer_props = FrameBufferProperties(FrameBufferProperties.getDefault()) #FrameBufferProperties()
         frame_buffer_props = FrameBufferProperties.getDefault()
+        # fb_prop = p3d.FrameBufferProperties(p3d.FrameBufferProperties.get_default())
+        # fb_prop.set_multisamples(1)
+        # fb_prop.set_srgb_color(True)
         # frame_buffer_props.setBackBuffers(0)
         # frame_buffer_props.setFloatColor(1)
         # frame_buffer_props.setSrgbColor(True)
@@ -202,6 +205,12 @@ class Application(ShowBase):
         # lens.setNear(5.0)
         # lens.setFar(500.0)
         self.cam2 = self.makeCamera(buffer, clearDepth=1, lens=self.cam.node().getLens(), scene=self.render, camName='cam2')
+        filters = CommonFilters(buffer, self.cam2)
+        # cfg=ApplicationConfig.defaults()
+        # # # if cfg.ambient_occlusion:
+        # # filters.setAmbientOcclusion()
+        # # # if cfg.srgb:
+        filters.setGammaAdjust(1.5)
         self.cam2.reparentTo(self.render)
         # self.cam2.setPos(np.sin(1.57), -np.cos(1.57), 3)
         # self.cam2.setHpr(0, 0, 0)
