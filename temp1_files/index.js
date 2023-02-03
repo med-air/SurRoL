@@ -76,3 +76,29 @@
 //     bulmaSlider.attach();
 
 // })
+// if (document.readyState === "complete") { 
+//     alert('cp');
+//   (function() {
+//     if (document.getElementById('tab1').checked){
+//         alert('checked');
+// alert( document.getElementsByClassName('vid-item'));
+var items = document.getElementsByClassName('vid-item');
+items[0].click();
+//     }
+//   })();      
+// }
+function selectthis(i) {
+//   alert('!!');
+    var items = document.getElementsByClassName('vid-item');
+    // alert(items);
+    [].forEach.call(items, function (j) {
+        // j.style.background='#0a0a23';
+        j.className='vid-item';});
+    var items_c = document.getElementsByClassName('vid-item-c');
+    // alert(items);
+    [].forEach.call(items_c, function (j) {
+        // j.style.background='#0a0a23';
+        j.className='vid-item';});
+    // i.style.background='rgba(223, 13, 13, 0.9)';
+    i.className='vid-item-c';
+}

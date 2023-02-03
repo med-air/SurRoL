@@ -14,28 +14,10 @@
     <link rel="stylesheet" href="./temp1_files/index.css">
 
 
-    <script src="./temp1_files/jquery.min.js"></script>
 
-    <script src="./temp1_files/index.js"></script>
-
-
-
-    <!-- Start WOWSlider.com HEAD section --> <!-- add to the <head> of your page -->
-    <link rel="stylesheet" type="text/css" href="engine6/style.css" />
-    <script type="text/javascript" src="engine6/jquery.js"></script>	<script src="https://www.youtube.com/iframe_api"></script>
-
-    <!-- End WOWSlider.com HEAD section -->
-    <!-- Start WOWSlider.com HEAD section --> <!-- add to the <head> of your page -->
-    <link rel="stylesheet" type="text/css" href="engine7/style.css" />
-    <script type="text/javascript" src="engine7/jquery.js"></script>	<script src="https://www.youtube.com/iframe_api"></script>
-
-    <!-- End WOWSlider.com HEAD section -->
-    <!-- Start WOWSlider.com HEAD section --> <!-- add to the <head> of your page -->
-    <link rel="stylesheet" type="text/css" href="engine8/style.css" />
-    <script type="text/javascript" src="engine8/jquery.js"></script>	<script src="https://www.youtube.com/iframe_api"></script>
-
-    <!-- End WOWSlider.com HEAD section -->
   </head>
+
+
 <body>
 
   
@@ -222,18 +204,18 @@
 
       <div class="tab-wrap">
         <!-- active tab on page load gets checked attribute -->
-        <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
+        <input type="radio" id="tab1" name="tabGroup1" onclick="document.getElementById('1').click();" class="tab" checked>
         <label for="tab1">Fundamental Action</label>
     
-        <input type="radio" id="tab2" name="tabGroup1" class="tab">
+        <input type="radio" id="tab2" name="tabGroup1" onclick="document.getElementById('5').click();" class="tab">
         <label for="tab2">ECM Fov Control</label>
     
-        <input type="radio" id="tab3" name="tabGroup1" class="tab">
+        <input type="radio" id="tab3" name="tabGroup1" onclick="document.getElementById('9').click();" class="tab">
         <label for="tab3">Basic Surgical Robot Skill Training</label>
     
         <div class="tab__content">
             <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
-              <div id="wowslider-container6">
+              <!-- <div id="wowslider-container6">
                 <div class="ws_images"><ul>
                   <li><iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/E-4q61woQTI?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data6/images/e4q61woqti.png" alt="Needle Reach" title="Needle Reach" id="wows6_0"/>To move the PSM jaw tip to the location slightly above the needle within a tolerance, where the needle is randomly placed on a surgical tray, and the jaw is close and of fixed orientation.</li>
                   <li><iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/Rj8FriqUJRU?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data6/images/rj8friqujru.png" alt="Gauze Retrieve" title="Gauze Retrieve" id="wows6_1"/>To sequentially pick the surgical gauze and get it back (place it at the target position), with one DoF to indicate the jaw open/close.</li>
@@ -249,7 +231,7 @@
                 <div class="ws_shadow"></div>
                 </div>	
                 <script type="text/javascript" src="engine6/wowslider.js"></script>
-                <script type="text/javascript" src="engine6/script.js"></script>
+                <script type="text/javascript" src="engine6/script.js"></script> -->
                 <!-- End WOWSlider.com BODY section -->
                 <!-- <br>
                 <br>
@@ -258,11 +240,33 @@
                 <br>
                 <br> -->
 
+                
+
+          <!-- THE YOUTUBE PLAYER -->
+          <div class="vid-container"> <iframe id="vid_frame" src="https://www.youtube-nocookie.com/embed/E-4q61woQTI?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" width="560" height="315"></iframe> </div>
+          <!-- THE BANNER -->
+          <div class="ws-title" id ="banner">Needle Reach<br><br><div>To move the PSM jaw tip to the location slightly above the needle within a tolerance, where the needle is randomly placed on a surgical tray, and the jaw is close and of fixed orientation.</div></div>
+          <!-- THE PLAYLIST -->
+          <div class="vid-list-container">
+            <div class="vid-list">
+              <div class="vid-item" id='1' onclick="selectthis(this);document.getElementById('vid_frame').src='https://www.youtube-nocookie.com/embed/E-4q61woQTI?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner').innerHTML='Needle Reach<br><br><div>To move the PSM jaw tip to the location slightly above the needle within a tolerance, where the needle is randomly placed on a surgical tray, and the jaw is close and of fixed orientation.</div>'">
+                <h>Needle Reach</h>
+              </div>
+              <div class="vid-item" id='2' onclick="selectthis(this);document.getElementById('vid_frame').src='https://www.youtube-nocookie.com/embed/Rj8FriqUJRU?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner').innerHTML='Gauze Retrieve<br><br><div>To sequentially pick the surgical gauze and get it back (place it at the target position), with one DoF to indicate the jaw open/close.</div>'">
+                <h>Gauze Retrieve</h>
+              </div>
+              <div class="vid-item" id='3' onclick="selectthis(this);document.getElementById('vid_frame').src='https://www.youtube-nocookie.com/embed/SLj4YBBtk8M?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner').innerHTML='Needle Pick<br><br><div>To sequentially pick the surgical needle and get it back (place it at the target position), with an additional DoF indicating the yaw angle.</div>'">
+                <h>Needle Pick</h>
+              </div>
+              <div class="vid-item" id='4' onclick="selectthis(this);document.getElementById('vid_frame').src='https://www.youtube-nocookie.com/embed/jUtX27djnYI?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner').innerHTML='Needle Regrasp<br><br><div>To hand over the held needle from one arm to the other arm with bimanual operations.</div>'">
+                <h>Needle Regrasp</h>
+              </div>    
+            </div>
+          </div>
         </div>
-    
         <div class="tab__content">
             <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
-              <div id="wowslider-container7">
+              <!-- <div id="wowslider-container7">
                 <div class="ws_images"><ul>
                   <li><iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/qnmyF2iWVlo?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data7/images/qnmyf2iwvlo.png" alt="ECM Reach" title="ECM Reach" id="wows7_0"/>To move the camera mounted on ECM to a randomly sampled position.</li>
                   <li><iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/MA9nxLOXD7I?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data7/images/ma9nxloxd7i.png" alt="Misorient" title="Misorient" id="wows7_1"/>To adjust the ECM's  joint such that the misorientation with the desired Natural Line-of-Sight is minimized.</li>
@@ -278,7 +282,7 @@
                 <div class="ws_shadow"></div>
                 </div>	
                 <script type="text/javascript" src="engine7/wowslider.js"></script>
-                <script type="text/javascript" src="engine7/script.js"></script>
+                <script type="text/javascript" src="engine7/script.js"></script> -->
                 <!-- End WOWSlider.com BODY section -->
                 <!-- <br>
                 <br>
@@ -286,11 +290,31 @@
                 <br>
                 <br>
                 <br> -->
+          <!-- THE YOUTUBE PLAYER -->
+          <div class="vid-container"> <iframe id="vid_frame1" src="https://www.youtube-nocookie.com/embed/qnmyF2iWVlo?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" width="560" height="315"></iframe> </div>
+          <!-- THE BANNER -->
+          <div class="ws-title" id ="banner1">ECM Reach<br><br><div>To move the camera mounted on ECM to a randomly sampled position.</div></div>
+          <!-- THE PLAYLIST -->
+          <div class="vid-list-container">
+            <div class="vid-list">
+              <div class="vid-item" id="5" onclick="selectthis(this);document.getElementById('vid_frame1').src='https://www.youtube-nocookie.com/embed/qnmyF2iWVlo?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner1').innerHTML='ECM Reach<br><br><div>To move the camera mounted on ECM to a randomly sampled position.</div>'">
+                <h>ECM Reach</h>
+              </div>
+              <div class="vid-item" id="6" onclick="selectthis(this);document.getElementById('vid_frame1').src='https://www.youtube-nocookie.com/embed/MA9nxLOXD7I?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner1').innerHTML='Misorient<br><br><div>To adjust the joint of ECM such that the misorientation with the desired Natural Line-of-Sight is minimized.</div>'">
+                <h>Misorient</h>
+              </div>
+              <div class="vid-item" id="7" onclick="selectthis(this);document.getElementById('vid_frame1').src='https://www.youtube-nocookie.com/embed/5-W8bf4MMHs?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner1').innerHTML='Static Track<br><br><div>To let the ECM track a static target cube with red color, disturbed by other surrounding cubes, that mimics the scenario to focus on the primary instrument during surgery.</div>'">
+                <h>Static Track</h>
+              </div>
+              <div class="vid-item" id="8" onclick="selectthis(this);document.getElementById('vid_frame1').src='https://www.youtube-nocookie.com/embed/uOFwTVnUEuM?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner1').innerHTML='Active Track<br><br><div>To keep the ECM tracking the moving cube, with a relaxed misorientation requirement but a chance to lose the target out of the view.</div>'">
+                <h>Active Track</h>
+              </div>    
+            </div>
+          </div>
         </div>
-    
         <div class="tab__content">
             <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
-              <div id="wowslider-container8">
+              <!-- <div id="wowslider-container8">
                 <div class="ws_images"><ul>
                   <li><iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/hjGl09hRugc?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data8/images/hjgl09hrugc.png" alt="Peg Transfer" title="Peg Transfer" id="wows8_0"/>To move the block from one peg to the other peg with single PSM, which requires collision avoidance and long-horizon reasoning.</li>
                   <li><iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/yYiruD8izz8?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" allowfullscreen></iframe><img src="data8/images/yyirud8izz8.png" alt="bi pegtransfer" title="Bimanual Peg Transfer" id="wows8_1"/>To move the block from one peg to the other peg with bimanual operations.</li>
@@ -310,7 +334,7 @@
                 <div class="ws_shadow"></div>
               </div>	
               <script type="text/javascript" src="engine8/wowslider.js"></script>
-              <script type="text/javascript" src="engine8/script.js"></script>
+              <script type="text/javascript" src="engine8/script.js"></script> -->
             <!-- End WOWSlider.com BODY section -->  
                 <!-- <br>
                 <br>
@@ -318,8 +342,34 @@
                 <br>
                 <br>
                 <br> -->
+          <!-- THE YOUTUBE PLAYER -->
+          <div class="vid-container"> <iframe id="vid_frame2" src="https://www.youtube-nocookie.com/embed/hjGl09hRugc?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1" frameborder="0" width="560" height="315"></iframe> </div>
+          <!-- THE BANNER -->
+          <div class="ws-title" id ="banner2">Peg Transfer<br><br><div>To move the block from one peg to the other peg with single PSM, which requires collision avoidance and long-horizon reasoning.</div></div>
+          <!-- THE PLAYLIST -->
+          <div class="vid-list-container">
+            <div class="vid-list">
+              <div class="vid-item" id="9" onclick="selectthis(this);document.getElementById('vid_frame2').src='https://www.youtube-nocookie.com/embed/hjGl09hRugc?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner2').innerHTML='Peg Transfer<br><br><div>To move the block from one peg to the other peg with single PSM, which requires collision avoidance and long-horizon reasoning.</div>'">
+                <h>Peg Transfer</h>
+              </div>
+              <div class="vid-item" id="10" onclick="selectthis(this);document.getElementById('vid_frame2').src='https://www.youtube-nocookie.com/embed/yYiruD8izz8?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner2').innerHTML='Gauze Retrieve<br><br><div>To sequentially pick the surgical gauze and get it back (place it at the target position), with one DoF to indicate the jaw open/close.</div>'">
+                <h>Bimanual Peg Transfer</h>
+              </div>
+              <div class="vid-item" id="11" onclick="selectthis(this);document.getElementById('vid_frame2').src='https://www.youtube-nocookie.com/embed/hXsOMGUcVIA?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner2').innerHTML='Needle Pick<br><br><div>To sequentially pick the surgical needle and get it back (place it at the target position), with an additional DoF indicating the yaw angle.</div>'">
+                <h>Needle the Rings</h>
+              </div>
+              <div class="vid-item" id="12" onclick="selectthis(this);document.getElementById('vid_frame2').src='https://www.youtube-nocookie.com/embed/-9K7p94633o?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner2').innerHTML='Needle Regrasp<br><br><div>To hand over the held needle from one arm to the other arm with bimanual operations.</div>'">
+                <h>Pick and Place</h>
+              </div> 
+              <div class="vid-item" id="13" onclick="selectthis(this);document.getElementById('vid_frame2').src='https://www.youtube-nocookie.com/embed/VZNorNQ2rGs?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner2').innerHTML='Peg Board<br><br><div>To pick up and transfer the rings sequentially from the peg board to the peg on the floor.</div>'">
+                <h>Peg Board</h>
+              </div> 
+              <div class="vid-item" id="14" onclick="selectthis(this);document.getElementById('vid_frame2').src='https://www.youtube-nocookie.com/embed/rQUCI0ntgp0?autoplay=0&controls=0&rel=0&enablejsapi=1&playerapiid=ytplayer&wmode=transparent&mute=1';document.getElementById('banner2').innerHTML='Match Board<br><br><div>To pick up the various objects and place them into their corresponding spaces on the board.</div>'">
+                <h>Match Board</h>
+              </div>    
+            </div>
           </div>
-    
+        </div>
       </div>
     </div>
 
@@ -482,8 +532,11 @@
       <img class ="himg" src="./images/logo_2x.png"/> 
     </div>
   </footer>
+  <script src="./temp1_files/jquery.min.js"></script>
 
+  <script src="./temp1_files/index.js"></script>
 
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
 
 
