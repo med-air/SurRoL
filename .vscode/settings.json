@@ -2,5 +2,10 @@
     "files.associations": {
         "hduerror.h": "c",
         "valarray": "c"
-    }
+    },
+    "editor.fontSize": 20,
+    "scm.inputFontSize": 20,
+    "debug.console.fontSize": 20,
+    "markdown.preview.fontSize": 20,
+    "terminal.integrated.fontSize": 20
 }

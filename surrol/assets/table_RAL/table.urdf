@@ -1,0 +1,79 @@
+<?xml version="0.0" ?>
+<robot name="table">
+    <!--https://free3d.com/3d-model/ikea-desk-thyge-85093.html-->
+    <material name="white">
+        <color rgba="0.95 0.95 0.95 1"/>
+    </material>
+    <material name="black">
+        <color rgba="0.10 0.10 0.10 1"/>
+    </material>
+    <material name="grey">
+        <color rgba="0.70 0.70 0.70 1"/>
+    </material>
+
+    <link name="baseLink">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/part0.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.65"/>
+            <geometry>
+                <box size="0.416 0.538 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="bodyLink">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/part1.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+    </link>
+
+    <joint name="joint_1" type="fixed">
+        <parent link="baseLink"/>
+        <child link="bodyLink"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <link name="bottomLink">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/part2.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+
+    <joint name="joint_2" type="fixed">
+        <parent link="baseLink"/>
+        <child link="bottomLink"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+</robot>

@@ -1,0 +1,588 @@
+<?xml version="0.0" ?>
+<robot name="match_board">
+    <material name="GREY">
+        <color rgba="0.85 0.85 0.85 1"/>
+    </material>
+    <material name="WOOD">
+        <!-- color rgba="0.905, 0.819, 0.701, 1"-->
+        <color rgba="0.866, 0.725, 0.529, 1"/>
+    </material>
+    <material name="RED">
+        <color rgba="0.85 0 0 1"/>
+    </material>
+    <material name="GREEN">
+        <color rgba="0 0.85 0 1"/>
+    </material>
+    <material name="BLUE">
+        <color rgba="0 0 0.85 1"/>
+    </material>
+    <material name="BLACK">
+        <color rgba="0.2 0.2 0.2 1"/>
+    </material>
+
+    <link name="baseLink">
+        <inertial>
+            <!--      tours: 30, 8-->
+            <!--      major radius: 0.02, minor radius: 0.0005-->
+            <!--      vis: radius=0.02, in radius=0.0005-->
+            <!--      col: radius=0.02, in radius=0.0006-->
+            <!--      center of mass: 2*R/pi; important-->
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="GREY"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="upper_left_0">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="GREY"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="upper_left_joint_0" type="fixed">
+        <parent link="baseLink"/>
+        <child link="upper_left_0"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="-0.1 0 -0.1"/>
+    </joint>
+
+    <link name="upper_1">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="GREY"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="upper_joint_1" type="fixed">
+        <parent link="baseLink"/>
+        <child link="upper_1"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0 0 -0.1"/>
+    </joint>
+
+    <link name="upper_right_2">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="GREY"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="upper_right_joint_2" type="fixed">
+        <parent link="baseLink"/>
+        <child link="upper_right_2"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0.1 0 -0.1"/>
+    </joint>
+
+    <link name="upper_lid_3">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 1.57 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="WOOD"/>
+        </visual>
+        <collision>
+            <origin rpy="0 1.57 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="upper_lid_joint_3" type="prismatic">
+        <parent link="upper_right_2"/>
+        <child link="upper_lid_3"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <axis xyz="1 0 0"/>
+        <origin rpy="0 0 0" xyz="-0.1 0.03 0"/>
+        <limit effort="30" velocity="1.0" lower="0" upper="0.3" />
+    </joint>
+
+    <link name="upper_handle_4">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_handle.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_handle.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="upper_handle_joint_4" type="fixed">
+        <parent link="upper_lid_3"/>
+        <child link="upper_handle_4"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0.145 0.01 0"/>
+    </joint>
+
+    <link name="upper_bar_5">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_bar.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_bar.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="upper_bar_joint_5" type="fixed">
+        <parent link="upper_lid_3"/>
+        <child link="upper_bar_5"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0.145 0.02 0"/>
+    </joint>
+
+    <link name="middle_left_6">
+        <inertial>
+            <!--      tours: 30, 8-->
+            <!--      major radius: 0.02, minor radius: 0.0005-->
+            <!--      vis: radius=0.02, in radius=0.0005-->
+            <!--      col: radius=0.02, in radius=0.0006-->
+            <!--      center of mass: 2*R/pi; important-->
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="GREY"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="middle_left_joint_6" type="fixed">
+        <parent link="baseLink"/>
+        <child link="middle_left_6"/>
+        <origin rpy="0 0 0" xyz="-0.1 0 0"/>
+    </joint>
+
+    <link name="middle_7">
+        <inertial>
+            <!--      tours: 30, 8-->
+            <!--      major radius: 0.02, minor radius: 0.0005-->
+            <!--      vis: radius=0.02, in radius=0.0005-->
+            <!--      col: radius=0.02, in radius=0.0006-->
+            <!--      center of mass: 2*R/pi; important-->
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+    </link>
+
+    <joint name="middle_joint_7" type="fixed">
+        <parent link="baseLink"/>
+        <child link="middle_7"/>
+        <!--    (-R, 0, 0)-->
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+    </joint>
+
+    <link name="middle_right_8">
+        <inertial>
+            <!--      tours: 30, 8-->
+            <!--      major radius: 0.02, minor radius: 0.0005-->
+            <!--      vis: radius=0.02, in radius=0.0005-->
+            <!--      col: radius=0.02, in radius=0.0006-->
+            <!--      center of mass: 2*R/pi; important-->
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="GREY"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="middle_right_joint_8" type="fixed">
+        <parent link="baseLink"/>
+        <child link="middle_right_8"/>
+        <!--    (-R, 0, 0)-->
+        <origin rpy="0 0 0" xyz="0.1 0 0"/>
+    </joint>
+
+    <link name="middle_lid_9">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 1.57 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="WOOD"/>
+        </visual>
+        <collision>
+            <origin rpy="0 1.57 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="middle_lid_joint_9" type="prismatic">
+        <parent link="middle_right_8"/>
+        <child link="middle_lid_9"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <axis xyz="1 0 0"/>
+        <origin rpy="0 0 0" xyz="-0.1 0.03 0"/>
+        <limit effort="30" velocity="1.0" lower="0" upper="0.3" />
+    </joint>
+
+    <link name="middle_handle_10">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_handle.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_handle.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="middle_handle_joint_10" type="fixed">
+        <parent link="middle_lid_9"/>
+        <child link="middle_handle_10"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0.145 0.01 0"/>
+    </joint>
+
+    <link name="middle_bar_11">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_bar.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_bar.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="middler_bar_joint_11" type="fixed">
+        <parent link="middle_lid_9"/>
+        <child link="middle_bar_11"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0.145 0.02 0"/>
+    </joint>
+
+    <link name="lower_left_12">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="GREY"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lower_left_joint_12" type="fixed">
+        <parent link="baseLink"/>
+        <child link="lower_left_12"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="-0.1 0 0.1"/>
+    </joint>
+
+    <link name="lower_13">
+        <inertial>
+
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="GREY"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lower_joint_13" type="fixed">
+        <parent link="baseLink"/>
+        <child link="lower_13"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0 0 0.1"/>
+    </joint>
+
+    <link name="lower_right_14">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.05"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="GREY"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lower_right_joint_14" type="fixed">
+        <parent link="baseLink"/>
+        <child link="lower_right_14"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0.1 0 0.1"/>
+    </joint>
+
+    <link name="lower_lid_15">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 1.57 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="WOOD"/>
+        </visual>
+        <collision>
+            <origin rpy="0 1.57 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lower_lid_joint_15" type="prismatic">
+        <parent link="lower_right_14"/>
+        <child link="lower_lid_15"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <axis xyz="1 0 0"/>
+        <origin rpy="0 0 0" xyz="-0.1 0.03 0"/>
+        <limit effort="30" velocity="1.0" lower="0" upper="0.3" />
+    </joint>
+
+    <link name="lower_handle_16">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_handle.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_handle.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lower_handle_joint_16" type="fixed">
+        <parent link="lower_lid_15"/>
+        <child link="lower_handle_16"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0.145 0.01 0"/>
+    </joint>
+
+    <link name="lower_bar_17">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_bar.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/lid_bar.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lower_bar_joint_17" type="fixed">
+        <parent link="lower_lid_15"/>
+        <child link="lower_bar_17"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0.145 0.02 0"/>
+    </joint>
+
+    <link name="border_18">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.001"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/border.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+            <material name="BLACK" />
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/border.obj" scale="0.05 0.05 0.05"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="border_joint_18" type="fixed">
+        <parent link="baseLink"/>
+        <child link="border_18"/>
+        <!--    (-sqrt(2)R/2, -sqrt(2)R/2, 0)-->
+        <origin rpy="0 0 0" xyz="0. 0 0"/>
+    </joint>
+</robot>

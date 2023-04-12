@@ -1,0 +1,82 @@
+<?xml version="0.0" ?>
+<robot name="letter_A">
+    <material name="green">
+        <color rgba="0.005953 0.613846 0.061735 1"/>
+    </material>
+
+    <link name="baseLink">
+        <!-- from lego/lego.urdf -->
+        <contact>
+            <lateral_friction value="1.0"/>
+            <rolling_friction value="0.0"/>
+            <contact_cfm value="0.0"/>
+            <contact_erp value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0.01"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="1.57 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/letter_A.obj" scale="0.024 0.024 0.024"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="green"/>
+        </visual>
+        <collision>
+            <origin rpy="1.57 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/letter_A_vhacd.obj" scale="0.024 0.024 0.024"/>
+                       <!-- <box size="0.002 0.002 0.002"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="waypoint_0">
+        <!--    origin-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+    </link>
+
+    <joint name="waypoint_joint_0" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_0"/>
+        <origin rpy="0 0 0" xyz="0.01 0 0.03"/>
+    </joint>
+
+    <link name="waypoint_1">
+        <!--    origin-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+    </link>
+
+    <joint name="waypoint_joint_1" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_1"/>
+        <origin rpy="0 0 -1.15" xyz="0.02 0.02 0.03"/>
+    </joint>
+
+    <link name="waypoint_2">
+        <!--    origin-->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+    </link>
+
+    <joint name="waypoint_joint_2" type="fixed">
+        <parent link="baseLink"/>
+        <child link="waypoint_2"/>
+        <origin rpy="0 0 1.15" xyz="0.02 -0.02 0.03"/>
+    </joint>
+</robot>

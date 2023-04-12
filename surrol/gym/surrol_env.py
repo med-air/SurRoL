@@ -247,7 +247,7 @@ class SurRoLEnv(gym.Env):
             steps += 1
             toc = time.time()
             print(" -> step time: {:.4f}".format(toc - tic))
-            time.sleep(0.05)
+            # time.sleep(0.05)
         print('\n -> Done: {}\n'.format(done > 0))
 
     def __del__(self):

@@ -144,23 +144,34 @@ class Application(ShowBase):
 
         # window_props = WindowProperties.size(1200, 900)
         # frame_buffer_props = FrameBufferProperties()
-        
-        window_props = WindowProperties.getDefault()
-        window_props = WindowProperties(window_props)
-        window_props.setSize(1200, 900)
+        # window_props.setSize(1024, 768)
         # window_props = WindowProperties.size(self.win.getXSize(), self.win.getYSize())
         # props = FrameBufferProperties.getDefault()
         # props.setBackBuffers(0)
         # props.setRgbColor(1)
         # frame_buffer_props = FrameBufferProperties(FrameBufferProperties.getDefault()) #FrameBufferProperties()
-        frame_buffer_props = FrameBufferProperties.getDefault()
+
         # fb_prop = p3d.FrameBufferProperties(p3d.FrameBufferProperties.get_default())
         # fb_prop.set_multisamples(1)
         # fb_prop.set_srgb_color(True)
         # frame_buffer_props.setBackBuffers(0)
         # frame_buffer_props.setFloatColor(1)
         # frame_buffer_props.setSrgbColor(True)
-        # print(f'!!!!!{frame_buffer_props.getSrgbColor()}')
+        # print(f'!!!!!{frame_buffer_props.getSrgbColor()}')   
+        # buffer = self.graphicsEngine.make_output(self.pipe,
+        #                                         'Image Buffer',
+        #                                         -2,
+        #                                         frame_buffer_props,
+        #                                         window_props,
+        #                                         GraphicsPipe.BFRefuseWindow,    # don't open a window
+        #                                         self.win.getGsg(),
+        #                                         self.win
+        #                                         )
+# DUAL ECM START           
+        window_props = WindowProperties.getDefault()
+        window_props = WindowProperties(window_props)
+        frame_buffer_props = FrameBufferProperties.getDefault()
+
         buffer = self.graphicsEngine.make_output(self.pipe,
                                                 'Image Buffer',
                                                 -2,
@@ -171,16 +182,7 @@ class Application(ShowBase):
                                                 self.win
                                                 )
 
-        # buffer = self.graphicsEngine.make_output(self.pipe,
-        #                                         'Image Buffer',
-        #                                         -2,
-        #                                         frame_buffer_props,
-        #                                         window_props,
-        #                                         GraphicsPipe.BFRefuseWindow,    # don't open a window
-        #                                         self.win.getGsg(),
-        #                                         self.win
-        #                                         )
-        
+
 
         if self.win is not None:
             # Close the previous window.
@@ -189,6 +191,14 @@ class Application(ShowBase):
             oldClearStencilActive = self.win.getClearStencilActive()
             oldClearStencil = self.win.getClearStencil()
 
+
+
+        self.cam2 = self.makeCamera(buffer, clearDepth=1, lens=self.cam.node().getLens(), scene=self.render, camName='cam2')
+        filters = CommonFilters(buffer, self.cam2)
+        filters.setGammaAdjust(1.5)
+        self.cam2.reparentTo(self.render)
+# DUAL ECM END
+    
         # buffer.setClearDepthActive(True)
         # buffer.setClearDepth(10000000.)
 
@@ -204,14 +214,6 @@ class Application(ShowBase):
         # the near and far clipping distances can be changed if desired
         # lens.setNear(5.0)
         # lens.setFar(500.0)
-        self.cam2 = self.makeCamera(buffer, clearDepth=1, lens=self.cam.node().getLens(), scene=self.render, camName='cam2')
-        filters = CommonFilters(buffer, self.cam2)
-        # cfg=ApplicationConfig.defaults()
-        # # # if cfg.ambient_occlusion:
-        # # filters.setAmbientOcclusion()
-        # # # if cfg.srgb:
-        filters.setGammaAdjust(1.5)
-        self.cam2.reparentTo(self.render)
         # self.cam2.setPos(np.sin(1.57), -np.cos(1.57), 3)
         # self.cam2.setHpr(0, 0, 0)
         # conv_mat = Mat4.convert_mat(p3d.CSZupRight, p3d.CSYupRight)

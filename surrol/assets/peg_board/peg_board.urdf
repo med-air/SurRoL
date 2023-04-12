@@ -81,14 +81,15 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <!-- <cylinder length="0.028" radius="0.001"/> -->
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>
@@ -111,14 +112,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>
@@ -141,14 +142,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>
@@ -171,14 +172,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>
@@ -201,14 +202,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>
@@ -231,14 +232,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>
@@ -261,14 +262,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>
@@ -291,14 +292,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>
@@ -321,14 +322,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>
@@ -351,14 +352,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>
@@ -381,14 +382,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>
@@ -411,14 +412,14 @@
         <visual>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+                <mesh filename="meshes/peg.obj" scale="1 1 0.6"/>
             </geometry>
             <material name="BLACK"/>
         </visual>
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
-                <cylinder length="0.028" radius="0.001"/>
+                <cylinder length="0.0168" radius="0.001"/>
             </geometry>
         </collision>
     </link>

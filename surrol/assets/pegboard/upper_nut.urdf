@@ -15,7 +15,7 @@
             <origin rpy="1.57 0 0" xyz="0 0 0"/>
             <geometry>
                 <!--        radius: 10mm, depth: 14.5mm-->
-                <mesh filename="meshes/upper_nut.obj" scale="1 1 1"/>
+                <mesh filename="meshes/upper_nut.obj" scale="0.75 0.75 0.75"/>
                 <!--        <box size="0.002 0.002 0.002"/>-->
             </geometry>
             <material name="white"/>
@@ -23,7 +23,7 @@
         <collision>
             <origin rpy="1.57 0 0" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="meshes/upper_nut.obj" scale="1 1 1"/>
+                <mesh filename="meshes/upper_nut.obj" scale="0.75 0.75 0.75"/>
                        <!-- <box size="2 2 2"/> -->
             </geometry>
         </collision>

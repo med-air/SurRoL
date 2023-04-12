@@ -1,0 +1,466 @@
+<?xml version="0.0" ?>
+<robot name="ring_peg">
+    <material name="WHITE">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <link name="baseLink">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="1.57 0 0" xyz="0 -1 0.4"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <box size="0 0 0"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="1.57 0 0" xyz="0 -1 0.4"/>
+            <geometry>
+                <box size="0 0 0"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="vertical_peg_1">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="vertical_joint_1" type="fixed">
+        <parent link="baseLink"/>
+        <child link="vertical_peg_1"/>
+        <origin rpy="1.57 0 0" xyz="0 -1 0.4"/>
+    </joint>
+
+    <link name="vertical_peg_2">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="vertical_joint_2" type="fixed">
+        <parent link="baseLink"/>
+        <child link="vertical_peg_2"/>
+        <origin rpy="1.57 0 0" xyz="0 1 0.4"/>
+    </joint>
+
+    <link name="horizontal_peg_1">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_1" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_1"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 -1.75 2"/>
+    </joint>
+
+    <link name="horizontal_peg_2">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_2" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_2"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 -1.05 2"/>
+    </joint>
+
+    <link name="horizontal_peg_3">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_3" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_3"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 -0.35 2"/>
+    </joint>
+
+    <link name="horizontal_peg_4">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_4" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_4"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 0.35 2"/>
+    </joint>
+
+    <link name="horizontal_peg_5">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_5" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_5"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 1.05 2"/>
+    </joint>
+
+    <link name="horizontal_peg_6">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_6" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_6"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 1.75 2"/>
+    </joint>
+
+    <link name="horizontal_peg_7">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_7" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_7"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 -1.75 1 "/>
+    </joint>
+
+    <link name="horizontal_peg_8">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_8" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_8"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 -1.05 1"/>
+    </joint>
+
+    <link name="horizontal_peg_9">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_9" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_9"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 -0.35 1"/>
+    </joint>
+
+    <link name="horizontal_peg_10">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_10" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_10"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 0.35 1"/>
+    </joint>
+
+    <link name="horizontal_peg_11">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_11" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_11"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 1.05 1"/>
+    </joint>
+
+    <link name="horizontal_peg_12">
+        <!-- from lego/lego.urdf -->
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="10.0"/>
+            <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <!--        radius: 10mm, depth: 14.5mm-->
+                <mesh filename="meshes/ring_peg.obj" scale="0.75 0.75 0.75"/>
+                <!--        <box size="0.002 0.002 0.002"/>-->
+            </geometry>
+            <material name="WHITE"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/ring_peg_collision.obj" scale="0.75 0.75 0.75"/>
+                       <!-- <box size="2 2 2"/> -->
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="horizontal_joint_12" type="fixed">
+        <parent link="baseLink"/>
+        <child link="horizontal_peg_12"/>
+        <origin rpy="0 0 1.57" xyz="-1.9 1.75 1"/>
+    </joint>
+
+</robot>

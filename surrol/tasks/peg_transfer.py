@@ -67,7 +67,7 @@ class PegTransfer(PsmEnv):
                             p.getQuaternionFromEuler(self.POSE_BOARD[1]),
                             globalScaling=self.SCALING)
         self.obj_ids['fixed'].append(obj_id)  # 1
-        
+        print(f'peg transfer\' board size: {p.getVisualShapeData(obj_id)}')
         # group = 1#other objects don't collide with me
         # mask=1 # don't collide with any other object
         # p.setCollisionFilterGroupMask(obj_id, 0,group, mask)
@@ -91,6 +91,8 @@ class PegTransfer(PsmEnv):
             print(f"peg obj id: {obj_id}.")
             self.obj_ids['rigid'].append(obj_id)
         self._blocks = np.array(self.obj_ids['rigid'][-num_blocks:])
+        print(f'peg transfer\' peg size: {p.getVisualShapeData(obj_id)}')
+
         np.random.shuffle(self._blocks)
         for obj_id in self._blocks[:1]:
             # change color to red
@@ -189,6 +191,7 @@ class PegTransfer(PsmEnv):
             pose = get_link_pose(self.obj_id, -1)
             # print(f'meet by checking distance')
             return pose[0][2] > self.goal[2] + 0.01 * self.SCALING
+        return False
 
     def get_oracle_action(self, obs) -> np.ndarray:
         """

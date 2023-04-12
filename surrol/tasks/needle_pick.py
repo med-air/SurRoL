@@ -3,7 +3,7 @@ import time
 import numpy as np
 
 import pybullet as p
-from surrol.tasks.psm_env import PsmEnv
+from surrol.tasks.psm_env_tao import PsmEnv
 from surrol.utils.pybullet_utils import (
     get_link_pose,
     reset_camera,    
@@ -76,7 +76,7 @@ class NeedlePick(PsmEnv):
 
         # needle
         yaw = (np.random.rand() - 0.5) * np.pi
-        obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'needle/needle_40mm.urdf'),
+        obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'needle/needle_40mm_RL.urdf'),
                             (workspace_limits[0].mean() + (np.random.rand() - 0.5) * 0.1,  # TODO: scaling
                              workspace_limits[1].mean() + (np.random.rand() - 0.5) * 0.1,
                              workspace_limits[2][0] + 0.01),

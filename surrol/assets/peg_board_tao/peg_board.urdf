@@ -1,0 +1,431 @@
+<?xml version="0.0" ?>
+<robot name="peg_board">
+    <material name="ROSE_GOLD">
+        <color rgba="0.98 0.84 0.74 1"/>
+    </material>
+    <material name="BLACK">
+        <color rgba="0.12 0.12 0.12 1"/>
+    </material>
+    <!--  block color-->
+    <material name="RED">
+        <color rgba="0.73 0.05 0.18 0.9"/>
+    </material>
+    <material name="BLUE">
+        <color rgba="0.68 1.00 0.80 0.9"/>
+    </material>
+
+    <link name="baseLink">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/board.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="ROSE_GOLD"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="0.103 0.154 0.022"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <!--  <link name="peg_0">-->
+    <!--&lt;!&ndash;    test purpose&ndash;&gt;-->
+    <!--    <contact>-->
+    <!--      <lateral_friction value="1.0"/>-->
+    <!--    </contact>-->
+    <!--    <inertial>-->
+    <!--      <origin rpy="0 0 0" xyz="0 0 0"/>-->
+    <!--      <mass value=".0"/>-->
+    <!--      <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>-->
+    <!--    </inertial>-->
+    <!--    <visual>-->
+    <!--      <origin rpy="0 0 0" xyz="0 0 0"/>-->
+    <!--      <geometry>-->
+    <!--        <mesh filename="meshes/peg.obj" scale="1 1 1"/>-->
+    <!--      </geometry>-->
+    <!--      <material name="BLACK"/>-->
+    <!--    </visual>-->
+    <!--    <collision>-->
+    <!--      <origin rpy="0 0 0" xyz="0 0 0"/>-->
+    <!--      <geometry>-->
+    <!--        <cylinder length="0.028" radius="0.001"/>-->
+    <!--      </geometry>-->
+    <!--    </collision>-->
+    <!--  </link>-->
+
+    <!--  <joint name="peg_joint_0" type="fixed">-->
+    <!--    <parent link="baseLink"/>-->
+    <!--    <child link="peg_0"/>-->
+    <!--    <origin rpy="0 0 0" xyz="0 0 0.022"/>-->
+    <!--  </joint>-->
+
+    <link name="peg_1">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_1" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_1"/>
+        <origin rpy="0 0 0" xyz="-0.03 0.043 0.022"/>
+    </joint>
+
+    <link name="peg_2">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_2" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_2"/>
+        <origin rpy="0 0 0" xyz="-0.01 0.043 0.022"/>
+    </joint>
+
+    <link name="peg_3">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_3" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_3"/>
+        <origin rpy="0 0 0" xyz="0.01 0.043 0.022"/>
+    </joint>
+
+    <link name="peg_4">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_4" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_4"/>
+        <origin rpy="0 0 0" xyz="-0.03 0.013 0.022"/>
+    </joint>
+
+    <link name="peg_5">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_5" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_5"/>
+        <origin rpy="0 0 0" xyz="-0.01 0.013 0.022"/>
+    </joint>
+
+    <link name="peg_6">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_6" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_6"/>
+        <origin rpy="0 0 0" xyz="0.01 0.013 0.022"/>
+    </joint>
+
+    <link name="peg_7">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_7" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_7"/>
+        <origin rpy="0 0 0" xyz="-0.033 -0.027 0.022"/>
+    </joint>
+
+    <link name="peg_8">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_8" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_8"/>
+        <origin rpy="0 0 0" xyz="0.013 -0.027 0.022"/>
+    </joint>
+
+    <link name="peg_9">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_9" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_9"/>
+        <origin rpy="0 0 0" xyz="-0.0215 -0.007081 0.022"/>
+    </joint>
+
+    <link name="peg_10">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_10" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_10"/>
+        <origin rpy="0 0 0" xyz="0.0015 -0.007081 0.022"/>
+    </joint>
+
+    <link name="peg_11">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_11" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_11"/>
+        <origin rpy="0 0 0" xyz="-0.0215 -0.046919 0.022"/>
+    </joint>
+
+    <link name="peg_12">
+        <contact>
+            <lateral_friction value="1.0"/>
+        </contact>
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value=".0"/>
+            <inertia ixx="0." ixy="0" ixz="0" iyy="0." iyz="0" izz="0."/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="meshes/peg.obj" scale="1 1 1"/>
+            </geometry>
+            <material name="BLACK"/>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="0.028" radius="0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="peg_joint_12" type="fixed">
+        <parent link="baseLink"/>
+        <child link="peg_12"/>
+        <origin rpy="0 0 0" xyz="0.0015 -0.046919 0.022"/>
+    </joint>
+</robot>

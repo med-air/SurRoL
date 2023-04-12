@@ -1,0 +1,32 @@
+psm_base_link
+    psm_yaw_joint (revolute)
+        psm_yaw_link
+            psm_pitch_end_joint (revolute)
+                psm_pitch_end_link
+                    psm_main_insertion_joint (prismatic)
+                        psm_main_insertion_link
+                            psm_tool_roll_joint (revolute)
+                                psm_tool_roll_link
+                                    psm_tool_pitch_joint (revolute)
+                                        psm_tool_pitch_link
+                                            psm_tool_yaw_joint (revolute)
+                                                psm_tool_yaw_link
+                                                    psm_tool_gripper1_joint (revolute, mimic=-1.*gripper2)
+                                                        psm_tool_gripper1_link
+                                                    psm_tool_gripper2_joint (revolute)
+                                                        psm_tool_gripper2_link
+                                                    psm_tool_tip_joint (fixed)
+                                                        psm_tool_tip_link
+            psm_pitch_back_joint (revolute, mimic=1.*psm_pitch_end_joint)
+                psm_pitch_back_link
+                    psm_pitch_bottom_joint (revolute, mimic=-1.*psm_pitch_end_joint)
+                        psm_pitch_bottom_link
+                            psm_pitch_bottom_pitch_end_constraint (p2p)
+                    psm_pitch_top_joint (revolute, mimic=-1.*psm_pitch_end_joint)
+                        psm_pitch_top_link
+                            psm_pitch_top_pitch_end_constraint (p2p)
+            psm_pitch_front_joint (revolute, mimic=1.*psm_pitch_end_joint)
+                psm_pitch_front_link
+                    psm_pitch_front_pitch_bottom_constraint (p2p)
+    psm_remote_center_joint (fixed)
+        psm_remote_center_link

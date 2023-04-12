@@ -5,7 +5,7 @@ import random
 import pybullet as p
 import pybullet_data
 
-from surrol.tasks.psm_env_pegboard import PsmEnv, goal_distance
+from surrol.tasks.psm_env import PsmEnv, goal_distance
 from surrol.utils.pybullet_utils import (
     get_link_pose,
     reset_camera,
@@ -20,11 +20,13 @@ from surrol.robots.ecm import Ecm
 class PegBoard(PsmEnv):
     
     POSE_BOARD = ((0.55, 0, 0.6861), (0, 0, 0))  # 0.675 + 0.011 + 0.001
-    WORKSPACE_LIMITS = ((0.50, 0.60), (-0.05, 0.05), (0.686, 0.745))
+    WORKSPACE_LIMITS1 = ((0.47, 0.66), (-0.05, 0.05), (0.686, 0.775))
+        # WORKSPACE_LIMITS1 = ((0.47, 0.66), (-0., 0.10), (0.606, 0.785))
+
     SCALING = 5.
     rand_id = random.randint(3,4)
 
-    QPOS_ECM = (0, 0.8, 0.04, 0)
+    QPOS_ECM = (0, 0.7, 0.04, 0)
     ACTION_ECM_SIZE=3
     #for haptic device demo
     haptic=True
@@ -78,61 +80,104 @@ class PegBoard(PsmEnv):
         scaling=0.15
         border_offset = [0,4.8443*scaling,0]
         startOrientation = p.getQuaternionFromEuler([0,0,0])
-        wood = p.loadTexture(os.path.join(ASSET_DIR_PATH, "texture/wood.jpg"))
-        metal = p.loadTexture(os.path.join(ASSET_DIR_PATH, "texture/metal.jpg"))
-        newmetal = p.loadTexture(os.path.join(ASSET_DIR_PATH, "texture/metal2.jpg"))
+        # wood = p.loadTexture(os.path.join(ASSET_DIR_PATH, "texture/wood.jpg"))
+        # metal = p.loadTexture(os.path.join(ASSET_DIR_PATH, "texture/metal.jpg"))
+        # newmetal = p.loadTexture(os.path.join(ASSET_DIR_PATH, "texture/metal2.jpg"))
 
-        hor_board = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/horizontal_pegboard.urdf"),startPos,startOrientation,globalScaling=scaling,useFixedBase=1)
-        ver_board = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/vertical_pegboard.urdf"),startPos,startOrientation,globalScaling=scaling,useFixedBase=1)
-        
-        p.changeVisualShape(hor_board, -1, textureUniqueId=wood)
-        p.changeVisualShape(ver_board, -1, textureUniqueId=wood)
-        self.obj_ids['fixed'].append(hor_board) # 1 4
-        self.obj_ids['fixed'].append(ver_board) # 2 5
+# board
+        asset_scaling = 0.185
+        obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/ring_board.urdf"),
+                            np.array(self.POSE_BOARD[0]) * self.SCALING,
+                            p.getQuaternionFromEuler(self.POSE_BOARD[1]),
+                            globalScaling=asset_scaling,
+                            useFixedBase=1)
+        texture = p.loadTexture(os.path.join(ASSET_DIR_PATH, "texture/wood.jpg"))
+        p.changeVisualShape(obj_id, -1, textureUniqueId=texture)
+        p.changeVisualShape(obj_id, 0, textureUniqueId=texture)
+        self.obj_ids['fixed'].append(obj_id)
 
+        # peg 
+        obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/ring_peg.urdf"),
+                            np.array(self.POSE_BOARD[0]) * self.SCALING,
+                            p.getQuaternionFromEuler(self.POSE_BOARD[1]),
+                            globalScaling=asset_scaling,
+                            useFixedBase=1)
+        texture = p.loadTexture(os.path.join(ASSET_DIR_PATH, "texture/metal.jpg"))
+        # p.changeVisualShape(obj_id, -1, textureUniqueId=texture)
+        self._pegs = np.arange(14)
+        for peg in self._pegs:
+            p.changeVisualShape(obj_id, peg, textureUniqueId=texture)
+        np.random.shuffle(self._pegs[:3])
+        self.obj_ids['fixed'].append(obj_id)
 
-        upper_offset_z = [0,0,-1.6*scaling]
-        upper_offset_y = [0,0.75*scaling,0]
-        for i in range(2):
-            upper_pos_z= list(np.array(startPos)+np.array([x*i for x in upper_offset_z]))
-            for j in range(6):
-                upper_pos= list(np.array(upper_pos_z)+np.array([x*j for x in upper_offset_y]))
-                upper_nut = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/upper_nut.urdf"),upper_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
-                upper_peg = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/upper_peg.urdf"),upper_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
-                p.changeVisualShape(upper_nut, -1, textureUniqueId=newmetal)
-                p.changeVisualShape(upper_peg, -1, textureUniqueId=newmetal)
-                ring_pos,ring_orn=get_link_pose(upper_peg, -1)
-                ring_pos = list(np.array(ring_pos)+np.array([0,0,-0.0]))
-                ring = p.loadURDF(os.path.join(ASSET_DIR_PATH,"ring/newring.urdf"),ring_pos,startOrientation,globalScaling=scaling)
-                # ring_color=[0.5*(i+0.5*j+1),0.5*j,0.16*(i+j),1]
-                # p.changeVisualShape(ring,-1,rgbaColor=ring_color)
-                self.obj_ids['rigid'].append(ring) #0-11
-        self._rings = np.array(self.obj_ids['rigid'][-12:])
-        # np.random.shuffle(self._rings)
-        for obj_id in self._rings[3:4]:
-            # change color to red
+        # rings
+        num_rings = 1
+        for i in range(num_rings):
+            pos, orn = get_link_pose(self.obj_ids['fixed'][-1], i + 5)
+            obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, "ring/ring_tao.urdf"),
+                                np.array([pos[0] + 0.05 * np.random.random(), pos[1], pos[2]]),
+                                p.getQuaternionFromEuler([0, 0, 0]),
+                                globalScaling=asset_scaling)
+            self.obj_ids['rigid'].append(obj_id)
+        self._rings = np.array(self.obj_ids['rigid'][-num_rings:])
+        #self._rings = np.array(self.obj_ids['rigid'][-1])
+        np.random.shuffle(self._rings)
+        for obj_id in self._rings[:1]:
             p.changeVisualShape(obj_id, -1, rgbaColor=(255 / 255, 69 / 255, 58 / 255, 1))
-        self.obj_id, self.obj_link1 = self._rings[0], -1
+        self.obj_id, self.obj_link1, self.obj_link2 = self._rings[0], 1, 2
 
-        lower_offset = [0,2.8*scaling,0]
-        for i in range(2):
-            lower_pos=list(np.array(startPos)+np.array([x*i for x in lower_offset]))
-            lower_nut = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/lower_nut.urdf"),lower_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
-            lower_peg = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/lower_peg.urdf"),lower_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
-            p.changeVisualShape(lower_nut, -1, textureUniqueId=newmetal)
-            p.changeVisualShape(lower_peg, -1, textureUniqueId=newmetal)
-            self.obj_ids['fixed'].append(lower_peg) # 43,47
-            print(f"lower_peg_id:{lower_peg}")
-            print(self.obj_ids['fixed'])
 
-            border_pos = list(np.array(startPos)+np.array([x*i for x in border_offset]))
-            hor_border = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/hor_border.urdf"),border_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
-            ver_border = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/ver_border.urdf"),border_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
-            p.changeVisualShape(hor_border, -1, textureUniqueId=metal)
-            p.changeVisualShape(ver_border, -1, textureUniqueId=metal)       
-        p.changeVisualShape(upper_nut, -1, textureUniqueId=newmetal)
-        p.changeVisualShape(upper_peg, -1, textureUniqueId=newmetal)
-        print(f"board{self.rand_id} {self.obj_ids['fixed'][self.rand_id]}")
+        # hor_board = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/horizontal_pegboard.urdf"),startPos,startOrientation,globalScaling=scaling,useFixedBase=1)
+        # ver_board = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/vertical_pegboard.urdf"),startPos,startOrientation,globalScaling=scaling,useFixedBase=1)
+        
+        # p.changeVisualShape(hor_board, -1, textureUniqueId=wood)
+        # p.changeVisualShape(ver_board, -1, textureUniqueId=wood)
+        # self.obj_ids['fixed'].append(hor_board) # 1 4
+        # self.obj_ids['fixed'].append(ver_board) # 2 5
+
+
+        # upper_offset_z = [0,0,-1.6*scaling]
+        # upper_offset_y = [0,0.75*scaling,0]
+        # for i in range(2):
+        #     upper_pos_z= list(np.array(startPos)+np.array([x*i for x in upper_offset_z]))
+        #     for j in range(6):
+        #         upper_pos= list(np.array(upper_pos_z)+np.array([x*j for x in upper_offset_y]))
+        #         upper_nut = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/upper_nut.urdf"),upper_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
+        #         upper_peg = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/upper_peg.urdf"),upper_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
+        #         p.changeVisualShape(upper_nut, -1, textureUniqueId=newmetal)
+        #         p.changeVisualShape(upper_peg, -1, textureUniqueId=newmetal)
+        #         ring_pos,ring_orn=get_link_pose(upper_peg, -1)
+        #         ring_pos = list(np.array(ring_pos)+np.array([0,0,-0.0]))
+        #         ring = p.loadURDF(os.path.join(ASSET_DIR_PATH,"ring/newring.urdf"),ring_pos,startOrientation,globalScaling=scaling)
+        #         # ring_color=[0.5*(i+0.5*j+1),0.5*j,0.16*(i+j),1]
+        #         # p.changeVisualShape(ring,-1,rgbaColor=ring_color)
+        #         self.obj_ids['rigid'].append(ring) #0-11
+        # self._rings = np.array(self.obj_ids['rigid'][-12:])
+        # # np.random.shuffle(self._rings)
+        # for obj_id in self._rings[3:4]:
+        #     # change color to red
+        #     p.changeVisualShape(obj_id, -1, rgbaColor=(255 / 255, 69 / 255, 58 / 255, 1))
+        # self.obj_id, self.obj_link1 = self._rings[0], -1
+
+        # lower_offset = [0,2.8*scaling,0]
+        # for i in range(2):
+        #     lower_pos=list(np.array(startPos)+np.array([x*i for x in lower_offset]))
+        #     lower_nut = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/lower_nut.urdf"),lower_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
+        #     lower_peg = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/lower_peg.urdf"),lower_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
+        #     p.changeVisualShape(lower_nut, -1, textureUniqueId=newmetal)
+        #     p.changeVisualShape(lower_peg, -1, textureUniqueId=newmetal)
+        #     self.obj_ids['fixed'].append(lower_peg) # 43,47
+        #     print(f"lower_peg_id:{lower_peg}")
+        #     print(self.obj_ids['fixed'])
+
+        #     border_pos = list(np.array(startPos)+np.array([x*i for x in border_offset]))
+        #     hor_border = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/hor_border.urdf"),border_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
+        #     ver_border = p.loadURDF(os.path.join(ASSET_DIR_PATH, "pegboard/ver_border.urdf"),border_pos,startOrientation,globalScaling=scaling,useFixedBase=1)
+        #     p.changeVisualShape(hor_border, -1, textureUniqueId=metal)
+        #     p.changeVisualShape(ver_border, -1, textureUniqueId=metal)       
+        # p.changeVisualShape(upper_nut, -1, textureUniqueId=newmetal)
+        # p.changeVisualShape(upper_peg, -1, textureUniqueId=newmetal)
+        # print(f"board{self.rand_id} {self.obj_ids['fixed'][self.rand_id]}")
         
         # blocks
         # blocks
@@ -199,7 +244,7 @@ class PegBoard(PsmEnv):
                                        pos_obj[2] + 0.045 * self.SCALING, yaw, -0.5])  # lift up
 
         # pos_peg = get_link_pose(self.obj_ids['fixed'][1], self.obj_id - np.min(self._blocks) + 6)[0]  # 6 pegs
-        pos_peg = get_link_pose(self.obj_ids['fixed'][self.rand_id], -1)[0]  # 6 pegs
+        pos_peg = get_link_pose(self.obj_ids['fixed'][2], -1)[0]  # 6 pegs
         pos_place = [self.goal[0] + pos_obj[0] - pos_peg[0],
                      self.goal[1] + pos_obj[1] - pos_peg[1], self._waypoints[0][2]]  # consider offset
         self._waypoints[4] = np.array([pos_place[0], pos_place[1], pos_place[2], yaw, -0.5])  # above goal

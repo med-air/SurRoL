@@ -450,7 +450,7 @@ class PickAndPlaceHaptic(PsmEnv):
         closeTouch_right() 
 
 if __name__ == "__main__":
-    env = PickAndPlaceHaptic(render_mode='human')  # create one process and corresponding env
+    env = PickAndPlace(render_mode='human')  # create one process and corresponding env
 
     env.test()
     env.close()

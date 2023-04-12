@@ -23,17 +23,19 @@ from surrol.tasks.gauze_retrieve import GauzeRetrieve
 from surrol.tasks.needle_reach import NeedleReach
 from surrol.tasks.needle_pick import NeedlePick
 from surrol.tasks.peg_board import PegBoard
-from surrol.tasks.peg_transfer import PegTransfer
+from surrol.tasks.peg_board_bimanual import BiPegBoard
+# from surrol.tasks.peg_transfer import PegTransfer
+from surrol.tasks.peg_transfer_tao import PegTransfer #for demo record following iros rl settings
 from surrol.tasks.peg_transfer_RL import PegTransferRL
 from surrol.tasks.needle_regrasp_bimanual import NeedleRegrasp
 # from surrol.tasks.peg_transfer_bimanual_org import BiPegTransfer
 from surrol.tasks.peg_transfer_bimanual import BiPegTransfer
-from surrol.tasks.ring_rail_cu import RingRailCU
-from surrol.tasks.peg_board import PegBoard
 from surrol.tasks.pick_and_place import PickAndPlace
-from surrol.tasks.match_board import MatchBoard 
+from surrol.tasks.match_board import MatchBoard
+from surrol.tasks.match_board_ii import MatchBoardII 
 from surrol.tasks.needle_pick_RL import NeedlePickRL
 from surrol.tasks.needle_the_rings import NeedleRings
+# from surrol.tasks.match_board_ii import BiMatchBoard
 from surrol.tasks.ecm_env import EcmEnv, goal_distance,reset_camera
 from surrol.robots.ecm import RENDER_HEIGHT, RENDER_WIDTH, FoV
 from surrol.robots.ecm import Ecm
@@ -51,8 +53,8 @@ def open_scene(id):
 
     scene = None
     menu_dict = {0:StartPage(),1:ECMPage(),2:NeedlePage(),3:PegPage(),4:PickPlacePage()}
-    task_list =[NeedlePick,PegTransfer,NeedleRegrasp,BiPegTransfer,PickAndPlace,PegBoard,NeedleRings,MatchBoard,ECMReach,MisOrient,StaticTrack,ActiveTrack,NeedleReach,GauzeRetrieve]
-    bimanual_list=[9,10,11,12,17,18]
+    task_list =[NeedlePick,PegTransfer,NeedleRegrasp,BiPegTransfer,PickAndPlace,BiPegBoard,NeedleRings,MatchBoardII,ECMReach,MisOrient,StaticTrack,ActiveTrack,NeedleReach,GauzeRetrieve]
+    bimanual_list=[9,10,11,12,16,17,18]
     if id < 5:
         scene = menu_dict[id]
     elif id in bimanual_list:
@@ -61,7 +63,9 @@ def open_scene(id):
         scene = SurgicalSimulatorBimanual(task_list[(id-5)//2], {'render_mode': 'human'}, jaw_states=jaws,id=id) if id %2==1 and id!=9 else \
         SurgicalSimulatorBimanual(task_list[(id-5)//2], {'render_mode': 'human'}, jaw_states=jaws,id=id,demo=1)
     else:
-        if id ==8:
+        if id ==15:
+            scene = SurgicalSimulator(PegBoard,{'render_mode': 'human'},id)
+        elif id ==8:
             scene = SurgicalSimulator(PegTransferRL,{'render_mode': 'human'},id,demo=1)
         elif id ==6:
             scene = SurgicalSimulator(NeedlePickRL,{'render_mode': 'human'},id,demo=1)
@@ -1448,7 +1452,7 @@ class NeedleUI(MDApp):
     def on_start(self):
         self.screen.ids.btn1.bind(on_press = lambda _: open_scene(29))
         self.screen.ids.btn2.bind(on_press = lambda _: open_scene(31))
-        self.screen.ids.btn3.bind(on_press = lambda _: open_scene(5))
+        self.screen.ids.btn3.bind(on_press = lambda _: open_scene(6))
         self.screen.ids.btn4.bind(on_press = lambda _: open_scene(9))
         self.screen.ids.btn5.bind(on_press = lambda _: open_scene(0))
         self.screen.ids.btn6.bind(on_press = lambda _: open_scene(2))
@@ -1852,8 +1856,8 @@ class SurgicalSimulator(SurgicalSimulatorBase):
         self.demo = demo
         self.start_time = time.time()
         exempt_l = [i for i in range(21,23)]
-        # if self.id not in exempt_l:
-        #     self.toggleEcmView()
+        if self.id not in exempt_l:
+            self.toggleEcmView()
         self.has_load_policy = False
 
         self.ecm_action = np.zeros(env_type.ACTION_ECM_SIZE)
@@ -1876,7 +1880,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
         """Step simulation
         """
         if self.demo == None:
-            print(f"scene id:{self.id}")
+            # print(f"scene id:{self.id}")
             if task.time - self.time > 1 / 240.0:
                 self.before_simulation_step()
 
@@ -1890,7 +1894,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                     viewMatrix=self.env._view_matrix,
                     projectionMatrix=self.env._proj_matrix)
                 p.setGravity(0,0,-10.0)
-                print(f"ecm view out matrix:{self.ecm_view_out}")
+                # print(f"ecm view out matrix:{self.ecm_view_out}")
                 self.time = task.time
         else:
             if time.time() - self.time > 1/240:
@@ -2016,7 +2020,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
             if retrived_action[4] == 1:
                 self.psm1_action[4] = -0.5
 
-            print(f"len of retrieved action:{len(retrived_action)}")
+            # print(f"len of retrieved action:{len(retrived_action)}")
             if self.demo:
                 if self.id ==8:
                     obs = self.env._get_obs()
@@ -2031,7 +2035,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                     action = self.env.get_oracle_action(obs)
                     self.psm1_action = action
                     self.env._set_action(self.psm1_action)
-                    self.env._step_callback()
+                    self.env._step_callback(demo=self.demo)
             else:
                 self.env._set_action(self.psm1_action)
                 self.env._step_callback()
@@ -2040,7 +2044,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
             self.ecm_action[0] = -retrived_action[0]*0.2
             self.ecm_action[1] = -retrived_action[1]*0.2
             self.ecm_action[2] = retrived_action[2]*0.2
-        print(self.id)
+        # print(self.id)
         #active track
         if self.id == 27 or self.id == 28:
             self.env._step_callback()
@@ -2209,7 +2213,7 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
                 # if time.time()-self.start_time > (self.itr + 1) * time_size:
                 obs = self.env._get_obs()
                 obs = self.env._get_obs()['achieved_goal'] if isinstance(obs, dict) else None
-                success = self.env._is_success(obs,self.env._sample_goal()) if obs is not None else False
+                # success = self.env._is_success(obs,self.env._sample_goal()) if obs is not None else False
                 if  time.time()-self.start_time > 18:   
                     # if self.cnt>=6: 
                     #     self.kivy_ui.stop()
@@ -2266,10 +2270,10 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
             self.psm2_action[2] = 0
             self.psm2_action[3] = 0              
         else:
-            self.psm2_action[0] = retrived_action[2]*0.7
-            self.psm2_action[1] = retrived_action[0]*0.7
-            self.psm2_action[2] = retrived_action[1]*0.7
-            self.psm2_action[3] = -retrived_action[3]/math.pi*180*0.6
+            self.psm2_action[0] = retrived_action[2]
+            self.psm2_action[1] = retrived_action[0]
+            self.psm2_action[2] = retrived_action[1]
+            self.psm2_action[3] = -retrived_action[3]/math.pi*180
         if retrived_action[4] == 0:
             self.psm2_action[4] = 1
         if retrived_action[4] == 1:
@@ -2277,9 +2281,10 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
 
         if self.demo:
             self.env._set_action(action)
+            self.env._step_callback(demo=self.demo)
         else:
             self.env._set_action(np.concatenate([self.psm2_action, self.psm1_action], axis=-1))
-        self.env._step_callback()
+            self.env._step_callback()
         '''Control ECM'''
         if retrived_action[4] == 3:
             self.ecm_action[0] = -retrived_action[0]*0.2
