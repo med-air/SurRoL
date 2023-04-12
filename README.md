@@ -22,7 +22,7 @@ conda activate surrol
 ### Install SurRoL
 
 ```shell
-git clone --recursive https://github.com/yuehaowang/SurRolv2.git
+git clone --recursive https://github.com/med-air/SurRolv2.git
 cd SurRolv2
 pip install -e .
 ```
@@ -32,6 +32,10 @@ pip install -e .
 1. Install OpenHaptic Device Driver
 
     https://support.3dsystems.com/s/article/OpenHaptics-for-Linux-Developer-Edition-v34?language=en_US
+
+2. Setup Device Name for Identification.
+
+    Please set the right device name as "right" and set the left device name as "left" using "Touch_Setup" software provided by the OpenHaptic Device Driver.
 
 2. Install SWIG -- https://www.swig.org/
 
