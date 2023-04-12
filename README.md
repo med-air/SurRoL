@@ -37,9 +37,9 @@ pip install -e .
 
     Please set the right device name as "right" and set the left device name as "left" using "Touch_Setup" software provided by the OpenHaptic Device Driver.
 
-2. Install SWIG -- https://www.swig.org/
+3. Install SWIG -- https://www.swig.org/
 
-3. Compile the Python API for Haptic Geomagic Touch
+4. Compile the Python API for Haptic Geomagic Touch
     ```shell
     cd tests
     bash setup_haptic.sh
