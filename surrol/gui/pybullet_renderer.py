@@ -94,7 +94,7 @@ class Panda3DSceneRenderer(BaseRenderer):
         self._pipe = self._app.pipe
         self.dr = self._app.camNode.getDisplayRegion(0)
 # DUAL ECM START
-        self.dr2 = self._app.cam2.node().getDisplayRegion(0)
+        # self.dr2 = self._app.cam2.node().getDisplayRegion(0)
 # DUAL ECM END
         # self._engine = p3d.GraphicsEngine.get_global_ptr()
         # self._pipe = p3d.GraphicsPipeSelection.get_global_ptr().make_default_pipe()
@@ -245,16 +245,16 @@ class Panda3DSceneRenderer(BaseRenderer):
         color_image = np.flipud(color_image)
         color_image = adjust_gamma(color_image,1.8)
 # DUAL ECM STRAT
-        movedTex = self.dr2.getScreenshot()
-        # print(f"!!!!right{tex}")
-        if requested_format is None:
-            data = movedTex.getRamImage()
-        else:
-            data = movedTex.getRamImageAs(requested_format)        
-        moved_image = np.frombuffer(data, np.uint8)
-        moved_image.shape = (movedTex.getYSize(), movedTex.getXSize(), movedTex.getNumComponents())
-        moved_image = np.flipud(moved_image)
-        moved_image = adjust_gamma(moved_image,1.8)
+        # movedTex = self.dr2.getScreenshot()
+        # # print(f"!!!!right{tex}")
+        # if requested_format is None:
+        #     data = movedTex.getRamImage()
+        # else:
+        #     data = movedTex.getRamImageAs(requested_format)        
+        # moved_image = np.frombuffer(data, np.uint8)
+        # moved_image.shape = (movedTex.getYSize(), movedTex.getXSize(), movedTex.getNumComponents())
+        # moved_image = np.flipud(moved_image)
+        # moved_image = adjust_gamma(moved_image,1.8)
 # DUAL ECM END
 # SHOW TWO ECM OUTPUT START
         # show_rgbd_image(color_image,moved_image)

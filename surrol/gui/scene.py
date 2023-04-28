@@ -18,7 +18,7 @@ class Scene:
         self.app = Application.app
         self.cam = Application.app.cam
 # DUAL ECM CAM START
-        self.cam2= Application.app.cam2
+        # self.cam2= Application.app.cam2
 # DUAL ECM CAM END
         self.taskMgr = Application.app.taskMgr
         self.loader = Application.app.loader
@@ -181,11 +181,11 @@ class GymEnvScene(Scene):
             [0.33382686972618103, -0.49541640281677246, -2.541912794113159, 1.0]])
             trans_mat = np.array([[1, 0, -0.,  0], [0., 1, -0.,0.01 ], [0., 0., 1,  0],[0, 0, 0, 1]])
             result_mat = np.transpose(np.matmul(trans_mat,np.transpose(scene_view.camera.pose_matrix)))
-            self.cam2.set_mat(conv_mat * Mat4(*result_mat.ravel(),))
-            # self.cam2.set_mat(conv_mat * Mat4(*self.outview['pose'].ravel(),))
-            # print(f"{scene_view.camera.pose_matrix} {trans_mat} camera view matrix: {conv_mat * Mat4(*scene_view.camera.pose_matrix.ravel(),)}")
-            self.cam2.node().get_lens().set_near_far(self.outview['znear'],self.outview['zfar'])
-            self.cam2.node().get_lens().set_fov(self.outview['aspect'], self.outview['yfov'])
+            # self.cam2.set_mat(conv_mat * Mat4(*result_mat.ravel(),))
+            # # self.cam2.set_mat(conv_mat * Mat4(*self.outview['pose'].ravel(),))
+            # # print(f"{scene_view.camera.pose_matrix} {trans_mat} camera view matrix: {conv_mat * Mat4(*scene_view.camera.pose_matrix.ravel(),)}")
+            # self.cam2.node().get_lens().set_near_far(self.outview['znear'],self.outview['zfar'])
+            # self.cam2.node().get_lens().set_fov(self.outview['aspect'], self.outview['yfov'])
 # DUAL ECM VIEW END
     def _update_state(self, scene_state):
         """Apply scene state.

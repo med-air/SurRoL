@@ -35,7 +35,7 @@ class MisOrient(EcmEnv):
     # QPOS_ECM = (0, 0.6, 0.04, 0)
     POSE_TABLE = ((0.5, 0, 0.001), (0, 0, 0))
 
-    ACTION_ECM_SIZE=3
+    ACTION_ECM_SIZE=1
     def __init__(self, render_mode=None, cid = -1):
         super(MisOrient, self).__init__(render_mode, cid)
         self._view_matrix = p.computeViewMatrixFromYawPitchRoll(

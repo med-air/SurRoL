@@ -53,7 +53,8 @@ class PsmEnv(SurRoLGoalEnv):
                            + np.array([0., 0., 0.0102]).reshape((3, 1))  # tip-eef offset with collision margin
         workspace_limits *= self.SCALING  # use scaling for more stable collistion simulation
         self.workspace_limits1 = workspace_limits
-
+        # plot goal
+        self._goal_plot = True
         # has_object
         self.has_object = False
         self._waypoint_goal = False
@@ -94,7 +95,7 @@ class PsmEnv(SurRoLGoalEnv):
         # return - (d > self.distance_threshold).astype(np.float32)
         return self._is_success(achieved_goal, desired_goal).astype(np.float32) - 1.
 
-    def _env_setup(self):
+    def _env_setup(self,goal_plot=True):
         # camera
         if self._render_mode == 'human':
             reset_camera(yaw=90.0, pitch=-30.0, dist=0.82 * self.SCALING,
@@ -121,9 +122,14 @@ class PsmEnv(SurRoLGoalEnv):
                    globalScaling=self.SCALING)
 
         # for goal plotting
-        obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'sphere/sphere.urdf'),
-                            globalScaling=self.SCALING)
-        self.obj_ids['fixed'].append(obj_id)  # 0
+        if goal_plot:
+            obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'sphere/sphere.urdf'),
+                                globalScaling=self.SCALING)
+            self.obj_ids['fixed'].append(obj_id)  # 0
+        else: 
+            obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'sphere/sphere.urdf'),
+                                globalScaling=0.000001) #visually remove
+            self.obj_ids['fixed'].append(obj_id)  # 0    
         print(f'goal:{obj_id}')
         pass  # need to implement based on every task
         # self.obj_ids
@@ -244,70 +250,70 @@ class PsmEnv(SurRoLGoalEnv):
         if self.block_gripper or not self.has_object or self._activated < 0:
             # print(f'skip{self.block_gripper} {self.has_object} {self._activated}')
             return
-        if demo:
-            if self._contact_constraint is None:
-                # the grippers activate; to check if they can grasp the object
-                # TODO: check whether the constraint may cause side effects
-                # pass
-                psm = self.psm1 if self._activated == 0 else self.psm2
-                print(self._meet_contact_constraint_requirement())
-                if self._meet_contact_constraint_requirement():
-                    # print(self.obj_id)
-                    points_1 = p.getContactPoints(bodyA=psm.body, linkIndexA=6)
-                    points_2 = p.getContactPoints(bodyA=psm.body, linkIndexA=7)
-                    points_1 = [point[2] for point in points_1 if point[2] in self.obj_ids['rigid']]
-                    points_2 = [point[2] for point in points_2 if point[2] in self.obj_ids['rigid']]
-                    contact_List = list(set(points_1)&set(points_2))
-                    # print(f'contact{contact_List}')
-                    print(f'contact item id:{contact_List}')
-                    if len(contact_List)>0:
-                        contact_Id=contact_List[-1]
-                        body_pose = p.getLinkState(psm.body, psm.EEF_LINK_INDEX)
-                        obj_pose = p.getBasePositionAndOrientation(contact_Id)
-                        world_to_body = p.invertTransform(body_pose[0], body_pose[1])
-                        obj_to_body = p.multiplyTransforms(world_to_body[0],
-                                                        world_to_body[1],
-                                                        obj_pose[0], obj_pose[1])                
-
-                        self._contact_constraint = p.createConstraint(
-                            parentBodyUniqueId=psm.body,
-                            parentLinkIndex=psm.EEF_LINK_INDEX,
-                            childBodyUniqueId=contact_Id,
-                            childLinkIndex=-1,
-                            jointType=p.JOINT_FIXED,
-                            jointAxis=(0, 0, 0),
-                            parentFramePosition=obj_to_body[0],
-                            parentFrameOrientation=obj_to_body[1],
-                            childFramePosition=(0, 0, 0),
-                            childFrameOrientation=(0, 0, 0))
-                        # TODO: check the maxForce; very subtle
-                        print(f'contact with {contact_Id}!create constraint id{self._contact_constraint}!')
-                        p.changeConstraint(self._contact_constraint, maxForce=20)
-            else:
-                # self._contact_constraint is not None
-                # the gripper grasp the object; to check if they remain contact
-                # pass
-                psm = self.psm1 if self._activated == 0 else self.psm2
-                # points = p.getContactPoints(bodyA=psm.body, linkIndexA=6) \
-                #          + p.getContactPoints(bodyA=psm.body, linkIndexA=7)
+        # if demo:
+        if self._contact_constraint is None:
+            # the grippers activate; to check if they can grasp the object
+            # TODO: check whether the constraint may cause side effects
+            # pass
+            psm = self.psm1 if self._activated == 0 else self.psm2
+            print(self._meet_contact_constraint_requirement())
+            if self._meet_contact_constraint_requirement():
+                # print(self.obj_id)
                 points_1 = p.getContactPoints(bodyA=psm.body, linkIndexA=6)
                 points_2 = p.getContactPoints(bodyA=psm.body, linkIndexA=7)
                 points_1 = [point[2] for point in points_1 if point[2] in self.obj_ids['rigid']]
                 points_2 = [point[2] for point in points_2 if point[2] in self.obj_ids['rigid']]
-                intersect = list(set(points_1)&set(points_2))
-                # if len(intersect) > 0:
-                #     contact_Id = intersect[-1]
-                # else:
-                #     contact_Id = -100
-                # points = [point for point in points if point[2] == contact_Id]
-                # remain_contact = len(points) > 0
-                remain_contact = len(intersect) > 0
+                contact_List = list(set(points_1)&set(points_2))
+                # print(f'contact{contact_List}')
+                print(f'contact item id:{contact_List}')
+                if len(contact_List)>0:
+                    contact_Id=contact_List[-1]
+                    body_pose = p.getLinkState(psm.body, psm.EEF_LINK_INDEX)
+                    obj_pose = p.getBasePositionAndOrientation(contact_Id)
+                    world_to_body = p.invertTransform(body_pose[0], body_pose[1])
+                    obj_to_body = p.multiplyTransforms(world_to_body[0],
+                                                    world_to_body[1],
+                                                    obj_pose[0], obj_pose[1])                
 
-                if not remain_contact and not self._contact_approx:
-                    # release the previously grasped object because there is no contact any more
-                    # print("no contact!remove constraint!")
-                    self._release(self._activated)
-            print(f'num of constraints for stepcallback: {p.getNumConstraints()}')
+                    self._contact_constraint = p.createConstraint(
+                        parentBodyUniqueId=psm.body,
+                        parentLinkIndex=psm.EEF_LINK_INDEX,
+                        childBodyUniqueId=contact_Id,
+                        childLinkIndex=-1,
+                        jointType=p.JOINT_FIXED,
+                        jointAxis=(0, 0, 0),
+                        parentFramePosition=obj_to_body[0],
+                        parentFrameOrientation=obj_to_body[1],
+                        childFramePosition=(0, 0, 0),
+                        childFrameOrientation=(0, 0, 0))
+                    # TODO: check the maxForce; very subtle
+                    print(f'contact with {contact_Id}!create constraint id{self._contact_constraint}!')
+                    p.changeConstraint(self._contact_constraint, maxForce=20)
+        else:
+            # self._contact_constraint is not None
+            # the gripper grasp the object; to check if they remain contact
+            # pass
+            psm = self.psm1 if self._activated == 0 else self.psm2
+            # points = p.getContactPoints(bodyA=psm.body, linkIndexA=6) \
+            #          + p.getContactPoints(bodyA=psm.body, linkIndexA=7)
+            points_1 = p.getContactPoints(bodyA=psm.body, linkIndexA=6)
+            points_2 = p.getContactPoints(bodyA=psm.body, linkIndexA=7)
+            points_1 = [point[2] for point in points_1 if point[2] in self.obj_ids['rigid']]
+            points_2 = [point[2] for point in points_2 if point[2] in self.obj_ids['rigid']]
+            intersect = list(set(points_1)&set(points_2))
+            # if len(intersect) > 0:
+            #     contact_Id = intersect[-1]
+            # else:
+            #     contact_Id = -100
+            # points = [point for point in points if point[2] == contact_Id]
+            # remain_contact = len(points) > 0
+            remain_contact = len(intersect) > 0
+
+            if not remain_contact and not self._contact_approx:
+                # release the previously grasped object because there is no contact any more
+                # print("no contact!remove constraint!")
+                self._release(self._activated)
+        print(f'num of constraints for stepcallback: {p.getNumConstraints()}')
 
     def _sample_goal(self) -> np.ndarray:
         """ Samples a new goal and returns it.
@@ -364,30 +370,30 @@ class PsmEnv(SurRoLGoalEnv):
 
         if self._activated == idx:
             self._activated = -1
-        if demo:
-            try:
-                print(f"no contact!to remove constraint id{self._contact_constraint}!")
-                for i in range(1,self._contact_constraint+1):
-                    p.changeConstraint(i, maxForce=0)
-                    p.removeConstraint(i)
-                if not p.getNumConstraints():
-                    self._contact_constraint = None
-                    # print(f"constraint status: {p.getConstraintInfo(i)}")
-                    # print(f"constraint state:{p.getConstraintState(i)}")
-                # p.changeConstraint(self._contact_constraint, maxForce=0)
-                # self._contact_constraint = None
-                print(f"#(constraint)?{p.getNumConstraints()}!")
+            if self._contact_constraint is not None:
+                try:
+                    print(f"no contact!to remove constraint id{self._contact_constraint}!")
+                    for i in range(1,self._contact_constraint+1):
+                        p.changeConstraint(i, maxForce=0)
+                        p.removeConstraint(i)
+                    if not p.getNumConstraints():
+                        self._contact_constraint = None
+                        # print(f"constraint status: {p.getConstraintInfo(i)}")
+                        # print(f"constraint state:{p.getConstraintState(i)}")
+                    # p.changeConstraint(self._contact_constraint, maxForce=0)
+                    # self._contact_constraint = None
+                    print(f"#(constraint)?{p.getNumConstraints()}!")
 
 
-                # enable collision
-                # psm = self.psm1 if idx == 0 else self.psm2
-                # p.setCollisionFilterPair(bodyUniqueIdA=psm.body, bodyUniqueIdB=self.obj_id,
-                #                          linkIndexA=6, linkIndexB=-1, enableCollision=1)
-                # p.setCollisionFilterPair(bodyUniqueIdA=psm.body, bodyUniqueIdB=self.obj_id,
-                #                          linkIndexA=7, linkIndexB=-1, enableCollision=1)
-            except:
-                print("unable to get constraint info since removed")
-                pass
+                    # enable collision
+                    # psm = self.psm1 if idx == 0 else self.psm2
+                    # p.setCollisionFilterPair(bodyUniqueIdA=psm.body, bodyUniqueIdB=self.obj_id,
+                    #                          linkIndexA=6, linkIndexB=-1, enableCollision=1)
+                    # p.setCollisionFilterPair(bodyUniqueIdA=psm.body, bodyUniqueIdB=self.obj_id,
+                    #                          linkIndexA=7, linkIndexB=-1, enableCollision=1)
+                except:
+                    print("unable to get constraint info since removed")
+                    pass
 
     def _meet_contact_constraint_requirement(self) -> bool:
         # check if meeting the contact constraint

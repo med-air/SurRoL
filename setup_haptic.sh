@@ -4,7 +4,7 @@
 SRC_DIR=haptic_src
 
 cd $SRC_DIR
-swig -python test.i
+swig -python touch_haptic.i
 python setup.py build_ext
 cd ..
-cp $SRC_DIR/build/lib.*/_test.*.so $SRC_DIR/_test.so
+cp $SRC_DIR/build/lib.*/_touch_haptic.*.so $SRC_DIR/_touch_haptic.so

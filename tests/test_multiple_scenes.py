@@ -24,24 +24,22 @@ from surrol.tasks.needle_reach import NeedleReach
 from surrol.tasks.needle_pick import NeedlePick
 from surrol.tasks.peg_board import PegBoard
 from surrol.tasks.peg_board_bimanual import BiPegBoard
-# from surrol.tasks.peg_transfer import PegTransfer
-from surrol.tasks.peg_transfer_tao import PegTransfer #for demo record following iros rl settings
+from surrol.tasks.peg_transfer import PegTransfer 
 from surrol.tasks.peg_transfer_RL import PegTransferRL
 from surrol.tasks.needle_regrasp_bimanual import NeedleRegrasp
-# from surrol.tasks.peg_transfer_bimanual_org import BiPegTransfer
 from surrol.tasks.peg_transfer_bimanual import BiPegTransfer
 from surrol.tasks.pick_and_place import PickAndPlace
 from surrol.tasks.match_board import MatchBoard
 from surrol.tasks.match_board_ii import MatchBoardII 
-from surrol.tasks.needle_pick_RL import NeedlePickRL
+
 from surrol.tasks.needle_the_rings import NeedleRings
 # from surrol.tasks.match_board_ii import BiMatchBoard
 from surrol.tasks.ecm_env import EcmEnv, goal_distance,reset_camera
 from surrol.robots.ecm import RENDER_HEIGHT, RENDER_WIDTH, FoV
 from surrol.robots.ecm import Ecm
 
-from haptic_src._test import initTouch_right, closeTouch_right, getDeviceAction_right, startScheduler, stopScheduler
-from haptic_src._test import initTouch_left, closeTouch_left, getDeviceAction_left
+from haptic_src.touch_haptic import initTouch_right, closeTouch_right, getDeviceAction_right, startScheduler, stopScheduler
+from haptic_src.touch_haptic import initTouch_left, closeTouch_left, getDeviceAction_left
 from direct.task import Task
 from surrol.utils.pybullet_utils import step
 
@@ -53,7 +51,7 @@ def open_scene(id):
 
     scene = None
     menu_dict = {0:StartPage(),1:ECMPage(),2:NeedlePage(),3:PegPage(),4:PickPlacePage()}
-    task_list =[NeedlePick,PegTransfer,NeedleRegrasp,BiPegTransfer,PickAndPlace,BiPegBoard,NeedleRings,MatchBoardII,ECMReach,MisOrient,StaticTrack,ActiveTrack,NeedleReach,GauzeRetrieve]
+    task_list =[NeedlePick,PegTransfer,NeedleRegrasp,BiPegTransfer,PickAndPlace,BiPegBoard,NeedleRings,MatchBoard,ECMReach,MisOrient,StaticTrack,ActiveTrack,NeedleReach,GauzeRetrieve]
     bimanual_list=[9,10,11,12,16,17,18]
     if id < 5:
         scene = menu_dict[id]
@@ -68,7 +66,7 @@ def open_scene(id):
         elif id ==8:
             scene = SurgicalSimulator(PegTransferRL,{'render_mode': 'human'},id,demo=1)
         elif id ==6:
-            scene = SurgicalSimulator(NeedlePickRL,{'render_mode': 'human'},id,demo=1)
+            scene = SurgicalSimulator(NeedlePick,{'render_mode': 'human'},id,demo=1)
         else:
             scene = SurgicalSimulator(task_list[(id-5)//2],{'render_mode': 'human'},id) if id%2==1 else\
             SurgicalSimulator(task_list[(id-5)//2],{'render_mode': 'human'},id,demo=1)
@@ -1994,11 +1992,13 @@ class SurgicalSimulator(SurgicalSimulatorBase):
             self.actor, self.o_norm,self.g_norm = self.load_policy(obs,self.env)
             self.has_load_policy = True
 
+        self.ecm_action = np.zeros(self.ecm_action.shape)
         retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
         getDeviceAction_right(retrived_action)
         if self.demo:
             obs = self.env._get_obs()
             action = self.env.get_oracle_action(obs)
+
         if self.env.ACTION_SIZE != 3 and self.env.ACTION_SIZE != 1:
 
             # haptic right
@@ -2019,6 +2019,12 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                 self.psm1_action[4] = 1
             if retrived_action[4] == 1:
                 self.psm1_action[4] = -0.5
+                
+            if retrived_action[4] == 3:
+                self.psm1_action[0] = 0
+                self.psm1_action[1] = 0
+                self.psm1_action[2] = 0
+                self.psm1_action[3] = 0 
 
             # print(f"len of retrieved action:{len(retrived_action)}")
             if self.demo:
@@ -2035,26 +2041,33 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                     action = self.env.get_oracle_action(obs)
                     self.psm1_action = action
                     self.env._set_action(self.psm1_action)
-                    self.env._step_callback(demo=self.demo)
+                    self.env._step_callback()
             else:
                 self.env._set_action(self.psm1_action)
                 self.env._step_callback()
-        '''Control ECM'''
-        if retrived_action[4] == 3:
+        if retrived_action[4] == 3 and self.env.ACTION_ECM_SIZE == 3:  
             self.ecm_action[0] = -retrived_action[0]*0.2
             self.ecm_action[1] = -retrived_action[1]*0.2
             self.ecm_action[2] = retrived_action[2]*0.2
-        # print(self.id)
+
+        if retrived_action[4] == 3 and self.env.ACTION_ECM_SIZE == 1:
+            self.ecm_action[0] = -retrived_action[3]/math.pi*180*0.5
+
         #active track
         if self.id == 27 or self.id == 28:
             self.env._step_callback()
 
         # self.env._set_action(self.ecm_action)
-        if self.demo and (self.env.ACTION_SIZE == 3 or self.env.ACTION_SIZE == 1):
+        if self.demo and (self.env.ACTION_ECM_SIZE == 3 or self.env.ACTION_ECM_SIZE == 1):
             self.ecm_action = action
             self.env._set_action(self.ecm_action)
         if self.demo is None:
-            self.env._set_action_ecm(self.ecm_action)
+            if self.env.ACTION_ECM_SIZE == 1:
+                self.env._set_action(self.ecm_action)
+            else:
+                self.env._set_action_ecm(self.ecm_action)
+            
+            
         self.env.ecm.render_image()
         # _,_,rgb,_,_ = p.getCameraImage(
         #             width=100, height=100,
@@ -2243,7 +2256,8 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
         if self.demo:
             obs = self.env._get_obs()
             action = self.env.get_oracle_action(obs)
-    
+
+
         if retrived_action[4] == 2:
             self.psm1_action[0] = 0
             self.psm1_action[1] = 0
@@ -2258,7 +2272,6 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
             self.psm1_action[4] = 1
         if retrived_action[4] == 1:
             self.psm1_action[4] = -0.5
-
 
         # # haptic right
         retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
@@ -2279,17 +2292,23 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
         if retrived_action[4] == 1:
             self.psm2_action[4] = -0.5
 
+        '''Control ECM'''
+        if retrived_action[4] == 3:
+            self.psm1_action[0] = 0
+            self.psm1_action[1] = 0
+            self.psm1_action[2] = 0
+            self.psm1_action[3] = 0 
+            self.ecm_action[0] = -retrived_action[0]*0.2
+            self.ecm_action[1] = -retrived_action[1]*0.2
+            self.ecm_action[2] = retrived_action[2]*0.2 
+
         if self.demo:
             self.env._set_action(action)
             self.env._step_callback(demo=self.demo)
         else:
             self.env._set_action(np.concatenate([self.psm2_action, self.psm1_action], axis=-1))
             self.env._step_callback()
-        '''Control ECM'''
-        if retrived_action[4] == 3:
-            self.ecm_action[0] = -retrived_action[0]*0.2
-            self.ecm_action[1] = -retrived_action[1]*0.2
-            self.ecm_action[2] = retrived_action[2]*0.2
+
 
 
         # self.env._set_action(self.ecm_action)

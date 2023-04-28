@@ -24,25 +24,22 @@ from surrol.tasks.needle_reach import NeedleReach
 from surrol.tasks.peg_board import PegBoard
 from surrol.tasks.peg_board_bimanual import BiPegBoard
 # from surrol.tasks.peg_transfer import PegTransfer
-from surrol.tasks.peg_transfer_tao import PegTransfer #for demo record following iros rl settings
+from surrol.tasks.peg_transfer import PegTransfer
 from surrol.tasks.needle_pick import NeedlePick
-from surrol.tasks.needle_pick_RAL import NeedlePickRAL
 from surrol.tasks.needle_regrasp_bimanual import NeedleRegrasp
 # from surrol.tasks.peg_transfer_bimanual_org import BiPegTransfer
 from surrol.tasks.peg_transfer_bimanual import BiPegTransfer
 from surrol.tasks.pick_and_place import PickAndPlace
 from surrol.tasks.match_board import MatchBoard
 from surrol.tasks.match_board_ii import MatchBoardII 
-from surrol.tasks.needle_pick_RL import NeedlePickRL
 from surrol.tasks.needle_the_rings import NeedleRings
 # from surrol.tasks.match_board_ii import BiMatchBoard
 from surrol.tasks.ecm_env import EcmEnv, goal_distance,reset_camera
 from surrol.robots.ecm import RENDER_HEIGHT, RENDER_WIDTH, FoV
 from surrol.robots.ecm import Ecm
-from surrol.tasks.peg_transfer_record_demo import PegTransferHaptic
 
-from haptic_src._test import initTouch_right, closeTouch_right, getDeviceAction_right, startScheduler, stopScheduler
-from haptic_src._test import initTouch_left, closeTouch_left, getDeviceAction_left
+from haptic_src.touch_haptic import initTouch_right, closeTouch_right, getDeviceAction_right, startScheduler, stopScheduler
+from haptic_src.touch_haptic import initTouch_left, closeTouch_left, getDeviceAction_left
 from direct.task import Task
 from surrol.utils.pybullet_utils import step,step_real
 
@@ -54,7 +51,7 @@ def open_scene(id):
 
     scene = None
     menu_dict = {0:StartPage(),1:ECMPage(),2:NeedlePage(),3:PegPage(),4:PickPlacePage()}
-    task_list =[NeedlePick,PegTransfer,NeedleRegrasp,BiPegTransfer,PickAndPlace,BiPegBoard,NeedleRings,MatchBoardII,ECMReach,MisOrient,StaticTrack,ActiveTrack,NeedleReach,GauzeRetrieve]
+    task_list =[NeedlePick,PegTransfer,NeedleRegrasp,BiPegTransfer,PickAndPlace,BiPegBoard,NeedleRings,MatchBoard,ECMReach,MisOrient,StaticTrack,ActiveTrack,NeedleReach,GauzeRetrieve]
     bimanual_list=[9,10,11,12,16,17,18]
     if id < 5:
         scene = menu_dict[id]
@@ -69,7 +66,7 @@ def open_scene(id):
         elif id ==8:
             scene = SurgicalSimulator(PegTransfer,{'render_mode': 'human'},id,demo=1)
         elif id ==6:
-            scene = SurgicalSimulator(NeedlePickRAL,{'render_mode': 'human'},id,demo=1)
+            scene = SurgicalSimulator(NeedlePick,{'render_mode': 'human'},id,demo=1)
         else:
             scene = SurgicalSimulator(task_list[(id-5)//2],{'render_mode': 'human'},id) if id%2==1 else\
             SurgicalSimulator(task_list[(id-5)//2],{'render_mode': 'human'},id,demo=1)
@@ -1855,7 +1852,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
         self.ecm_view = 0
         self.ecm_view_out = None
         self.demo = demo
-        self.count_record_sample = 0
+        self.record_step_size = 150
         self.count_record_step = 0
         self.success = 0.0
         self.episode_acs = []
@@ -1905,69 +1902,11 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                 self.time = task.time
         else:    
             # if task.time - self.time > 1/240.0:
-            if self.id==8:
-                
-                # TODO longyonghao
+            if self.id==6:
                 self.before_simulation_step()
                 self.count_record_step +=1
                 print("count_record_step:",self.count_record_step)
-                # Step simulation
-                #pb.stepSimulation()
-                # self._duration = 0.1 # needle 
-                self._duration = 0.2
-                step(self._duration)
-                # for i in range(int(0.2 * 240)):
-                #     p.stepSimulation()
 
-                time.sleep(0.01)
-                # p.stepSimulation()
-
-                self.after_simulation_step()
-
-                # Call trigger update scene (if necessary) and draw methods
-                p.getCameraImage(
-                    width=1, height=1,
-                    viewMatrix=self.env._view_matrix,
-                    projectionMatrix=self.env._proj_matrix)
-                p.setGravity(0,0,-10.0)
-
-                # TODO
-                self.time = task.time
-
-                obs = self.env._get_obs()
-                obs = self.env._get_obs()['achieved_goal'] if isinstance(obs, dict) else None
-
-                success = self.env._is_success(obs,self.env._sample_goal()) if obs is not None else False
-                print(f"success: {success}")
-
-                if success and self.count_record_step>=100:
-                    actions = [self.episode_acs]
-                    observations= [self.episode_obs]
-                    infos = [self.episode_info]
-
-                    folder = "./recorded_demo/peg_transfer/yhlong3/"
-                    data_number = len(os.listdir(folder))
-                    file_name = "data_PegTransfer_random_" + str(data_number+1) + ".npz"
-                    np.savez_compressed(os.path.join(folder, file_name), acs=actions, obs=observations, info=infos) 
-
-                
-                wait_list=[12,30]
-                if (self.id not in wait_list) and self.count_record_step>=100:                           
-                    self.count_record_step = 0
-                    open_scene(0)
-                    open_scene(self.id)
-                    exempt_l = [i for i in range(21,23)]
-                    if self.id not in exempt_l:
-                        self.toggleEcmView()
-                    return 
-                
-            elif self.id==6:
-                self.before_simulation_step()
-                self.count_record_step +=1
-                print("count_record_step:",self.count_record_step)
-                # Step simulation
-                #pb.stepSimulation()
-                # self._duration = 0.1 # needle 
                 self._duration = 0.2
                 step(self._duration)
                 self.env._step_callback()
@@ -1978,7 +1917,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                     'is_success': self.env._is_success(obs['achieved_goal'], self.env.goal),
                 } if isinstance(obs, dict) else {'achieved_goal': None}               
                 self.episode_info.append(info)
-                # time.sleep(0.02)
+                time.sleep(0.01)
 
                 self.after_simulation_step()
 
@@ -1995,19 +1934,19 @@ class SurgicalSimulator(SurgicalSimulatorBase):
 
                 print(info)
 
-                if self.success and self.count_record_step>=150:
+                if self.success and self.count_record_step>=self.record_step_size:
                     actions = [self.episode_acs]
                     observations= [self.episode_obs]
                     infos = [self.episode_info]
 
-                    folder = "./recorded_demo/needle_pick/mixed_RAL/"
+                    folder = "./recorded_demo/needle_pick/demo1/"
                     data_number = len(os.listdir(folder))
                     file_name = "data_NeedlePick_random_" + str(data_number+1) + ".npz"
                     np.savez_compressed(os.path.join(folder, file_name), acs=actions, obs=observations, info=infos) 
 
                 
                 wait_list=[12,30]
-                if (self.id not in wait_list) and self.count_record_step>=150:                           
+                if (self.id not in wait_list) and self.count_record_step>=self.record_step_size:                           
                     self.count_record_step = 0
                     open_scene(0)
                     open_scene(self.id)
@@ -2099,11 +2038,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                 self.psm1_action[3] = 0  
             # print(f"len of retrieved action:{len(retrived_action)}")
             if self.demo:
-                if self.id == 8:
-                    ## TODO longyonghao
-                    # obs = self.env._get_obs()
-                    # action = self.env.get_oracle_action(obs)
-                    # self.psm1_action = retrived_action
+                if self.id == 6:
                     scale_psm1_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
                     scale_psm1_action[0] = self.psm1_action[0]/8
                     scale_psm1_action[1] = self.psm1_action[1]/8
@@ -2116,45 +2051,9 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                         scale_psm1_action[2] = 0
                         scale_psm1_action[3] = 0   
 
-                    # scale_psm1_action = np.clip(scale_psm1_action, self.action_space.low, self.action_space.high)
                     self.env._set_action(scale_psm1_action)
-
-                    obs = self.env._get_obs()
-
-                    self.episode_obs.append(obs)
-                    self.episode_acs.append(scale_psm1_action)
-                    info = {'is_success': self.env._is_success(obs['achieved_goal'], self.env.goal),} if isinstance(obs, dict) else {'achieved_goal': None}                    
-                    self.episode_info.append(info)
-
-                elif self.id == 6:
-                    scale_psm1_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
-                    scale_psm1_action[0] = self.psm1_action[0]/8
-                    scale_psm1_action[1] = self.psm1_action[1]/8
-                    scale_psm1_action[2] = self.psm1_action[2]/8
-                    scale_psm1_action[3] = self.psm1_action[3]/8
-                    scale_psm1_action[4] = self.psm1_action[4]
-                    if self.count_record_step == 0:
-                        scale_psm1_action[0] = 0
-                        scale_psm1_action[1] = 0
-                        scale_psm1_action[2] = 0
-                        scale_psm1_action[3] = 0   
-
-                    # scale_psm1_action = np.clip(scale_psm1_action, self.action_space.low, self.action_space.high)
-                    # scale_psm1_action = np.clip(scale_psm1_action, self.env.action_space.low, self.env.action_space.high)
-                    self.env._set_action(scale_psm1_action)
-                    # self.env._step_callback()
-
-                    # obs = self.env._get_obs()
-
-                    # self.episode_obs.append(obs)
                     self.episode_acs.append(scale_psm1_action)
 
-                # else:
-                #     obs = self.env._get_obs()
-                #     action = self.env.get_oracle_action(obs)
-                #     self.psm1_action = action
-                #     self.env._set_action(self.psm1_action)
-                #     self.env._step_callback(demo=self.demo)
             else:
                 self.env._set_action(self.psm1_action)
                 self.env._step_callback()
@@ -2165,10 +2064,6 @@ class SurgicalSimulator(SurgicalSimulatorBase):
         if self.id == 27 or self.id == 28:
             self.env._step_callback()
             
-        # self.env._set_action(self.ecm_action)
-        # if self.demo and (self.env.ACTION_SIZE == 3 or self.env.ACTION_SIZE == 1):
-        #     self.ecm_action = action
-        #     self.env._set_action(self.ecm_action)
         if self.demo is None:
             self.env._set_action_ecm(self.ecm_action)
         if self.demo and (self.id == 8 or self.id == 6):
@@ -2177,18 +2072,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
             self.ecm_action[2] = self.ecm_action[1]/5
             self.env._set_action_ecm(self.ecm_action)
         self.env.ecm.render_image()
-        # _,_,rgb,_,_ = p.getCameraImage(
-        #             width=100, height=100,
-        #             viewMatrix=self.env._view_matrix,
-        #             projectionMatrix=self.env._proj_matrix
-        #             )
-        # rgb_array = np.array(rgb, dtype=np.uint8)
-        # if len(rgb_array)>0:
-        #     rgb_array = np.reshape(rgb_array, (100, 100, 4))
 
-        #     rgb_array = rgb_array[:, :, :3]
-
-        #     imageio.imwrite('test.png',rgb_array)
         if self.ecm_view:
             self.env._view_matrix = self.env.ecm.view_matrix
         else:

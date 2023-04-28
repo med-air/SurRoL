@@ -3,7 +3,7 @@ import time
 import numpy as np
 
 import pybullet as p
-from surrol.tasks.psm_env_tao import PsmEnv, goal_distance
+from surrol.tasks.psm_env_RL import PsmEnv, goal_distance
 from surrol.utils.pybullet_utils import (
     get_link_pose,
     reset_camera,

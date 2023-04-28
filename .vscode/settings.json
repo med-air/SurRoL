@@ -1,7 +1,9 @@
 {
     "files.associations": {
         "hduerror.h": "c",
-        "valarray": "c"
+        "valarray": "c",
+        "touch_haptic.h": "c",
+        "bitset": "c"
     },
     "editor.fontSize": 20,
     "scm.inputFontSize": 20,

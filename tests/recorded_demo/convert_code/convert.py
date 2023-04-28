@@ -6,7 +6,7 @@ actions = []
 observations = []
 infos = []
 
-folder = "../needle_pick/mixed_RAL/"
+folder = "../needle_pick/demo1/"
 file_names = os.listdir(folder)
 
 for name in file_names:
@@ -16,4 +16,4 @@ for name in file_names:
     infos.append(episode_info["info"].squeeze())
 
 
-np.savez_compressed("./data_NeedlePick_random_150_mixed.npz", acs=actions, obs=observations, info=infos)  # save the file
+np.savez_compressed("./data_NeedlePick_random_150_demo1.npz", acs=actions, obs=observations, info=infos)  # save the file
