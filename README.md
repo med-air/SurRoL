@@ -1,8 +1,5 @@
 # SurRoL-v2
 
-<p align="center">
-   <img src="resources/img/overview.png" width="95%" height="95%" alt="SurRoL"/>
-</p>
 
 <p align="center">
    <img src="resources/img/overview.png" width="95%" height="95%" alt="SurRoL"/>
