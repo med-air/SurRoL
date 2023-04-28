@@ -4,6 +4,10 @@
    <img src="resources/img/overview.png" width="95%" height="95%" alt="SurRoL"/>
 </p>
 
+<p align="center">
+   <img src="resources/img/overview.png" width="95%" height="95%" alt="SurRoL"/>
+</p>
+
 - [Human-in-the-loop Embodied Intelligence with Interactive Simulation Environment for Surgical Robot Learning](https://arxiv.org/abs/2301.00452)
 
 ## Features
@@ -38,8 +42,6 @@ Create a conda virtual environment and activate it.
    git checkout SurRoL_v2
    pip install -e .
    ```
-
-### Install PyTorch Following the [Official Guideline](https://pytorch.org/get-started/locally/)
 
 ### Install Driver and Dependencies for Touch Haptic Device
 
