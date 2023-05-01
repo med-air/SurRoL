@@ -22,7 +22,7 @@
 
 The project is built on Ubuntu with Python 3.7.
 
-### Prepare environment
+### 1. Prepare environment
 
 Create a conda virtual environment and activate it.
 
@@ -31,7 +31,7 @@ Create a conda virtual environment and activate it.
  conda activate surrol
  ```
 
-### Install SurRoL
+### 2. Install SurRoL
 
    ```shell
    git clone --recursive https://github.com/med-air/SurRoL.git
@@ -40,7 +40,9 @@ Create a conda virtual environment and activate it.
    pip install -e .
    ```
 
-### Install Driver and Dependencies for Touch Haptic Device
+### 3. Install PyTorch Following the [Official Guideline](https://pytorch.org/get-started/locally/)
+
+### 4. Install Driver and Dependencies for Touch Haptic Device
 
 1. Install [OpenHaptic Device Driver](https://support.3dsystems.com/s/article/OpenHaptics-for-Linux-Developer-Edition-v34?language=en_US)    
 
@@ -70,15 +72,22 @@ that contains the basic procedures to start the environment, load the robot, and
 
 We also provide some [run files](./run) to evaluate the environments using baselines.
 
-To start the SurRoL-v2 GUI, run the following command:
+To start the SurRoL-v2 GUI with Touch (haptic device) support, run the following command:
 ```shell
 # GUI
-python tests/test_multiple_scenes.py
+python tests/test_multiple_scenes_touch.py
 ```
 You should see the following windows:
 <p align="center">
    <img src="resources/img/GUI.png" width="95%" height="95%" alt="SurRoL"/>
 </p>
+
+#### Alternative:
+To start the SurRoL-v2 GUI without touch haptic device, run the following command to preview:
+```shell
+# GUI
+python tests/test_multiple_scenes_keyboard.py
+```
 
 ## Citation
 

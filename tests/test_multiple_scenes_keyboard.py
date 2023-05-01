@@ -38,8 +38,6 @@ from surrol.tasks.ecm_env import EcmEnv, goal_distance,reset_camera
 from surrol.robots.ecm import RENDER_HEIGHT, RENDER_WIDTH, FoV
 from surrol.robots.ecm import Ecm
 
-from haptic_src.touch_haptic import initTouch_right, closeTouch_right, getDeviceAction_right, startScheduler, stopScheduler
-from haptic_src.touch_haptic import initTouch_left, closeTouch_left, getDeviceAction_left
 from direct.task import Task
 from surrol.utils.pybullet_utils import step
 
@@ -1635,7 +1633,7 @@ menu_bar_kv_haptic = '''MDBoxLayout:
     MDRectangleFlatIconButton:
         icon: "help-box"
         id: btn4
-        text: "Switch to RL Agent"
+        text: "Switch to Demo"
         text_color: (1, 1, 1, 1)
         icon_color: (1, 1, 1, 1)
         md_bg_color: app.theme_cls.bg_light
@@ -1828,8 +1826,6 @@ class SurgicalSimulator(SurgicalSimulatorBase):
     def __init__(self, env_type, env_params,id=None,demo=None):
         super(SurgicalSimulator, self).__init__(env_type, env_params)
         self.id = id
-        initTouch_right()
-        startScheduler()
         if env_type.ACTION_SIZE != 3 and env_type.ACTION_SIZE != 1:
             self.psm1_action = np.zeros(env_type.ACTION_SIZE)
             self.psm1_action[4] = 0.5
@@ -1993,38 +1989,12 @@ class SurgicalSimulator(SurgicalSimulatorBase):
             self.has_load_policy = True
 
         self.ecm_action = np.zeros(self.ecm_action.shape)
-        retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
-        getDeviceAction_right(retrived_action)
+
         if self.demo:
             obs = self.env._get_obs()
             action = self.env.get_oracle_action(obs)
 
         if self.env.ACTION_SIZE != 3 and self.env.ACTION_SIZE != 1:
-
-            # haptic right
-            # retrived_action-> x,y,z, angle, buttonState(0,1,2)
-            if retrived_action[4] == 2:
-                self.psm1_action[0] = 0
-                self.psm1_action[1] = 0
-                self.psm1_action[2] = 0
-                self.psm1_action[3] = 0            
-         
-            else:
-                self.psm1_action[0] = retrived_action[2]*0.9
-                self.psm1_action[1] = retrived_action[0]*0.9
-                self.psm1_action[2] = retrived_action[1]*0.9
-                self.psm1_action[3] = -retrived_action[3]/math.pi*180*0.5
-
-            if retrived_action[4] == 0:
-                self.psm1_action[4] = 1
-            if retrived_action[4] == 1:
-                self.psm1_action[4] = -0.5
-                
-            if retrived_action[4] == 3:
-                self.psm1_action[0] = 0
-                self.psm1_action[1] = 0
-                self.psm1_action[2] = 0
-                self.psm1_action[3] = 0 
 
             # print(f"len of retrieved action:{len(retrived_action)}")
             if self.demo:
@@ -2045,13 +2015,6 @@ class SurgicalSimulator(SurgicalSimulatorBase):
             else:
                 self.env._set_action(self.psm1_action)
                 self.env._step_callback()
-        if retrived_action[4] == 3 and self.env.ACTION_ECM_SIZE == 3:  
-            self.ecm_action[0] = -retrived_action[0]*0.2
-            self.ecm_action[1] = -retrived_action[1]*0.2
-            self.ecm_action[2] = retrived_action[2]*0.2
-
-        if retrived_action[4] == 3 and self.env.ACTION_ECM_SIZE == 1:
-            self.ecm_action[0] = -retrived_action[3]/math.pi*180*0.5
 
         #active track
         if self.id == 27 or self.id == 28:
@@ -2105,8 +2068,6 @@ class SurgicalSimulator(SurgicalSimulatorBase):
 
     def on_destroy(self):
         # !!! important
-        stopScheduler()
-        closeTouch_right()
         self.kivy_ui.stop()
         self.app.win.removeDisplayRegion(self.ui_display_region)
 
@@ -2114,10 +2075,6 @@ class SurgicalSimulator(SurgicalSimulatorBase):
 class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
     def __init__(self, env_type, env_params, jaw_states=[1.0, 1.0],id=None,demo=None):
         super(SurgicalSimulatorBimanual, self).__init__(env_type, env_params)
-
-        initTouch_right()
-        initTouch_left()
-        startScheduler()
         self.id=id
         self.demo = demo
         self.closed=True
@@ -2249,58 +2206,9 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
 
     def before_simulation_step(self):
 
-        # haptic left
-        retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
-        getDeviceAction_left(retrived_action)
-        # retrived_action-> x,y,z, angle, buttonState(0,1,2)
         if self.demo:
             obs = self.env._get_obs()
             action = self.env.get_oracle_action(obs)
-
-
-        if retrived_action[4] == 2:
-            self.psm1_action[0] = 0
-            self.psm1_action[1] = 0
-            self.psm1_action[2] = 0
-            self.psm1_action[3] = 0            
-        else:
-            self.psm1_action[0] = retrived_action[2]*0.7
-            self.psm1_action[1] = retrived_action[0]*0.7
-            self.psm1_action[2] = retrived_action[1]*0.7
-            self.psm1_action[3] = -retrived_action[3]/math.pi*180*0.6
-        if retrived_action[4] == 0:
-            self.psm1_action[4] = 1
-        if retrived_action[4] == 1:
-            self.psm1_action[4] = -0.5
-
-        # # haptic right
-        retrived_action = np.array([0, 0, 0, 0, 0], dtype = np.float32)
-        getDeviceAction_right(retrived_action)
-        # retrived_action-> x,y,z, angle, buttonState(0,1,2)
-        if retrived_action[4] == 2:
-            self.psm2_action[0] = 0
-            self.psm2_action[1] = 0
-            self.psm2_action[2] = 0
-            self.psm2_action[3] = 0              
-        else:
-            self.psm2_action[0] = retrived_action[2]
-            self.psm2_action[1] = retrived_action[0]
-            self.psm2_action[2] = retrived_action[1]
-            self.psm2_action[3] = -retrived_action[3]/math.pi*180
-        if retrived_action[4] == 0:
-            self.psm2_action[4] = 1
-        if retrived_action[4] == 1:
-            self.psm2_action[4] = -0.5
-
-        '''Control ECM'''
-        if retrived_action[4] == 3:
-            self.psm1_action[0] = 0
-            self.psm1_action[1] = 0
-            self.psm1_action[2] = 0
-            self.psm1_action[3] = 0 
-            self.ecm_action[0] = -retrived_action[0]*0.2
-            self.ecm_action[1] = -retrived_action[1]*0.2
-            self.ecm_action[2] = retrived_action[2]*0.2 
 
         if self.demo:
             self.env._set_action(action)
@@ -2345,9 +2253,6 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
 
     def on_destroy(self):
         # !!! important
-        stopScheduler()
-        closeTouch_right()     
-        closeTouch_left()
         self.kivy_ui.stop()
         self.app.win.removeDisplayRegion(self.ui_display_region)
 
