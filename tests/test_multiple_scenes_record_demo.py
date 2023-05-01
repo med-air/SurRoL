@@ -1834,21 +1834,6 @@ class SurgicalSimulator(SurgicalSimulatorBase):
             self.psm1_action = np.zeros(env_type.ACTION_SIZE)
             self.psm1_action[4] = 0.5
 
-            self.app.accept('w-up', self.setPsmAction, [2, 0])
-            self.app.accept('w-repeat', self.addPsmAction, [2, 0.01])
-            self.app.accept('s-up', self.setPsmAction, [2, 0])
-            self.app.accept('s-repeat', self.addPsmAction, [2, -0.01])
-            self.app.accept('d-up', self.setPsmAction, [1, 0])
-            self.app.accept('d-repeat', self.addPsmAction, [1, 0.01])
-            self.app.accept('a-up', self.setPsmAction, [1, 0])
-            self.app.accept('a-repeat', self.addPsmAction, [1, -0.01])
-            self.app.accept('q-up', self.setPsmAction, [0, 0])
-            self.app.accept('q-repeat', self.addPsmAction, [0, 0.01])
-            self.app.accept('e-up', self.setPsmAction, [0, 0])
-            self.app.accept('e-repeat', self.addPsmAction, [0, -0.01])
-            self.app.accept('space-up', self.setPsmAction, [4, 1.0])
-            self.app.accept('space-repeat', self.setPsmAction, [4, -0.5])
-
         self.ecm_view = 0
         self.ecm_view_out = None
         self.demo = demo
@@ -1865,18 +1850,6 @@ class SurgicalSimulator(SurgicalSimulatorBase):
         self.has_load_policy = False
 
         self.ecm_action = np.zeros(env_type.ACTION_ECM_SIZE)
-        self.app.accept('i-up', self.setEcmAction, [2, 0])
-        self.app.accept('i-repeat', self.addEcmAction, [2, 0.2])
-        self.app.accept('k-up', self.setEcmAction, [2, 0])
-        self.app.accept('k-repeat', self.addEcmAction, [2, -0.2])
-        self.app.accept('o-up', self.setEcmAction, [1, 0])
-        self.app.accept('o-repeat', self.addEcmAction, [1, 0.2])
-        self.app.accept('u-up', self.setEcmAction, [1, 0])
-        self.app.accept('u-repeat', self.addEcmAction, [1, -0.2])
-        self.app.accept('j-up', self.setEcmAction, [0, 0])
-        self.app.accept('j-repeat', self.addEcmAction, [0, 0.2])
-        self.app.accept('l-up', self.setEcmAction, [0, 0])
-        self.app.accept('l-repeat', self.addEcmAction, [0, -0.2])
         self.app.accept('m-up', self.toggleEcmView)
         self.app.accept('r-up', self.resetEcmFlag)
 
@@ -2121,54 +2094,12 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
         self.psm2_action = np.zeros(env_type.ACTION_SIZE // 2)
         self.psm2_action[4] = jaw_states[1]
 
-        self.app.accept('w-up', self.setPsmAction1, [2, 0])
-        self.app.accept('w-repeat', self.addPsmAction1, [2, 0.01])
-        self.app.accept('s-up', self.setPsmAction1, [2, 0])
-        self.app.accept('s-repeat', self.addPsmAction1, [2, -0.01])
-        self.app.accept('d-up', self.setPsmAction1, [1, 0])
-        self.app.accept('d-repeat', self.addPsmAction1, [1, 0.01])
-        self.app.accept('a-up', self.setPsmAction1, [1, 0])
-        self.app.accept('a-repeat', self.addPsmAction1, [1, -0.01])
-        self.app.accept('q-up', self.setPsmAction1, [0, 0])
-        self.app.accept('q-repeat', self.addPsmAction1, [0, 0.01])
-        self.app.accept('e-up', self.setPsmAction1, [0, 0])
-        self.app.accept('e-repeat', self.addPsmAction1, [0, -0.01])
-        self.app.accept('space-up', self.setPsmAction1, [4, 1.0])
-        self.app.accept('space-repeat', self.setPsmAction1, [4, -0.5])
-
-        self.app.accept('i-up', self.setPsmAction2, [2, 0])
-        self.app.accept('i-repeat', self.addPsmAction2, [2, 0.01])
-        self.app.accept('k-up', self.setPsmAction2, [2, 0])
-        self.app.accept('k-repeat', self.addPsmAction2, [2, -0.01])
-        self.app.accept('l-up', self.setPsmAction2, [1, 0])
-        self.app.accept('l-repeat', self.addPsmAction2, [1, 0.01])
-        self.app.accept('j-up', self.setPsmAction2, [1, 0])
-        self.app.accept('j-repeat', self.addPsmAction2, [1, -0.01])
-        self.app.accept('u-up', self.setPsmAction2, [0, 0])
-        self.app.accept('u-repeat', self.addPsmAction2, [0, 0.01])
-        self.app.accept('o-up', self.setPsmAction2, [0, 0])
-        self.app.accept('o-repeat', self.addPsmAction2, [0, -0.01])
-        self.app.accept('m-up', self.setPsmAction2, [4, 1.0])
-        self.app.accept('m-repeat', self.setPsmAction2, [4, -0.5])
-
         self.ecm_view = 0
         self.ecm_view_out = None
         exempt_l = [i for i in range(21,23)]
         if self.id not in exempt_l:
             self.toggleEcmView()
         self.ecm_action = np.zeros(env_type.ACTION_ECM_SIZE)
-        self.app.accept('i-up', self.setEcmAction, [2, 0])
-        self.app.accept('i-repeat', self.addEcmAction, [2, 0.2])
-        self.app.accept('k-up', self.setEcmAction, [2, 0])
-        self.app.accept('k-repeat', self.addEcmAction, [2, -0.2])
-        self.app.accept('o-up', self.setEcmAction, [1, 0])
-        self.app.accept('o-repeat', self.addEcmAction, [1, 0.2])
-        self.app.accept('u-up', self.setEcmAction, [1, 0])
-        self.app.accept('u-repeat', self.addEcmAction, [1, -0.2])
-        self.app.accept('j-up', self.setEcmAction, [0, 0])
-        self.app.accept('j-repeat', self.addEcmAction, [0, 0.2])
-        self.app.accept('l-up', self.setEcmAction, [0, 0])
-        self.app.accept('l-repeat', self.addEcmAction, [0, -0.2])
         self.app.accept('m-up', self.toggleEcmView)
         self.app.accept('r-up', self.resetEcmFlag)
 

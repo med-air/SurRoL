@@ -74,8 +74,8 @@ We also provide some [run files](./run) to evaluate the environments using basel
 
 To start the SurRoL-v2 GUI with Touch (haptic device) support, run the following command:
 ```shell
-# GUI
-python tests/test_multiple_scenes_touch.py
+cd ./tests/
+python test_multiple_scenes_touch.py
 ```
 You should see the following windows:
 <p align="center">
@@ -85,8 +85,8 @@ You should see the following windows:
 #### Alternative:
 To start the SurRoL-v2 GUI without touch haptic device, run the following command to preview:
 ```shell
-# GUI
-python tests/test_multiple_scenes_keyboard.py
+cd ./tests/
+python test_multiple_scenes_keyboard.py
 ```
 
 ## Citation

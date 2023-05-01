@@ -1,5 +1,5 @@
 .DS_Store
-vscode/
+.vscode/
 __pycache__/
 .ipynb_checkpoints/
 .idea
@@ -8,3 +8,4 @@ logs
 policies
 surrol/data/demo
 surrol/data/video
+haptic_src/build
