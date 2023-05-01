@@ -122,7 +122,3 @@ The code is built with the reference of [dVRK](https://github.com/jhu-dvrk/sawIn
 [RLBench](https://github.com/stepjam/RLBench),
 [Decentralized-MultiArm](https://github.com/columbia-ai-robotics/decentralized-multiarm),
 [Ravens](https://github.com/google-research/ravens), etc.
-
-
-## Contact
-For any questions, please feel free to email <a href="mailto:qidou@cuhk.edu.hk">qidou@cuhk.edu.hk</a>
