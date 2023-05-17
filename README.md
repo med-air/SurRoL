@@ -23,16 +23,30 @@ Under development...
 
 The project is built on Ubuntu with Python 3.7.
 
-### 1. Prepare environment
+### 1. Install prerequisites
 
-Create a conda virtual environment and activate it.
+Run following commands in the terminal to install build-essential and cmake:
+
+ ```shell
+sudo apt-get install build-essential
+sudo apt-get install cmake
+ ```
+
+Install Anaconda following the [Official Guideline](https://www.anaconda.com/).
+
+
+### 2. Prepare environment
+
+Create a conda virtual environment and activate it:
 
  ```shell
  conda create -n surrol python=3.7 -y
  conda activate surrol
  ```
 
-### 2. Install SurRoL
+### 3. Install SurRoL
+
+Install SurRoL in the created conda environment:
 
    ```shell
    git clone --recursive -b SurRoL-v2 https://github.com/med-air/SurRoL.git
@@ -40,9 +54,9 @@ Create a conda virtual environment and activate it.
    pip install -e .
    ```
 
-### 3. Install PyTorch Following the [Official Guideline](https://pytorch.org/get-started/locally/)
+### 4. Install PyTorch Following the [Official Guideline](https://pytorch.org/get-started/locally/) using Conda.
 
-### 4. Install Driver and Dependencies for Touch Haptic Device
+### 5. Install Driver and Dependencies for Touch Haptic Device
 
 1. Install [OpenHaptic Device Driver](https://support.3dsystems.com/s/article/OpenHaptics-for-Linux-Developer-Edition-v34?language=en_US)    
 
