@@ -2,6 +2,7 @@
 
 ### [[Project Website]](https://med-air.github.io/SurRoL/)
 
+IEEE RA-L'23 [Human-in-the-loop Embodied Intelligence with Interactive Simulation Environment for Surgical Robot Learning](https://arxiv.org/abs/2301.00452) <br>
 ICRA'23 [Demonstration-Guided Reinforcement Learning with Efficient Exploration for Task Automation of Surgical Robot](https://arxiv.org/abs/2302.09772) <br>
 ISMR'22 [Integrating artificial intelligence and augmented reality in robotic surgery: An initial dVRK study using a surgical education scenario](https://arxiv.org/abs/2201.00383) <br>
 IROS'21 [SurRoL: An open-source reinforcement learning centered and dVRK compatible platform for surgical robot learning](https://arxiv.org/abs/2108.13035)
