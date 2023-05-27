@@ -76,7 +76,7 @@ Then you will see the following windows:
    <img src="resources/img/GUI.png" width="95%" height="95%" alt="SurRoL"/>
 </p>
 
-## Control with Human Input Device
+## Control with Touch Haptic Device
 
 ### 1. Install Driver and Dependencies for Touch Haptic Device
 
