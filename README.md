@@ -119,37 +119,37 @@ Note that you should specify the path of demonstration data you would like to pr
 
 ```
 SurRoL
-   |- surrol					# simulator enviroment
-   |	|- assets				# assets (meshes and urdf files)
-   |	|- data					# implementation of script demonstration
-   |	|- gui					# implementation of graphical user interface (GUI)
-   |	|- gym					# implementation of basic surrol environment
-   |	|- robots				# implementation of dVRK robots (PSM & RCM) with PyBullet
-   |	|- tasks				# implementation of multiple surgical tasks
-   |	|- utils				# implementation of surrol utilities
-   |- haptic_src				# source codes to enable human input with Touch haptic device
-   |- rl						# implementation of RL policy learning
-   |	|- agents				# implements core algorithms in agent classes
-   |	|- components			# reusable infrastructure for model training
-   |	|- configs				# experiment configs 
-   |	|- modules				# reusable architecture components
-   |	|- trainers				# main model training script
-   |	|- utils				# rl utilities, pytorch/visualization utilities etc.
-   |	|- train.py				# experiment launcher
-   |- ext                       # 3rd party extentions and plug-ins
-   |- tests						# SurRoL-v2 launcher and test codes
-        |- images               # fodler to store gui images
-        |- needle_pick_model    # fodler to store trained needle pick demo policy
-        |- peg_transfer_model   # fodler to store trained peg transfer demo policy
-        |- recorded_human_demo  # recorded human demonstrations and post-processing code
-            |- convert.py       # pack multiple demonstrations into one file (.npz) for RL learning
-        |- test_ecm.ipynb       # test ECM kinematics in surrol
-        |- test_psm.ipynb       # test PSMs kinematics in surrol
+   |- surrol                     # simulator enviroment
+   |	|- assets                  # assets (meshes and urdf files)
+   |	|- data                    # implementation of script demonstration
+   |	|- gui                     # implementation of graphical user interface (GUI)
+   |	|- gym                     # implementation of basic surrol environment
+   |	|- robots                  # implementation of dVRK robots (PSM & RCM) with PyBullet
+   |	|- tasks                   # implementation of multiple surgical tasks
+   |	|- utils                   # implementation of surrol utilities
+   |- haptic_src                 # source codes to enable human input with Touch haptic device
+   |- rl	                        # implementation of RL policy learning
+   |	|- agents                  # implements core algorithms in agent classes
+   |	|- components              # reusable infrastructure for model training
+   |	|- configs                 # experiment configs 
+   |	|- modules                 # reusable architecture components
+   |	|- trainers                # main model training script
+   |	|- utils                   # rl utilities, pytorch/visualization utilities etc.
+   |	|- train.py                # experiment launcher
+   |- ext                        # 3rd party extentions and plug-ins
+   |- tests                      # SurRoL-v2 launcher and test codes
+        |- images                # fodler to store gui images
+        |- needle_pick_model     # fodler to store trained needle pick demo policy
+        |- peg_transfer_model    # fodler to store trained peg transfer demo policy
+        |- recorded_human_demo   # recorded human demonstrations and post-processing code
+            |- convert.py        # pack multiple demonstrations into one file (.npz) for RL learning
+        |- test_ecm.ipynb        # test ECM kinematics in surrol
+        |- test_psm.ipynb        # test PSMs kinematics in surrol
         |- test_multiple_scenes_keyboard.py     # start SurRoL-v2 GUI with keyboard input to preview
         |- test_multiple_scenes_touch.py        # start SurRoL-v2 GUI with Touch device input
         |- test_multiple_scenes_record_demo.py  # record demos with SurRoL-v2 GUI and Touch
-    |- setup.py                 # setup required python package (for installation only)
-    |- setup_haptic.sh          # setup Touch Haptic Device
+    |- setup.py                  # setup required python package (for installation only)
+    |- setup_haptic.sh           # setup Touch Haptic Device
 ```
 
 ## Citation
