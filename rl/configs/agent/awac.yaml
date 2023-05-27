@@ -1,0 +1,24 @@
+name: AWAC
+device: ${device}
+discount: 0.99
+reward_scale: 1
+n_seed_steps: 0
+
+actor_lr: 1e-4  
+critic_lr: 1e-4
+alpha_lr: 1e-4
+soft_target_tau: 0.005
+learnable_temperature: True
+init_temperature: 0.1
+clip_obs: 200
+norm_clip: 5
+norm_eps: 0.01
+hidden_dim: 256
+sampler:
+  type: her
+  strategy: future
+  k: 4
+update_epoch: 40
+n_action_samples: 1
+lam: 1
+offline_steps: 25000 

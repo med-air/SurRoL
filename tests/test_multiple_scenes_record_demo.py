@@ -1912,7 +1912,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                     observations= [self.episode_obs]
                     infos = [self.episode_info]
 
-                    folder = "./recorded_demo/needle_pick/demo1/"
+                    folder = "./recorded_human_demo/needle_pick/"
                     data_number = len(os.listdir(folder))
                     file_name = "data_NeedlePick_random_" + str(data_number+1) + ".npz"
                     np.savez_compressed(os.path.join(folder, file_name), acs=actions, obs=observations, info=infos) 

@@ -1,0 +1,21 @@
+name: DDPGBC
+device: ${device}
+discount: 0.99
+reward_scale: 1
+n_seed_steps: 1000
+
+actor_lr: 1e-3  
+critic_lr: 1e-3
+noise_eps: 0.1
+aux_weight: 5
+p_dist: 2
+soft_target_tau: 0.005
+clip_obs: 200
+norm_clip: 5
+norm_eps: 0.01
+hidden_dim: 256
+sampler:
+  type: her
+  strategy: future
+  k: 4
+update_epoch: 40

@@ -1,0 +1,39 @@
+defaults:
+  - agent: bc
+  - _self_
+
+# File path
+cwd: ${hydra:runtime.output_dir}
+
+# Training params
+n_train_steps: 10_000
+n_save: 20
+num_demo: 200
+n_seed_steps: ${agent.n_seed_steps}
+
+replay_buffer_capacity: 1000_000
+batch_size: 128
+device: cuda:0
+seed: 1
+task: BiPegTransfer-v0
+postfix: null
+dont_save: False
+n_eval_episodes: 10
+
+use_wb: True
+project_name: dex-sc
+entity_name: thuang22
+
+# MPI
+mpi: {rank: null, is_chef: null, num_workers: null}
+
+# Working space
+hydra:
+  run:
+    dir: ./exp_local/${task}/${agent.name}/d${num_demo}/s${seed}
+  sweep:
+    dir: ./exp_local/${task}/${agent.name}/d${num_demo}
+    subdir: ${seed}
+  sweeper:
+    params:
+      seed: 1,2,3,4,5

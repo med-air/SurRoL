@@ -6,7 +6,7 @@ actions = []
 observations = []
 infos = []
 
-folder = "../needle_pick/demo1/"
+folder = "./needle_pick/"
 file_names = os.listdir(folder)
 
 for name in file_names:

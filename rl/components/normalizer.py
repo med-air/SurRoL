@@ -1,21 +1,26 @@
 import numpy as np
+import torch
+
 
 class Normalizer:
     def __init__(self, size, eps=1e-2, default_clip_range=np.inf):
         self.size = size
         self.eps = eps
         self.default_clip_range = default_clip_range
+
         # some local information
         self.total_sum = np.zeros(self.size, np.float32)
         self.total_sumsq = np.zeros(self.size, np.float32)
         self.total_count = np.zeros(1, np.float32)
+
         # get the mean and std
         self.mean = np.zeros(self.size, np.float32)
         self.std = np.ones(self.size, np.float32)
-    
-    # update the parameters of the normalizer
+
     def update(self, v):
+        # update the parameters of the normalizer
         v = v.reshape(-1, self.size)
+
         # do the computing
         self.total_sum += v.sum(axis=0)
         self.total_sumsq += (np.square(v)).sum(axis=0)
@@ -26,8 +31,11 @@ class Normalizer:
         self.mean = self.total_sum / self.total_count
         self.std = np.sqrt(np.maximum(np.square(self.eps), (self.total_sumsq / self.total_count) - np.square(self.total_sum / self.total_count)))
 
-    # normalize the observation
-    def normalize(self, v, clip_range=None):
+    def normalize(self, v, clip_range=None, device=None):
+        # normalize the observation
         if clip_range is None:
             clip_range = self.default_clip_range
-        return np.clip((v - self.mean) / (self.std), -clip_range, clip_range)
+        if isinstance(v, np.ndarray):
+            return np.clip((v - self.mean) / (self.std), -clip_range, clip_range)
+        elif isinstance(v, torch.Tensor):
+            return (v - torch.tensor(self.mean, dtype=torch.float32).to(device)) / (torch.tensor(self.std, dtype=torch.float32).to(device)).clamp(-clip_range, clip_range)
