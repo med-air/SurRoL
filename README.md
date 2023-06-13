@@ -47,6 +47,14 @@ cd surrol
 pip install -e .
 ```
 
+### Register Environment
+To run [baseline](https://github.com/openai/baselines.git), surrol environments needs to be registered in [gym](https://github.com/openai/gym).
+```shell
+echo "import surrol.gym" >> <path-to-python-environment>/lib/python3.7/site-packages/gym/envs/__init__.py
+# For example: echo "import surrol.gym" >> /home/xxx/anaconda3/envs/gym_suture/lib/python3.7/site-packages/gym/envs/__init__.py
+```
+Detailed technical discussion can be found [1](https://github.com/med-air/SurRoL/issues/1) and [2](https://stackoverflow.com/questions/52727233/how-can-i-register-a-custom-environment-in-openais-gym)
+
 ## Get started
 
 The robot control API follows [dVRK](https://github.com/jhu-dvrk/dvrk-ros/tree/master/dvrk_python/src/dvrk)
