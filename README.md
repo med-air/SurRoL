@@ -42,8 +42,8 @@ and evaluated with [Baselines](https://github.com/openai/baselines),
 ### Install SurRoL
 
 ```shell
-git clone https://github.com/jiaqixuac/surrol.git
-cd surrol
+git clone https://github.com/med-air/SurRoL.git
+cd SurRoL
 pip install -e .
 ```
 
