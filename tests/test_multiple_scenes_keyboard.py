@@ -149,7 +149,7 @@ selection_panel_kv = '''MDBoxLayout:
     padding: dp(20)
 
     MDLabel:
-        text: "SurRol Simulator v2"
+        text: "SurRoL Simulator v2"
         theme_text_color: "Primary"
         font_style: "H6"
         bold: True
@@ -408,7 +408,7 @@ Peg_panel_kv = '''MDBoxLayout:
                         adaptive_height: True
 
                     MDLabel:
-                        text: "Move the gripper to a randomly sampled position"
+                        text: "Move the block to the target peg"
                         adaptive_height: True
                         theme_text_color: "Primary"
 
@@ -1924,7 +1924,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                 obs = self.env._get_obs()['achieved_goal'] if isinstance(obs, dict) else None
                 # print(f"waypoints: {self.env._waypoints}")
                 success = self.env._is_success(obs,self.env._sample_goal()) if obs is not None else False
-                print(f"success: {success}")
+                # print(f"success: {success}")
                 wait_list=[12,30]
                 if (self.id not in wait_list and success) or time.time()-self.start_time > 10:   
                     # if self.cnt>=6: 
@@ -1936,7 +1936,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                     # self.after_simulation_step()
                     
                     open_scene(0)
-                    print(f"xxxx current time:{time.time()}")
+                    # print(f"xxxx current time:{time.time()}")
                     open_scene(self.id)
                     exempt_l = [i for i in range(21,23)]
                     if self.id not in exempt_l:
@@ -2007,7 +2007,7 @@ class SurgicalSimulator(SurgicalSimulatorBase):
                     o, g = obs['observation'], obs['desired_goal']
                     input_tensor = self._preproc_inputs(o, g, self.o_norm, self.g_norm)
                     action = self.actor(input_tensor).data.numpy().flatten()
-                    print(f"retrieved action is: {self.psm1_action}")
+                    # print(f"retrieved action is: {self.psm1_action}")
                     self.psm1_action = action
                     self.env._set_action(self.psm1_action)
                 else:
@@ -2194,7 +2194,7 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
                     #     self.app.win.removeDisplayRegion(self.ui_display_region)
 
                     open_scene(0)
-                    print(f"xxxx current time:{time.time()}")
+                    # print(f"xxxx current time:{time.time()}")
                     open_scene(self.id)
                     exempt_l = [i for i in range(21,23)]
                     if self.id not in exempt_l:

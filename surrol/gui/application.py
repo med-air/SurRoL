@@ -34,7 +34,7 @@ class ApplicationConfig:
         # Window config
         self.window_width = kwargs.get('window_width', 640)
         self.window_height = kwargs.get('window_height', 512)
-        self.window_title = kwargs.get('window_title', 'SurRol Simulator')
+        self.window_title = kwargs.get('window_title', 'SurRoL Simulator')
     
     @staticmethod
     def defaults():

@@ -80,7 +80,7 @@ class PegTransferRL(PsmEnv):
         np.random.shuffle(self._pegs[6: 12])
         # self._pegs = [3,1,4,5,6,8,0,2,7,9,10,11]
         self._pegs = [3,1,4,5,0,6,8,10,7,9,2,11]
-        print(f"pegs id: {self._pegs}")
+        # print(f"pegs id: {self._pegs}")
         # blocks
         num_blocks = 4
         # for i in range(6, 6 + num_blocks):
@@ -94,7 +94,7 @@ class PegTransferRL(PsmEnv):
                                 p.getQuaternionFromEuler((0, 0, yaw)),
                                 useFixedBase=False,
                                 globalScaling=self.SCALING)
-            print(f"peg obj id: {obj_id}.")
+            # print(f"peg obj id: {obj_id}.")
             self.obj_ids['rigid'].append(obj_id)
         self._blocks = np.array(self.obj_ids['rigid'][-1:])
         # np.random.shuffle(self._blocks)
@@ -114,10 +114,10 @@ class PegTransferRL(PsmEnv):
                                 p.getQuaternionFromEuler((0, 0, yaw)),
                                 useFixedBase=False,
                                 globalScaling=self.SCALING)
-            print(f"blue peg obj id: {obj_id}.")
+            # print(f"blue peg obj id: {obj_id}.")
             self.obj_ids['rigid'].append(obj_id)        
-        print(self.obj_ids['fixed'])
-        print(f'goal peg:{obj_id}')
+        # print(self.obj_ids['fixed'])
+        # print(f'goal peg:{obj_id}')
     def _is_success(self, achieved_goal, desired_goal):
         """ Indicates whether or not the achieved goal successfully achieved the desired goal.
         """
@@ -190,7 +190,7 @@ class PegTransferRL(PsmEnv):
             points_1 = [point[2] for point in points_1 if point[2] in self.obj_ids['rigid']]
             points_2 = [point[2] for point in points_2 if point[2] in self.obj_ids['rigid']]
             contact_List = list(set(points_1)&set(points_2))
-            print(f'joint contact item:{contact_List}')
+            # print(f'joint contact item:{contact_List}')
             if len(contact_List)>0:
                 return True
         else:

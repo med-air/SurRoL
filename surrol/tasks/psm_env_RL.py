@@ -124,7 +124,7 @@ class PsmEnv(SurRoLGoalEnv):
         obj_id = p.loadURDF(os.path.join(ASSET_DIR_PATH, 'sphere/sphere.urdf'),
                             globalScaling=self.SCALING)
         self.obj_ids['fixed'].append(obj_id)  # 0
-        print(f'goal:{obj_id}')
+        # print(f'goal:{obj_id}')
         pass  # need to implement based on every task
         # self.obj_ids
 
@@ -219,7 +219,7 @@ class PsmEnv(SurRoLGoalEnv):
         else:
             self.psm1.move_jaw(np.deg2rad(40))  # open jaw angle; can tune
             self._release(0)
-            print(f'num of constraits for set action: {p.getNumConstraints()}')
+            # print(f'num of constraits for set action: {p.getNumConstraints()}')
 
         # time3 = time.time()
         # print("transform time: {:.4f}, IK time: {:.4f}, jaw time: {:.4f}, total time: {:.4f}"
@@ -254,7 +254,7 @@ class PsmEnv(SurRoLGoalEnv):
                 points_1 = [point[2] for point in points_1 if point[2] in self.obj_ids['rigid']]
                 points_2 = [point[2] for point in points_2 if point[2] in self.obj_ids['rigid']]
                 contact_List = list(set(points_1)&set(points_2))
-                print(f'joint contact item:{contact_List}')
+                # print(f'joint contact item:{contact_List}')
                 if len(contact_List)>0:
                     contact_Id=contact_List[-1]
                     body_pose = p.getLinkState(psm.body, psm.EEF_LINK_INDEX)
@@ -276,7 +276,7 @@ class PsmEnv(SurRoLGoalEnv):
                         childFramePosition=(0, 0, 0),
                         childFrameOrientation=(0, 0, 0))
                     # TODO: check the maxForce; very subtle
-                    print(f'contact with {contact_Id}!create constraint id{self._contact_constraint}!')
+                    # print(f'contact with {contact_Id}!create constraint id{self._contact_constraint}!')
                     p.changeConstraint(self._contact_constraint, maxForce=30)
         else:
             # self._contact_constraint is not None
@@ -302,7 +302,7 @@ class PsmEnv(SurRoLGoalEnv):
                 # release the previously grasped object because there is no contact any more
                 # print("no contact!remove constraint!")
                 self._release(self._activated)
-        print(f'num of constraits for stepcallback: {p.getNumConstraints()}')
+        # print(f'num of constraits for stepcallback: {p.getNumConstraints()}')
 
     def _sample_goal(self) -> np.ndarray:
         """ Samples a new goal and returns it.
@@ -361,12 +361,12 @@ class PsmEnv(SurRoLGoalEnv):
 
             if self._contact_constraint is not None:
                 try:
-                    print(f"no contact!to remove constraint id{self._contact_constraint}!")
+                    # print(f"no contact!to remove constraint id{self._contact_constraint}!")
                     for i in range(1,self._contact_constraint+1):
                         p.removeConstraint(i)
                     self._contact_constraint = None
-                    print(f"removed?{self._contact_constraint}!")
-                    print(f"contact constraint status: {self._contact_constraint}")
+                    # print(f"removed?{self._contact_constraint}!")
+                    # print(f"contact constraint status: {self._contact_constraint}")
                     # enable collision
                     # psm = self.psm1 if idx == 0 else self.psm2
                     # p.setCollisionFilterPair(bodyUniqueIdA=psm.body, bodyUniqueIdB=self.obj_id,
@@ -374,7 +374,7 @@ class PsmEnv(SurRoLGoalEnv):
                     # p.setCollisionFilterPair(bodyUniqueIdA=psm.body, bodyUniqueIdB=self.obj_id,
                     #                          linkIndexA=7, linkIndexB=-1, enableCollision=1)
                 except:
-                    print("unable to remove constraint")
+                    # print("unable to remove constraint")
                     pass
 
     def _meet_contact_constraint_requirement(self) -> bool:

@@ -151,7 +151,7 @@ selection_panel_kv = '''MDBoxLayout:
     padding: dp(20)
 
     MDLabel:
-        text: "SurRol Simulator v2"
+        text: "SurRoL Simulator v2"
         theme_text_color: "Primary"
         font_style: "H6"
         bold: True
@@ -410,7 +410,7 @@ Peg_panel_kv = '''MDBoxLayout:
                         adaptive_height: True
 
                     MDLabel:
-                        text: "Move the gripper to a randomly sampled position"
+                        text: "Move the block to the target peg"
                         adaptive_height: True
                         theme_text_color: "Primary"
 
@@ -2107,7 +2107,7 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
         """Step simulation
         """
         if self.demo == None:
-            print(f"scene id:{self.id}")
+            # print(f"scene id:{self.id}")
             if task.time - self.time > 1 / 240.0:
                 self.before_simulation_step()
 
@@ -2156,7 +2156,7 @@ class SurgicalSimulatorBimanual(SurgicalSimulatorBase):
                     #     self.app.win.removeDisplayRegion(self.ui_display_region)
 
                     open_scene(0)
-                    print(f"xxxx current time:{time.time()}")
+                    # print(f"xxxx current time:{time.time()}")
                     open_scene(self.id)
                     exempt_l = [i for i in range(21,23)]
                     if self.id not in exempt_l:

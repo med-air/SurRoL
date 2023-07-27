@@ -67,14 +67,14 @@ class PegTransfer(PsmEnv):
                             p.getQuaternionFromEuler(self.POSE_BOARD[1]),
                             globalScaling=self.SCALING)
         self.obj_ids['fixed'].append(obj_id)  # 1
-        print(f'peg transfer\' board size: {p.getVisualShapeData(obj_id)}')
+        # print(f'peg transfer\' board size: {p.getVisualShapeData(obj_id)}')
         # group = 1#other objects don't collide with me
         # mask=1 # don't collide with any other object
         # p.setCollisionFilterGroupMask(obj_id, 0,group, mask)
         self._pegs = np.arange(12)
         np.random.shuffle(self._pegs[:6])
         np.random.shuffle(self._pegs[6: 12])
-        print(self._pegs)
+        # print(self._pegs)
         self._pegs = [2,1,0,3,4,5,6,7,9,11,10,8]
         self._cnt = 0
         # blocks
@@ -88,10 +88,10 @@ class PegTransfer(PsmEnv):
                                 p.getQuaternionFromEuler((0, 0, yaw)),
                                 useFixedBase=False,
                                 globalScaling=self.SCALING)
-            print(f"peg obj id: {obj_id}.")
+            # print(f"peg obj id: {obj_id}.")
             self.obj_ids['rigid'].append(obj_id)
         self._blocks = np.array(self.obj_ids['rigid'][-num_blocks:])
-        print(f'peg transfer\' peg size: {p.getVisualShapeData(obj_id)}')
+        # print(f'peg transfer\' peg size: {p.getVisualShapeData(obj_id)}')
 
         np.random.shuffle(self._blocks)
         for obj_id in self._blocks[:1]:
@@ -120,8 +120,8 @@ class PegTransfer(PsmEnv):
         #     # change color to red
         #     p.changeVisualShape(obj_id, -1, rgbaColor=(255 / 255, 69 / 255, 58 / 255, 1))
         # self.obj_id, self.obj_link1 = self._blocks[2], -1
-        print(self.obj_ids['fixed'])
-        print(f'goal peg:{obj_id}')
+        # print(self.obj_ids['fixed'])
+        # print(f'goal peg:{obj_id}')
     def _is_success(self, achieved_goal, desired_goal):
         """ Indicates whether or not the achieved goal successfully achieved the desired goal.
         """
@@ -184,7 +184,7 @@ class PegTransfer(PsmEnv):
             points_1 = [point[2] for point in points_1 if point[2] in self.obj_ids['rigid']]
             points_2 = [point[2] for point in points_2 if point[2] in self.obj_ids['rigid']]
             contact_List = list(set(points_1)&set(points_2))
-            print(f'joint contact item:{contact_List}')
+            # print(f'joint contact item:{contact_List}')
             if len(contact_List)>0:
                 return True
         else:
@@ -224,6 +224,9 @@ class PegTransfer(PsmEnv):
         pos, _ = self.ecm.pose_rcm2world(pose_rcm, 'tuple')
         joint_positions = self.ecm.inverse_kinematics((pos, None), self.ecm.EEF_LINK_INDEX)  # do not consider orn
         self.ecm.move_joint(joint_positions[:self.ecm.DoF])
+
+    def _reset_ecm_pos(self):
+        self.ecm.reset_joint(self.QPOS_ECM)
         
 if __name__ == "__main__":
     env = PegTransfer(render_mode='human')  # create one process and corresponding env
