@@ -56,6 +56,9 @@ def main():
     folder = 'demo' if not args.video else 'video'
     folder = os.path.join(ROOT_DIR_PATH, 'data', folder)
 
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
     np.savez_compressed(os.path.join(folder, file_name),
                         acs=actions, obs=observations, info=infos)  # save the file
 
